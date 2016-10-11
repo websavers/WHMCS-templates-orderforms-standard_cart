@@ -50,10 +50,27 @@
                 </div>
             {/foreach}
 
-            {if $ispaid}
-                <!-- Enter any HTML code which should be displayed when a user has completed checkout here -->
-                <!-- Common uses of this include conversion and affiliate tracking scripts -->
-            {/if}
+           {if $ispaid}
+           <!-- Enter any HTML code which needs to be displayed once a user has completed the checkout of their order here - for example conversion tracking and affiliate tracking scripts -->
+           {* Google Analytics Trasaction Recording *}
+           <script type="text/javascript">
+           
+             var _gaq = _gaq || [];
+             _gaq.push(['_setAccount', 'UA-3271728-22']);
+             _gaq.push(['_trackPageview']);
+             _gaq.push(['_addTrans',
+               '{$ordernumber}',           // transaction ID - required
+               'Websavers Inc',  // affiliation or store name
+               '{$amount}',          // total - required
+               'Dartmouth',       // city
+               'Nova Scotia',     // state or province
+               'Canada'             // country
+             ]);
+           
+             _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
+           
+           </script>
+           {/if}
 
             <div class="text-center">
                 <a href="clientarea.php" class="btn btn-default">
@@ -63,5 +80,8 @@
             </div>
 
         </div>
+        
+        <div class="alert alert-info">Have a friend that might want to host with us? Send them coupon code IMAFRIEND for 15% off their order!</div>
+        
     </div>
 </div>

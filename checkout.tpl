@@ -425,7 +425,7 @@
                 </div>
 
                 <div class="alert alert-success text-center large-text" role="alert">
-                    {$LANG.ordertotalduetoday}: &nbsp; <strong>{$total}</strong>
+                    {$LANG.ordertotalduetoday}: &nbsp; <strong> {$total}</strong>
                 </div>
 
                 <div class="form-group">
@@ -582,12 +582,10 @@
                 </div>
             </form>
 
-            {if $servedOverSsl}
-                <div class="alert alert-warning checkout-security-msg">
-                    <i class="fa fa-lock"></i>
-                    {$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
-                </div>
-            {/if}
+            <div class="alert alert-warning checkout-security-msg">
+                <i class="fa fa-lock"></i>
+                {$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
+            </div>
 
         </div>
     </div>
