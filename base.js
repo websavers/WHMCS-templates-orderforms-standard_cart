@@ -61,11 +61,11 @@ jQuery(document).ready(function(){
         if (jQuery(window).scrollTop() > offset.top) {
             $orderSummaryEl.stop().animate({
                 marginTop: newTopOffset
-            });
+            }, 150, 'linear');
         } else {
             $orderSummaryEl.stop().animate({
                 marginTop: 0
-            });
+            }, 150, 'linear');
         }
     }
 
