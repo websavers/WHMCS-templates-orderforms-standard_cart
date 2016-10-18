@@ -1,4 +1,4 @@
-{include file="orderforms/standard_cart/common.tpl"}
+{include file="orderforms/{$carttpl}/common.tpl"}
 
 <div id="order-standard_cart">
 
@@ -14,13 +14,13 @@
 
         <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
 
-            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
 
         </div>
 
         <div class="col-md-9 pull-md-right">
 
-            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 
             <p>{$LANG.orderreceived}</p>
 
@@ -54,7 +54,7 @@
            <!-- Enter any HTML code which needs to be displayed once a user has completed the checkout of their order here - for example conversion tracking and affiliate tracking scripts -->
            {* Google Analytics Trasaction Recording *}
            <script type="text/javascript">
-           
+
              var _gaq = _gaq || [];
              _gaq.push(['_setAccount', 'UA-3271728-22']);
              _gaq.push(['_trackPageview']);
@@ -66,9 +66,9 @@
                'Nova Scotia',     // state or province
                'Canada'             // country
              ]);
-           
+
              _gaq.push(['_trackTrans']); //submits transaction to the Analytics servers
-           
+
            </script>
            {/if}
 
@@ -80,8 +80,8 @@
             </div>
 
         </div>
-        
+
         <div class="alert alert-info">Have a friend that might want to host with us? Send them coupon code IMAFRIEND for 15% off their order!</div>
-        
+
     </div>
 </div>
