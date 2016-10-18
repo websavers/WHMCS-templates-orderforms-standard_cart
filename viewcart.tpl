@@ -1,4 +1,4 @@
-{if $checkout}
+ {if $checkout}
 
     {include file="orderforms/$carttpl/checkout.tpl"}
 
@@ -9,7 +9,7 @@
         var statesTab = 10;
         var stateNotRequired = true;
     </script>
-    {include file="orderforms/standard_cart/common.tpl"}
+    {include file="orderforms/{$carttpl}/common.tpl"}
     <script type="text/javascript" src="{$BASE_PATH_JS}/StatesDropdown.js"></script>
 
     <div id="order-standard_cart">
@@ -26,13 +26,13 @@
 
             <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
 
-                {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+                {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
 
             </div>
 
             <div class="col-md-9 pull-md-right">
 
-                {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+                {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 
                 <div class="row">
                     <div class="col-md-8">
@@ -49,7 +49,7 @@
                                 </ul>
                             </div>
                         {elseif $promotioncode && $rawdiscount eq "0.00"}
-                            <div class="alert alert-info text-center" role="alert">
+                            <div class="alert alert-warning text-center" role="alert">
                                 {$LANG.promoappliedbutnodiscount}
                             </div>
                         {elseif $promoaddedsuccess}
@@ -168,7 +168,14 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {if $addon.name|strstr:'SiteMigrator'}{assign var="siteMigratorAddon" value='true'}{/if}
+
                                     {/foreach}
+
+                                    {if $product.productinfo.name|strstr:'Titanium' && $product.billingcycle neq 'quarterly'}{assign var="siteMigratorTitanium" value='true'}{/if}
+                                    {if $product.productinfo.name|strstr:'Helium'}{assign var="heliumWithDomain" value=$product.domain}{/if}
+
                                 {/foreach}
 
                                 {foreach $addons as $num => $addon}
@@ -222,10 +229,12 @@
                                                         {$LANG.orderForm.edit}
                                                     </a>
                                                     <span class="visible-xs-inline">
+                                                      {if array_search(141, $products) == false} {* Not Helium *}
                                                         <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
                                                             <i class="fa fa-times"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
+                                                      {/if}
                                                     </span>
                                                 </span>
                                                 {if $domain.domain}
@@ -260,11 +269,13 @@
                                                     </div>
                                                 {/if}
                                             </div>
+                                            {if $heliumWithDomain != $domain.domain}
                                             <div class="col-sm-1 hidden-xs">
                                                 <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
                                                     <i class="fa fa-times"></i>
                                                 </button>
                                             </div>
+                                            {/if}
                                         </div>
                                     </div>
                                 {/foreach}
@@ -341,6 +352,10 @@
                                             </a>
                                         </div>
                                     {else}
+
+                                    {if $siteMigratorAddon eq 'true' && $siteMigratorTitanium eq 'true' && $promotioncode neq 'FreeSiteMigrator'}
+<div id="promo-alert" style="text-align:center;color: black;font-size:0.9em;margin-bottom:5px;">Your order qualifies for a free website migration! Enter promotion code "FreeSiteMigrator" to save!</div>
+{/if}
                                         <form method="post" action="cart.php?a=view">
                                             <div class="form-group prepend-icon ">
                                                 <label for="cardno" class="field-icon">

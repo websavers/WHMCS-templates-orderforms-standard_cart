@@ -1,8 +1,8 @@
-{include file="orderforms/standard_cart/common.tpl"}
+{include file="orderforms/{$carttpl}/common.tpl"}
 
 <div id="order-standard_cart">
 
-    <div class="row">
+    <div class="row" style="padding-bottom:0">
 
         <div class="pull-md-right col-md-9">
 
@@ -16,13 +16,13 @@
 
         <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
 
-            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
 
         </div>
 
         <div class="col-md-9 pull-md-right">
 
-            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 
             <p>{$LANG.orderForm.findNewDomain}</p>
 
@@ -147,6 +147,7 @@
             </div>
 
             <div class="row">
+              {*
                 <div class="{if $domainTransferEnabled}col-md-6{else}col-md-8 col-md-offset-2{/if}">
                     <div class="domain-promo-box">
 
@@ -163,8 +164,9 @@
                         </a>
                     </div>
                 </div>
+              *}
                 {if $domainTransferEnabled}
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="domain-promo-box">
 
                             <div class="clearfix">
@@ -173,7 +175,7 @@
                                 <p class="font-bold text-primary">{lang key='orderForm.transferExtend'}*</p>
                             </div>
 
-                            <a href="cart.php?a=add&domain=transfer" class="btn btn-primary">
+                            <a href="cart.php?a=add&domain=transfer" class="btn btn-primary btn-large">
                                 {lang key='orderForm.transferDomain'}
                             </a>
 
@@ -182,9 +184,31 @@
                     </div>
                 {/if}
             </div>
-
+            
         </div>
+        {if !$lookupTerm}
+        <div id="domain-registration-features" style="margin-top: 50px" class="greyfoot">
+          <div class="col33 textcenter">
+            <i class="fa fa-server"></i>
+            <p>FREE DNS, web, and Mail hosting available with our <a href="http://www.websavershosting.ca" target="_blank">Helium Hosting Plan</a></p>
+          </div>
+          <div class="col33 textcenter">
+            <i class="fa-arrow-down"></i>
+            <p>Simplify your online life by having all web services in one spot. Right here with Websavers.</p>
+          </div>
+          <div class="col33 textcenter">
+            <i class="fa-map-marker"></i>
+            <p>Why throw your money across the border when you could invest in your local Canadian economy?</p>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+</div>
+<div class="clearfix"></div>
+
+        {/if}
     </div>
+    <div class="bluefoot">Looking for a TLD you don't see here? <a href="submitticket.php">Ask us!</a></div>
 </div>
 
 {if $lookupTerm && !$captchaError}

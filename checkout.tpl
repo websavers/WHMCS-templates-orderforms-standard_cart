@@ -4,7 +4,7 @@
     // Do not enforce state input client side
     var stateNotRequired = true;
 </script>
-{include file="orderforms/standard_cart/common.tpl"}
+{include file="orderforms/{$carttpl}/common.tpl"}
 <script type="text/javascript" src="{$BASE_PATH_JS}/StatesDropdown.js"></script>
 <script type="text/javascript" src="{$BASE_PATH_JS}/PasswordStrength.js"></script>
 <script>
@@ -45,13 +45,13 @@
 
         <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
 
-            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
 
         </div>
 
         <div class="col-md-9 pull-md-right">
 
-            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 
             <div class="already-registered clearfix">
                 <div class="pull-right">
@@ -108,44 +108,76 @@
 
                 <div id="containerNewUserSignup"{if !$loggedin && $custtype eq "existing"} class="hidden"{/if}>
 
-                    <div class="sub-heading">
-                        <span>{$LANG.orderForm.personalInformation}</span>
-                    </div>
+                    {if !$loggedin}
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group prepend-icon">
-                                <label for="inputFirstName" class="field-icon">
-                                    <i class="fa fa-user"></i>
-                                </label>
-                                <input type="text" name="firstname" id="inputFirstName" class="field" placeholder="{$LANG.orderForm.firstName}" value="{$clientsdetails.firstname}"{if $loggedin} readonly="readonly"{/if} autofocus>
+                        <div id="containerNewUserSecurity"{if !$loggedin && $custtype eq "existing"} class="hidden"{/if}>
+
+                            <div class="sub-heading">
+                                <span>{$LANG.orderForm.accountSecurity}</span>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group prepend-icon">
-                                <label for="inputLastName" class="field-icon">
-                                    <i class="fa fa-user"></i>
-                                </label>
-                                <input type="text" name="lastname" id="inputLastName" class="field" placeholder="{$LANG.orderForm.lastName}" value="{$clientsdetails.lastname}"{if $loggedin} readonly="readonly"{/if}>
+                            <div class="row" {if $securityquestions}style="padding-bottom:0"{/if}>
+                                <div class="col-sm-6">
+                                    <div class="form-group prepend-icon">
+                                        <label for="inputEmail" class="field-icon">
+                                            <i class="fa fa-envelope"></i>
+                                        </label>
+                                        <input type="email" name="email" id="inputEmail" class="field" placeholder="{$LANG.orderForm.emailAddress}" value="{$clientsdetails.email}"{if $loggedin} readonly="readonly"{/if}>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group prepend-icon">
+                                        <label for="inputNewPassword1" class="field-icon">
+                                            <i class="fa fa-lock"></i>
+                                        </label>
+                                        <input type="password" name="password" id="inputNewPassword1" class="field" placeholder="{$LANG.clientareapassword}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group prepend-icon">
+                                        <label for="inputNewPassword2" class="field-icon">
+                                            <i class="fa fa-lock"></i>
+                                        </label>
+                                        <input type="password" name="password2" id="inputNewPassword2" class="field" placeholder="{$LANG.clientareaconfirmpassword}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="passwordStrengthMeterBar">
+                                        </div><div style="position:absolute;left:30px;top:1px;color:white;" class="text-center small text-muted" id="passwordStrengthTextLabel">{$LANG.pwstrength}: {$LANG.pwstrengthenter}</div>
+                                    </div>
+                                </div>
                             </div>
+                            {if $securityquestions}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <select name="securityqid" id="inputSecurityQId" class="field">
+                                                <option value="">{$LANG.clientareasecurityquestion}</option>
+                                                {foreach $securityquestions as $question}
+                                                    <option value="{$question.id}"{if $question.id eq $securityqid} selected{/if}>
+                                                        {$question.question}
+                                                    </option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group prepend-icon">
+                                            <label for="inputSecurityQAns" class="field-icon">
+                                                <i class="fa fa-lock"></i>
+                                            </label>
+                                            <input type="password" name="securityqans" id="inputSecurityQAns" class="field" placeholder="{$LANG.clientareasecurityanswer}">
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
+
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group prepend-icon">
-                                <label for="inputEmail" class="field-icon">
-                                    <i class="fa fa-envelope"></i>
-                                </label>
-                                <input type="email" name="email" id="inputEmail" class="field" placeholder="{$LANG.orderForm.emailAddress}" value="{$clientsdetails.email}"{if $loggedin} readonly="readonly"{/if}>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group prepend-icon">
-                                <label for="inputPhone" class="field-icon">
-                                    <i class="fa fa-phone"></i>
-                                </label>
-                                <input type="tel" name="phonenumber" id="inputPhone" class="field" placeholder="{$LANG.orderForm.phoneNumber}" value="{$clientsdetails.phonenumber}"{if $loggedin} readonly="readonly"{/if}>
-                            </div>
-                        </div>
-                    </div>
+                    {else}
+
+                      <div class="alert alert-success">Logged in as {$clientsdetails.email}</div>
+
+                    {/if}
 
                     <div class="sub-heading">
                         <span>{$LANG.orderForm.billingAddress}</span>
@@ -154,13 +186,49 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group prepend-icon">
+                                <select name="country" id="inputCountry" class="field"{if $loggedin} disabled="disabled"{/if}>
+                                    {foreach $countries as $countrycode => $countrylabel}
+                                        <option value="{$countrycode}"{if (!$country && $countrycode == $defaultcountry) || $countrycode eq $country} selected{/if}>
+                                            {$countrylabel}
+                                        </option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group prepend-icon">
+                                <label for="inputFirstName" class="field-icon">
+                                    <i class="fa fa-user"></i>
+                                </label>
+                                <input type="text" name="firstname" id="inputFirstName" class="field" placeholder="{$LANG.orderForm.firstName}" value="{$clientsdetails.firstname}"{if $loggedin} readonly="readonly"{/if} autofocus>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group prepend-icon">
+                                <label for="inputLastName" class="field-icon">
+                                    <i class="fa fa-user"></i>
+                                </label>
+                                <input type="text" name="lastname" id="inputLastName" class="field" placeholder="{$LANG.orderForm.lastName}" value="{$clientsdetails.lastname}"{if $loggedin} readonly="readonly"{/if}>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group prepend-icon">
+                                <label for="inputPhone" class="field-icon">
+                                    <i class="fa fa-phone"></i>
+                                </label>
+                                <input type="tel" name="phonenumber" id="inputPhone" class="field" placeholder="{$LANG.orderForm.phoneNumber}" value="{$clientsdetails.phonenumber}"{if $loggedin} readonly="readonly"{/if}>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group prepend-icon">
                                 <label for="inputCompanyName" class="field-icon">
                                     <i class="fa fa-building"></i>
                                 </label>
                                 <input type="text" name="companyname" id="inputCompanyName" class="field" placeholder="{$LANG.orderForm.companyName} ({$LANG.orderForm.optional})" value="{$clientsdetails.companyname}"{if $loggedin} readonly="readonly"{/if}>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputAddress1" class="field-icon">
                                     <i class="fa fa-building-o"></i>
@@ -168,7 +236,7 @@
                                 <input type="text" name="address1" id="inputAddress1" class="field" placeholder="{$LANG.orderForm.streetAddress}" value="{$clientsdetails.address1}"{if $loggedin} readonly="readonly"{/if}>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputAddress2" class="field-icon">
                                     <i class="fa fa-map-marker"></i>
@@ -200,35 +268,28 @@
                                 <input type="text" name="postcode" id="inputPostcode" class="field" placeholder="{$LANG.orderForm.postcode}" value="{$clientsdetails.postcode}"{if $loggedin} readonly="readonly"{/if}>
                             </div>
                         </div>
-                        <div class="col-sm-12">
-                            <div class="form-group prepend-icon">
-                                <select name="country" id="inputCountry" class="field"{if $loggedin} disabled="disabled"{/if}>
-                                    {foreach $countries as $countrycode => $countrylabel}
-                                        <option value="{$countrycode}"{if (!$country && $countrycode == $defaultcountry) || $countrycode eq $country} selected{/if}>
-                                            {$countrylabel}
-                                        </option>
-                                    {/foreach}
-                                </select>
-                            </div>
-                        </div>
                     </div>
 
                     {if $customfields}
                         <div class="sub-heading">
                             <span>{$LANG.orderadditionalrequiredinfo}</span>
                         </div>
-                        <div class="field-container">
+                        <div class="field-container col50 center" style="margin: 10px auto">
                             <div class="row">
                                 {foreach $customfields as $customfield}
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="customfield{$customfield.id}">{$customfield.name}</label>
-                                            {$customfield.input}
                                             {if $customfield.description}
-                                                <span class="field-help-text">
+                                                <span class="field-help-text" style="font-size:0.8em">
                                                     {$customfield.description}
                                                 </span>
                                             {/if}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            {$customfield.input}
                                         </div>
                                     </div>
                                 {/foreach}
@@ -263,7 +324,18 @@
                     </div>
 
                     <div class="row{if $contact neq "addingnew"} hidden{/if}" id="domainRegistrantInputFields">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <div class="form-group prepend-icon">
+                                <select name="domaincontactcountry" id="inputDCCountry" class="field">
+                                    {foreach $countries as $countrycode => $countrylabel}
+                                        <option value="{$countrycode}"{if (!$domaincontact.country && $countrycode == $defaultcountry) || $countrycode eq $domaincontact.country} selected{/if}>
+                                            {$countrylabel}
+                                        </option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="form-group prepend-icon">
                                 <label for="inputDCFirstName" class="field-icon">
                                     <i class="fa fa-user"></i>
@@ -271,12 +343,20 @@
                                 <input type="text" name="domaincontactfirstname" id="inputDCFirstName" class="field" placeholder="{$LANG.orderForm.firstName}" value="{$domaincontact.firstname}">
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group prepend-icon">
                                 <label for="inputDCLastName" class="field-icon">
                                     <i class="fa fa-user"></i>
                                 </label>
                                 <input type="text" name="domaincontactlastname" id="inputDCLastName" class="field" placeholder="{$LANG.orderForm.lastName}" value="{$domaincontact.lastname}">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group prepend-icon">
+                                <label for="inputDCPhone" class="field-icon">
+                                    <i class="fa fa-phone"></i>
+                                </label>
+                                <input type="tel" name="domaincontactphonenumber" id="inputDCPhone" class="field" placeholder="{$LANG.orderForm.phoneNumber}" value="{$domaincontact.phonenumber}">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -289,21 +369,13 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group prepend-icon">
-                                <label for="inputDCPhone" class="field-icon">
-                                    <i class="fa fa-phone"></i>
-                                </label>
-                                <input type="tel" name="domaincontactphonenumber" id="inputDCPhone" class="field" placeholder="{$LANG.orderForm.phoneNumber}" value="{$domaincontact.phonenumber}">
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group prepend-icon">
                                 <label for="inputDCCompanyName" class="field-icon">
                                     <i class="fa fa-building"></i>
                                 </label>
                                 <input type="text" name="domaincontactcompanyname" id="inputDCCompanyName" class="field" placeholder="{$LANG.orderForm.companyName} ({$LANG.orderForm.optional})" value="{$domaincontact.companyname}">
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputDCAddress1" class="field-icon">
                                     <i class="fa fa-building-o"></i>
@@ -311,7 +383,7 @@
                                 <input type="text" name="domaincontactaddress1" id="inputDCAddress1" class="field" placeholder="{$LANG.orderForm.streetAddress}" value="{$domaincontact.address1}">
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputDCAddress2" class="field-icon">
                                     <i class="fa fa-map-marker"></i>
@@ -343,79 +415,6 @@
                                 <input type="text" name="domaincontactpostcode" id="inputDCPostcode" class="field" placeholder="{$LANG.orderForm.postcode}" value="{$domaincontact.postcode}">
                             </div>
                         </div>
-                        <div class="col-sm-12">
-                            <div class="form-group prepend-icon">
-                                <select name="domaincontactcountry" id="inputDCCountry" class="field">
-                                    {foreach $countries as $countrycode => $countrylabel}
-                                        <option value="{$countrycode}"{if (!$domaincontact.country && $countrycode == $defaultcountry) || $countrycode eq $domaincontact.country} selected{/if}>
-                                            {$countrylabel}
-                                        </option>
-                                    {/foreach}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                {/if}
-
-                {if !$loggedin}
-
-                    <div id="containerNewUserSecurity"{if !$loggedin && $custtype eq "existing"} class="hidden"{/if}>
-
-                        <div class="sub-heading">
-                            <span>{$LANG.orderForm.accountSecurity}</span>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group prepend-icon">
-                                    <label for="inputNewPassword1" class="field-icon">
-                                        <i class="fa fa-lock"></i>
-                                    </label>
-                                    <input type="password" name="password" id="inputNewPassword1" class="field" placeholder="{$LANG.clientareapassword}">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group prepend-icon">
-                                    <label for="inputNewPassword2" class="field-icon">
-                                        <i class="fa fa-lock"></i>
-                                    </label>
-                                    <input type="password" name="password2" id="inputNewPassword2" class="field" placeholder="{$LANG.clientareaconfirmpassword}">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="passwordStrengthMeterBar">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="text-center small text-muted" id="passwordStrengthTextLabel">{$LANG.pwstrength}: {$LANG.pwstrengthenter}</p>
-                            </div>
-                        </div>
-                        {if $securityquestions}
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <select name="securityqid" id="inputSecurityQId" class="field">
-                                        <option value="">{$LANG.clientareasecurityquestion}</option>
-                                        {foreach $securityquestions as $question}
-                                            <option value="{$question.id}"{if $question.id eq $securityqid} selected{/if}>
-                                                {$question.question}
-                                            </option>
-                                        {/foreach}
-                                    </select>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group prepend-icon">
-                                        <label for="inputSecurityQAns" class="field-icon">
-                                            <i class="fa fa-lock"></i>
-                                        </label>
-                                        <input type="password" name="securityqans" id="inputSecurityQAns" class="field" placeholder="{$LANG.clientareasecurityanswer}">
-                                    </div>
-                                </div>
-                            </div>
-                        {/if}
-
                     </div>
 
                 {/if}
@@ -582,12 +581,11 @@
                 </div>
             </form>
 
-            <div class="alert alert-warning checkout-security-msg">
-                <i class="fa fa-lock"></i>
-                {$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
-            </div>
-
         </div>
+    </div>
+    <div class="alert alert-warning checkout-security-msg">
+        <i class="fa fa-lock"></i>
+        {$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
     </div>
 </div>
 

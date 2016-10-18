@@ -1,4 +1,4 @@
-{include file="orderforms/standard_cart/common.tpl"}
+{include file="orderforms/{$carttpl}/common.tpl"}
 
 {assign var="transfers" value=0}
 {assign var="registrations" value=0}
@@ -10,7 +10,7 @@
 <div id="order-standard_cart">
 
     <div class="row">
-    
+
     	{if $registrations > 0 && $atleastonenohosting}
     	<div class="alert alert-info">
     	    <p><i class="fa fa-white fa-info-circle"></i> {$LANG.cartnameserversdesc}</p>
@@ -32,13 +32,13 @@
 
         <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
 
-            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
 
         </div>
 
         <div class="col-md-9 pull-md-right">
 
-            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 
             <form method="post" action="{$smarty.server.PHP_SELF}?a=confdomains" id="frmConfigureDomains">
                 <input type="hidden" name="update" value="true" />
@@ -53,7 +53,7 @@
                         </ul>
                     </div>
                 {/if}
-                
+
                 {if $atleastonenohosting}
 
                     <div class="sub-heading">
@@ -61,12 +61,12 @@
                     </div>
 
                     <!-- <p>{$LANG.cartnameserversdesc}</p> -->
-                    
+
                     {if !$loggedin}<p style="font-size: 1.3em;margin:10px 0 0;text-align:center"><i class="fa fa-female" style="margin-top:1px"></i> <strong>{$LANG.alreadyregistered}</strong> <a href="{$smarty.server.PHP_SELF}?a=login" onclick="showloginform();return false;">{$LANG.clickheretologin}</a></p>{/if}
-                    
+
                     {include file="orderforms/$carttpl/login.tpl"}
-                    	
-                    <span style="text-align: left; margin: 20px auto 15px;">
+
+                    <div style="text-align: left; margin: 20px auto 15px;" class="col70 center">
                     	{if $loggedin}
                     	<input type="radio" class="radio inline nschoice" name="nschoice" id="ns-websavers" value="custom" checked="checked" /> <label class="full control-label" for="ns-websavers">{$LANG.nschoicewebsavers}</label>
                     	<div id="nameservers-servers" style="display:none">
@@ -87,7 +87,7 @@
                     	<input type="radio" class="radio nschoice" name="nschoice" id="ns-custom" value="custom" /> <label class="full control-label" for="ns-custom" />{$LANG.nschoicecustom}</label>
                     	<br />
                     	<input type="radio" class="radio inline nschoice" name="nschoice" id="ns-default" value="default" {if !$loggedin} checked="checked"{/if} /> <label class="full control-label" for="ns-default" />{$LANG.nschoicedefault}</label>
-                    </span>
+                    </div>
 
                     <div class="row">
                         <div class="col-sm-4">
@@ -136,7 +136,7 @@
                     <div class="row">
 
                         {if $registrations == 1 || $transfers == 1}<p class="textcenter">{if $domain.hosting}<span style="color:#009900;">{$LANG.cartdomainshashosting}</span>{else}<a href="cart.php" style="color:#cc0000;">{$LANG.cartdomainsnohosting}</a>{/if}</p>{/if}
-                        
+
                         {if $domain.eppenabled}
                             <div class="col-sm-12">
                                 <div class="form-group prepend-icon">
@@ -177,7 +177,7 @@
                                 </div>
                             {/if}
 						{/if}
-						
+
                             {if $domain.idprotection}
                                 <div class="col-sm-{math equation="12 / numAddons" numAddons=$domain.addonsCount}">
                                     <div class="panel panel-default panel-addon{if $domain.idprotectionselected} panel-addon-selected{/if}">

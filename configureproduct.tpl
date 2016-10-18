@@ -1,4 +1,4 @@
-{include file="orderforms/standard_cart/common.tpl"}
+{include file="orderforms/{$carttpl}/common.tpl"}
 
 <script>
 var _localLang = {
@@ -21,13 +21,13 @@ var _localLang = {
 
         <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
 
-            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
 
         </div>
 
         <div class="col-md-9 pull-md-right">
 
-            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 
             <form id="frmConfigureProduct" onsubmit="catchEnter(event);">
                 <input type="hidden" name="configure" value="true" />
@@ -191,7 +191,7 @@ var _localLang = {
                                                             <link href="{$BASE_PATH_CSS}/ion.rangeSlider.skinModern.css" rel="stylesheet">
                                                             {assign var='rangesliderincluded' value=true}
                                                         {/if}
-                                                        <input type="text" name="configoption[{$configoption.id}]" value="{if $configoption.selectedqty}{$configoption.selectedqty}{else}{$configoption.qtyminimum}{/if}" id="inputConfigOption{$configoption.id}" class="form-control" />
+                                                        <input type="text" name="configoption[{$configoption.id}]" value="{if $configoption.selectedqty}{$configoption.selectedqty}{else}{$configoption.qtyminimum}{/if}" id="inputConfigOption{$configoption.id}" class="form-control" autocapitalize="none" />
                                                         <script>
                                                             var sliderTimeoutId = null;
 
@@ -286,11 +286,6 @@ var _localLang = {
 
                         {/if}
 
-                        <div class="alert alert-warning info-text-sm">
-                            <i class="fa fa-question-circle"></i>
-                            {$LANG.orderForm.haveQuestionsContact} <a href="contact.php" target="_blank" class="alert-link">{$LANG.orderForm.haveQuestionsClickHere}</a>
-                        </div>
-
                     </div>
                     <div class="col-md-4" id="scrollingPanelContainer">
 
@@ -316,6 +311,10 @@ var _localLang = {
 
             </form>
         </div>
+    </div>
+    <div class="bluefoot">
+        <i class="fa fa-question-circle"></i>
+        {$LANG.orderForm.haveQuestionsContact} <a href="contact.php" target="_blank" class="alert-link">{$LANG.orderForm.haveQuestionsClickHere}</a>
     </div>
 </div>
 
