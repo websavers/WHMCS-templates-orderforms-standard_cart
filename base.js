@@ -92,7 +92,7 @@ jQuery(document).ready(function(){
     jQuery("#productConfigurableOptions").on('ifChecked', 'input', function() {
         recalctotals();
     });
-    jQuery("#productConfigurableOptions").on('ifUnchecked', 'input', function() {
+    jQuery("#productConfigurableOptions input[type=checkbox]").on('ifUnchecked', 'input', function() {
         recalctotals();
     });
     jQuery("#productConfigurableOptions").on('change', 'select', function() {

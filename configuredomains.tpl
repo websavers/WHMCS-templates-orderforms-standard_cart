@@ -138,11 +138,11 @@
                         {if $registrations == 1 || $transfers == 1}<p class="textcenter">{if $domain.hosting}<span style="color:#009900;">{$LANG.cartdomainshashosting}</span>{else}<a href="cart.php" style="color:#cc0000;">{$LANG.cartdomainsnohosting}</a>{/if}</p>{/if}
 
                         {if $domain.eppenabled}
-                            <div class="col-sm-12">
+                            <div class="col-sm-4 eppcode">
                                 <div class="form-group prepend-icon">
                                     <input type="text" name="epp[{$num}]" id="inputEppcode{$num}" value="{$domain.eppvalue}" class="field" placeholder="{$LANG.domaineppcode}" />
-                                    <label for="cardno" class="field-icon">
-                                        <i class="fa fa-calendar"></i>
+                                    <label for="epp[{$num}]" class="field-icon">
+                                        <i class="fa fa-keyboard-o"></i>
                                     </label>
                                     <span class="field-help-text">
                                         {$LANG.domaineppcodedesc}

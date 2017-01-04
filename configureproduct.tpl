@@ -55,32 +55,32 @@ var _localLang = {
                                     <select name="billingcycle" id="inputBillingcycle" class="form-control select-inline" onchange="{if $configurableoptions}updateConfigurableOptions({$i}, this.value);{else}recalctotals();{/if}">
                                         {if $pricing.monthly}
                                             <option value="monthly"{if $billingcycle eq "monthly"} selected{/if}>
-                                                {$pricing.monthly}
+                                                {$pricing.monthly|replace:"$0.00CAD ":""}
                                             </option>
                                         {/if}
                                         {if $pricing.quarterly}
                                             <option value="quarterly"{if $billingcycle eq "quarterly"} selected{/if}>
-                                                {$pricing.quarterly}
+                                                {$pricing.quarterly|replace:"$0.00CAD ":""}
                                             </option>
                                         {/if}
                                         {if $pricing.semiannually}
                                             <option value="semiannually"{if $billingcycle eq "semiannually"} selected{/if}>
-                                                {$pricing.semiannually}
+                                                {$pricing.semiannually|replace:"$0.00CAD ":""}
                                             </option>
                                         {/if}
                                         {if $pricing.annually}
                                             <option value="annually"{if $billingcycle eq "annually"} selected{/if}>
-                                                {$pricing.annually}
+                                                {$pricing.annually|replace:"$0.00CAD ":""}
                                             </option>
                                         {/if}
                                         {if $pricing.biennially}
                                             <option value="biennially"{if $billingcycle eq "biennially"} selected{/if}>
-                                                {$pricing.biennially}
+                                                {$pricing.biennially|replace:"$0.00CAD ":""}
                                             </option>
                                         {/if}
                                         {if $pricing.triennially}
                                             <option value="triennially"{if $billingcycle eq "triennially"} selected{/if}>
-                                                {$pricing.triennially}
+                                                {$pricing.triennially|replace:"$0.00CAD ":""}
                                             </option>
                                         {/if}
                                     </select>
@@ -98,7 +98,7 @@ var _localLang = {
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="inputHostname">{$LANG.serverhostname}</label>
+                                            <label for="inputHostname">{$LANG.serverhostname} <i class="fa fa-info-circle" data-toggle="tooltip" title="This is the name for your server, often a subdomain of your website or organization. For example: vps1.websavers.ca"></i></label>
                                             <input type="text" name="hostname" class="form-control" id="inputHostname" value="{$server.hostname}" placeholder="servername.yourdomain.com">
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@ var _localLang = {
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row" style="display:none">
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="inputNs1prefix">{$LANG.serverns1prefix}</label>
@@ -136,16 +136,55 @@ var _localLang = {
                                 <div class="row">
                                     {foreach $configurableoptions as $num => $configoption}
                                         {if $configoption.optiontype eq 1}
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-6" {if $configoption.optionname|strstr:"IP"}style="display:none"{/if}>
                                                 <div class="form-group">
-                                                    <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
-                                                    <select name="configoption[{$configoption.id}]" id="inputConfigOption{$configoption.id}" class="form-control">
-                                                        {foreach key=num2 item=options from=$configoption.options}
-                                                            <option value="{$options.id}"{if $configoption.selectedvalue eq $options.id} selected="selected"{/if}>
-                                                                {$options.name}
-                                                            </option>
-                                                        {/foreach}
-                                                    </select>
+                                                    <label for="inputConfigOption{$configoption.id}">{if $configoption.optionname eq "Operating System"}Linux System Package{else}{$configoption.optionname}{/if}</label>
+                                                    {if $configoption.optionname|stristr:"CPU" || $configoption.optionname|stristr:"Memory" || $configoption.optionname|stristr:"Disk"}
+                                                        {if !$rangesliderincluded}
+                                                            <script type="text/javascript" src="{$BASE_PATH_JS}/ion.rangeSlider.min.js"></script>
+                                                            <link href="{$BASE_PATH_CSS}/ion.rangeSlider.css" rel="stylesheet">
+                                                            <link href="{$BASE_PATH_CSS}/ion.rangeSlider.skinModern.css" rel="stylesheet">
+                                                            {assign var='rangesliderincluded' value=true}
+                                                        {/if}
+                                                        <input type="hidden" name="configoption[{$configoption.id}]" value="{$configoption.selectedvalue}" id="inputConfigOption{$configoption.id}" class="form-control" autocapitalize="none" />
+                                                        <input type="text" name="configoption_visual[{$configoption.id}]" value="{foreach $configoption.options as $option}{if $configoption.selectedvalue eq $option.id}{$option.nameonly}{/if}{/foreach}" id="inputConfigOption_visual{$configoption.id}" />
+                                                        <script>
+                                                            var sliderTimeoutId = null;
+                                                            
+                                                            input_values_{$configoption.id} = [{foreach $configoption.options as $o}{$o.id},{/foreach}];
+
+                                                            jQuery("#inputConfigOption_visual{$configoption.id}").ionRangeSlider({
+                                                                /* values are actually Labels since we override values during onChange */
+                                                                values: [{foreach $configoption.options as $o}"{$o.nameonly}",{/foreach}],
+                                                                grid: true,
+                                                                grid_snap: true,
+                                                                onStart: function(data) {
+                                                                    //console.log("Visual: {foreach $configoption.options as $o}{if $configoption.selectedvalue eq $o.id}{$o.nameonly}{/if}{/foreach} Actual: " + input_values_{$configoption.id}[data.from]);
+                                                                },
+                                                                onChange: function(data) {
+                                                                  
+                                                                    jQuery("#inputConfigOption{$configoption.id}").val(input_values_{$configoption.id}[data.from]);
+                                                                    
+                                                                    if (sliderTimeoutId) {
+                                                                        clearTimeout(sliderTimeoutId);
+                                                                    }
+
+                                                                    sliderTimeoutId = setTimeout(function() {
+                                                                        sliderTimeoutId = null;
+                                                                        recalctotals();
+                                                                    }, 250);
+                                                                }
+                                                            });
+                                                        </script>
+                                                    {else}
+                                                      <select name="configoption[{$configoption.id}]" id="inputConfigOption{$configoption.id}" class="form-control">
+                                                          {foreach key=num2 item=options from=$configoption.options}
+                                                              <option value="{$options.id}"{if $configoption.selectedvalue eq $options.id} selected="selected"{/if}>
+                                                                  {$options.name}
+                                                              </option>
+                                                          {/foreach}
+                                                      </select>
+                                                    {/if}
                                                 </div>
                                             </div>
                                         {elseif $configoption.optiontype eq 2}
