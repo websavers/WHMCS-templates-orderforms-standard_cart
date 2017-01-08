@@ -62,8 +62,6 @@
 
                     <!-- <p>{$LANG.cartnameserversdesc}</p> -->
 
-                    {if !$loggedin}<p style="font-size: 1.3em;margin:10px 0 0;text-align:center"><i class="fa fa-female" style="margin-top:1px"></i> <strong>{$LANG.alreadyregistered}</strong> <a href="{$smarty.server.PHP_SELF}?a=login" onclick="showloginform();return false;">{$LANG.clickheretologin}</a></p>{/if}
-
                     {include file="orderforms/$carttpl/login.tpl"}
 
                     <div style="text-align: left; margin: 20px auto 15px;" class="col70 center">
