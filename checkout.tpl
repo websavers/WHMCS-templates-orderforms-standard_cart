@@ -462,11 +462,16 @@
                         <input type="hidden" name="ccinfo" value="new" />
                     {/if}
                     <div id="newCardInfo" class="row{if $clientsdetails.cclastfour && $ccinfo neq "new"} hidden{/if}">
-                        <div class="col-sm-6">
-                            <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="form-group prepend-icon">
+                                <label for="inputCardNumber" class="field-icon">
+                                    <i class="fa fa-credit-card"></i>
+                                </label>
+                                <input type="tel" name="ccnumber" id="inputCardNumber" style="display:inline-block" class="field" placeholder="{$LANG.orderForm.cardNumber}" autocomplete="cc-number" value="{$ccnumber}">
+                                
                                 <input type="hidden" id="cctype" name="cctype" value="{$acceptedcctypes.0}" />
-                                <div class="dropdown" id="cardType">
-                                    <button class="btn btn-default dropdown-toggle field" type="button" id="creditCardType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <div class="dropdown" id="cardType" style="width:auto;position:absolute;top:0;right:0;z-index:4;">
+                                    <button class="btn btn-default dropdown-toggle field" type="button" style="border:none;padding-left:0;background-color:transparent;" id="creditCardType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span id="selectedCardType">
                                             <i class="fa {if $cctype}{getFontAwesomeCCIcon ccType=$cctype|trim}{else}{getFontAwesomeCCIcon ccType=$acceptedcctypes.0}{/if} fa-fw"></i>
                                             {if $cctype}{$cctype}{else}{$acceptedcctypes.0}{/if}
@@ -486,34 +491,27 @@
                                         {/foreach}
                                     </ul>
                                 </div>
+                                
+                            </div>
+                        </div>
+                    {if $showccissuestart}
+                        <div class="col-sm-6">
+                            <div class="form-group prepend-icon">
+                                <label for="inputCardStart" class="field-icon">
+                                    <i class="fa fa-calendar-check-o"></i>
+                                </label>
+                                <input type="tel" name="ccstartdate" id="inputCardStart" class="field" placeholder="MM / YY ({$LANG.creditcardcardstart})" autocomplete="cc-exp">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group prepend-icon">
-                                <label for="inputCardNumber" class="field-icon">
-                                    <i class="fa fa-credit-card"></i>
+                                <label for="inputCardIssue" class="field-icon">
+                                    <i class="fa fa-asterisk"></i>
                                 </label>
-                                <input type="tel" name="ccnumber" id="inputCardNumber" class="field" placeholder="{$LANG.orderForm.cardNumber}" autocomplete="cc-number" value="{$ccnumber}">
+                                <input type="tel" name="ccissuenum" id="inputCardIssue" class="field" placeholder="{$LANG.creditcardcardissuenum}">
                             </div>
                         </div>
-                        {if $showccissuestart}
-                            <div class="col-sm-6">
-                                <div class="form-group prepend-icon">
-                                    <label for="inputCardStart" class="field-icon">
-                                        <i class="fa fa-calendar-check-o"></i>
-                                    </label>
-                                    <input type="tel" name="ccstartdate" id="inputCardStart" class="field" placeholder="MM / YY ({$LANG.creditcardcardstart})" autocomplete="cc-exp">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group prepend-icon">
-                                    <label for="inputCardIssue" class="field-icon">
-                                        <i class="fa fa-asterisk"></i>
-                                    </label>
-                                    <input type="tel" name="ccissuenum" id="inputCardIssue" class="field" placeholder="{$LANG.creditcardcardissuenum}">
-                                </div>
-                            </div>
-                        {/if}
+                    {/if}
                         <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputCardExpiry" class="field-icon">
@@ -581,8 +579,7 @@
         </div>
     </div>
     <div class="alert alert-warning checkout-security-msg">
-        <i class="fa fa-lock"></i>
-        {$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
+        <i class="fa fa-lock"></i> {$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}
     </div>
 </div>
 
