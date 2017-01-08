@@ -129,7 +129,7 @@
                                         <label for="inputNewPassword1" class="field-icon">
                                             <i class="fa fa-lock"></i>
                                         </label>
-                                        <input type="password" name="password" id="inputNewPassword1" class="field" placeholder="{$LANG.clientareapassword}">
+                                        <input type="password" name="password" id="inputNewPassword1" class="field" placeholder="{$LANG.clientareapassword}" value="{$password}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -137,14 +137,14 @@
                                         <label for="inputNewPassword2" class="field-icon">
                                             <i class="fa fa-lock"></i>
                                         </label>
-                                        <input type="password" name="password2" id="inputNewPassword2" class="field" placeholder="{$LANG.clientareaconfirmpassword}">
+                                        <input type="password" name="password2" id="inputNewPassword2" class="field" placeholder="{$LANG.clientareaconfirmpassword}" value="{$password2}">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="progress">
-                                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="passwordStrengthMeterBar">
-                                        </div><div style="position:absolute;left:30px;top:1px;color:white;" class="text-center small text-muted" id="passwordStrengthTextLabel">{$LANG.pwstrength}: {$LANG.pwstrengthenter}</div>
+                                    <div class="progress" style="margin-bottom:0;">
+                                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="passwordStrengthMeterBar"></div>
                                     </div>
+                                    <div style="" class="text-center small text-muted" id="passwordStrengthTextLabel">{$LANG.pwstrength}: {$LANG.pwstrengthenter}</div>
                                 </div>
                             </div>
                             {if $securityquestions}
@@ -166,7 +166,7 @@
                                             <label for="inputSecurityQAns" class="field-icon">
                                                 <i class="fa fa-lock"></i>
                                             </label>
-                                            <input type="password" name="securityqans" id="inputSecurityQAns" class="field" placeholder="{$LANG.clientareasecurityanswer}">
+                                            <input type="password" name="securityqans" id="inputSecurityQAns" class="field" placeholder="{$LANG.clientareasecurityanswer}" value="{$securityqans}">
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="form-group prepend-icon">
+                            <div class="form-group">
                                 <select name="country" id="inputCountry" class="field"{if $loggedin} disabled="disabled"{/if}>
                                     {foreach $countries as $countrycode => $countrylabel}
                                         <option value="{$countrycode}"{if (!$country && $countrycode == $defaultcountry) || $countrycode eq $country} selected{/if}>
@@ -231,7 +231,7 @@
                         <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputAddress1" class="field-icon">
-                                    <i class="fa fa-building-o"></i>
+                                    <i class="fa fa-map-marker"></i>
                                 </label>
                                 <input type="text" name="address1" id="inputAddress1" class="field" placeholder="{$LANG.orderForm.streetAddress}" value="{$clientsdetails.address1}"{if $loggedin} readonly="readonly"{/if}>
                             </div>
@@ -247,16 +247,13 @@
                         <div class="col-sm-4">
                             <div class="form-group prepend-icon">
                                 <label for="inputCity" class="field-icon">
-                                    <i class="fa fa-building-o"></i>
+                                    <i class="fa fa-map-signs"></i>
                                 </label>
                                 <input type="text" name="city" id="inputCity" class="field" placeholder="{$LANG.orderForm.city}" value="{$clientsdetails.city}"{if $loggedin} readonly="readonly"{/if}>
                             </div>
                         </div>
                         <div class="col-sm-5">
-                            <div class="form-group prepend-icon">
-                                <label for="inputState" class="field-icon" id="inputStateIcon">
-                                    <i class="fa fa-map-signs"></i>
-                                </label>
+                            <div class="form-group">
                                 <input type="text" name="state" id="inputState" class="field" placeholder="{$LANG.orderForm.state}" value="{$clientsdetails.state}"{if $loggedin} readonly="readonly"{/if}>
                             </div>
                         </div>
@@ -471,8 +468,8 @@
                                 <div class="dropdown" id="cardType">
                                     <button class="btn btn-default dropdown-toggle field" type="button" id="creditCardType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span id="selectedCardType">
-                                            <i class="fa {getFontAwesomeCCIcon ccType=$acceptedcctypes.0} fa-fw"></i>
-                                            {$acceptedcctypes.0}
+                                            <i class="fa {if $cctype}{getFontAwesomeCCIcon ccType=$cctype|trim}{else}{getFontAwesomeCCIcon ccType=$acceptedcctypes.0}{/if} fa-fw"></i>
+                                            {if $cctype}{$cctype}{else}{$acceptedcctypes.0}{/if}
                                         </span>
                                         <span class="fa fa-caret-down fa-fw"></span>
                                     </button>
@@ -496,7 +493,7 @@
                                 <label for="inputCardNumber" class="field-icon">
                                     <i class="fa fa-credit-card"></i>
                                 </label>
-                                <input type="tel" name="ccnumber" id="inputCardNumber" class="field" placeholder="{$LANG.orderForm.cardNumber}" autocomplete="cc-number">
+                                <input type="tel" name="ccnumber" id="inputCardNumber" class="field" placeholder="{$LANG.orderForm.cardNumber}" autocomplete="cc-number" value="{$ccnumber}">
                             </div>
                         </div>
                         {if $showccissuestart}
@@ -522,7 +519,7 @@
                                 <label for="inputCardExpiry" class="field-icon">
                                     <i class="fa fa-calendar"></i>
                                 </label>
-                                <input type="tel" name="ccexpirydate" id="inputCardExpiry" class="field" placeholder="MM / YY{if $showccissuestart} ({$LANG.creditcardcardexpires}){/if}" autocomplete="cc-exp">
+                                <input type="tel" name="ccexpirydate" id="inputCardExpiry" class="field" placeholder="MM / YY{if $showccissuestart} ({$LANG.creditcardcardexpires}){/if}" autocomplete="cc-exp" {if $ccexpirymonth && $ccexpiryyear}value="{$ccexpirymonth} / {$ccexpiryyear}"{/if}>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -530,7 +527,7 @@
                                 <label for="inputCardCVV" class="field-icon">
                                     <i class="fa fa-barcode"></i>
                                 </label>
-                                <input type="tel" name="cccvv" id="inputCardCVV" class="field" placeholder="{$LANG.orderForm.cvv}" autocomplete="cc-cvc">
+                                <input type="tel" name="cccvv" id="inputCardCVV" class="field" placeholder="{$LANG.orderForm.cvv}" autocomplete="cc-cvc" value="{$cccvv}">
                             </div>
                         </div>
                     </div>
@@ -566,7 +563,7 @@
                     {if $accepttos}
                         <p>
                             <label class="checkbox-inline">
-                                <input type="checkbox" name="accepttos" id="accepttos" />
+                                <input type="checkbox" name="accepttos" id="accepttos" {if $accepttos eq "on"}checked="checked"{/if} />
                                 &nbsp;
                                 {$LANG.ordertosagreement}
                                 <a href="{$tosurl}" target="_blank">{$LANG.ordertos}</a>
