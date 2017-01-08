@@ -98,8 +98,8 @@ var _localLang = {
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="inputHostname">{$LANG.serverhostname} <i class="fa fa-info-circle" data-toggle="tooltip" title="This is the name for your server, often a subdomain of your website or organization. For example: vps1.websavers.ca"></i></label>
-                                            <input type="text" name="hostname" class="form-control" id="inputHostname" value="{$server.hostname}" placeholder="servername.yourdomain.com">
+                                            <label for="inputHostname">{$LANG.serverhostname} <!--i class="fa fa-info-circle" data-toggle="tooltip"></i--></label>
+                                            <input type="text" name="hostname" class="form-control" id="inputHostname" value="{$server.hostname}" placeholder="servername.yourdomain.com" autocorrect="off" autocapitalize="off">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
