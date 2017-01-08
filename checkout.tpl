@@ -239,7 +239,7 @@
                         <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputAddress2" class="field-icon">
-                                    <i class="fa fa-map-marker"></i>
+                                    <i class="fa fa-asterisk"></i>
                                 </label>
                                 <input type="text" name="address2" id="inputAddress2" class="field" placeholder="{$LANG.orderForm.streetAddress2}" value="{$clientsdetails.address2}"{if $loggedin} readonly="readonly"{/if}>
                             </div>
@@ -322,7 +322,7 @@
 
                     <div class="row{if $contact neq "addingnew"} hidden{/if}" id="domainRegistrantInputFields">
                         <div class="col-sm-12">
-                            <div class="form-group prepend-icon">
+                            <div class="form-group">
                                 <select name="domaincontactcountry" id="inputDCCountry" class="field">
                                     {foreach $countries as $countrycode => $countrylabel}
                                         <option value="{$countrycode}"{if (!$domaincontact.country && $countrycode == $defaultcountry) || $countrycode eq $domaincontact.country} selected{/if}>
@@ -375,7 +375,7 @@
                         <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputDCAddress1" class="field-icon">
-                                    <i class="fa fa-building-o"></i>
+                                    <i class="fa fa-map-marker"></i>
                                 </label>
                                 <input type="text" name="domaincontactaddress1" id="inputDCAddress1" class="field" placeholder="{$LANG.orderForm.streetAddress}" value="{$domaincontact.address1}">
                             </div>
@@ -383,7 +383,7 @@
                         <div class="col-sm-6">
                             <div class="form-group prepend-icon">
                                 <label for="inputDCAddress2" class="field-icon">
-                                    <i class="fa fa-map-marker"></i>
+                                    <i class="fa fa-asterisk"></i>
                                 </label>
                                 <input type="text" name="domaincontactaddress2" id="inputDCAddress2" class="field" placeholder="{$LANG.orderForm.streetAddress2}" value="{$domaincontact.address2}">
                             </div>
@@ -391,16 +391,13 @@
                         <div class="col-sm-4">
                             <div class="form-group prepend-icon">
                                 <label for="inputDCCity" class="field-icon">
-                                    <i class="fa fa-building-o"></i>
+                                    <i class="fa fa-map-signs"></i>
                                 </label>
                                 <input type="text" name="domaincontactcity" id="inputDCCity" class="field" placeholder="{$LANG.orderForm.city}" value="{$domaincontact.city}">
                             </div>
                         </div>
                         <div class="col-sm-5">
-                            <div class="form-group prepend-icon">
-                                <label for="inputDCState" class="field-icon">
-                                    <i class="fa fa-map-signs"></i>
-                                </label>
+                            <div class="form-group">
                                 <input type="text" name="domaincontactstate" id="inputDCState" class="field" placeholder="{$LANG.orderForm.state}" value="{$domaincontact.state}">
                             </div>
                         </div>
