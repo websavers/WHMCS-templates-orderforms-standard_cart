@@ -99,7 +99,7 @@
                                                         {$LANG.orderForm.edit}
                                                     </a>
                                                     <span class="visible-xs-inline">
-                                                        <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
+                                                        <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
                                                             <i class="fa fa-times"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
@@ -140,7 +140,7 @@
                                                 {if $product.proratadate}<br />({$LANG.orderprorata} {$product.proratadate}){/if}
                                             </div>
                                             <div class="col-sm-1 hidden-xs">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
+                                                <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
                                                     <i class="fa fa-times"></i>
                                                 </button>
                                             </div>
@@ -185,7 +185,7 @@
                                                 <span class="item-title">
                                                     {$addon.name}
                                                     <span class="visible-xs-inline">
-                                                        <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
+                                                        <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
                                                             <i class="fa fa-times"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
@@ -210,7 +210,7 @@
                                                 <span class="cycle">{$addon.billingcyclefriendly}</span>
                                             </div>
                                             <div class="col-sm-1 hidden-xs">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
+                                                <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
                                                     <i class="fa fa-times"></i>
                                                 </button>
                                             </div>
@@ -230,7 +230,7 @@
                                                     </a>
                                                     <span class="visible-xs-inline">
                                                       {if array_search(141, $products) == false} {* Not Helium *}
-                                                        <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
+                                                        <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
                                                             <i class="fa fa-times"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
@@ -271,7 +271,7 @@
                                             </div>
                                             {if $heliumWithDomain != $domain.domain}
                                             <div class="col-sm-1 hidden-xs">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
+                                                <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
                                                     <i class="fa fa-times"></i>
                                                 </button>
                                             </div>
@@ -299,7 +299,7 @@
                                                 <span class="cycle">{$domain.regperiod} {$LANG.orderyears}</span>
                                             </div>
                                             <div class="col-sm-1">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('r','{$num}')">
+                                                <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('r','{$num}')">
                                                     <i class="fa fa-times"></i>
                                                     <span class="visible-xs">{$LANG.orderForm.remove}</span>
                                                 </button>
