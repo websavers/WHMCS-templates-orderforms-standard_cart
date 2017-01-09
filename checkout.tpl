@@ -466,12 +466,12 @@
                                 </label>
                                 <input type="tel" name="ccnumber" id="inputCardNumber" style="display:inline-block" class="field" placeholder="{$LANG.orderForm.cardNumber}" autocomplete="cc-number" value="{$ccnumber}">
                                 
-                                <input type="hidden" id="cctype" name="cctype" value="{$acceptedcctypes.0}" />
+                                <input type="hidden" id="cctype" name="cctype" value="{if $cctype}{$cctype}{else}{$acceptedcctypes.0|trim}{/if}" />
                                 <div class="dropdown" id="cardType" style="width:auto;position:absolute;top:0;right:0;z-index:4;">
-                                    <button class="btn btn-default dropdown-toggle field" type="button" style="border:none;padding-left:0;background-color:transparent;" id="creditCardType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <button class="btn btn-default dropdown-toggle field" type="button" style="border:none;padding-left:10px;background-color:transparent;" id="creditCardType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span id="selectedCardType">
                                             <i class="fa {if $cctype}{getFontAwesomeCCIcon ccType=$cctype|trim}{else}{getFontAwesomeCCIcon ccType=$acceptedcctypes.0}{/if} fa-fw"></i>
-                                            {if $cctype}{$cctype}{else}{$acceptedcctypes.0}{/if}
+                                            <span class="cc-type-name">{if $cctype}{$cctype}{else}{$acceptedcctypes.0|trim}{/if}</span>
                                         </span>
                                         <span class="fa fa-caret-down fa-fw"></span>
                                     </button>
@@ -481,7 +481,7 @@
                                                 <a href="#">
                                                     <i class="fa {getFontAwesomeCCIcon ccType=$cardType} fa-fw"></i>
                                                     <span class="type">
-                                                        {$cardType}
+                                                        {$cardType|trim}
                                                     </span>
                                                 </a>
                                             </li>
@@ -581,3 +581,22 @@
 </div>
 
 <script type="text/javascript" src="{$BASE_PATH_JS}/jquery.payment.js"></script>
+
+<!-- Automatic Credit Card Type Switching -->
+<script type="text/javascript" src="templates/orderforms/{$carttpl}/detect-card.js"></script>
+<script type="text/javascript">
+  jQuery('input#inputCardNumber').detectCard().on("cardChange", function(e, $card) {
+    
+    var $cardtype_existing_fa_class = jQuery('#selectedCardType').find('i.fa');
+    
+    if (typeof $card.type === 'string' && $card.type != ''){
+      
+      var $cc_visual = card_type_get_visual($card.type);
+      jQuery('#selectedCardType span.cc-type-name').text( $cc_visual );
+      jQuery('input#cctype').val( $cc_visual );
+      $cardtype_existing_fa_class.attr( 'class', card_type_get_fontawesome($card.type) + " fa" );
+      
+    }
+    
+  });
+</script>
