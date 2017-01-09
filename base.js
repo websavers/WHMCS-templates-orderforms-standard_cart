@@ -58,16 +58,28 @@ jQuery(document).ready(function(){
         if (newTopOffset > maxTopOffset - heightOfOrderSummary) {
             newTopOffset = maxTopOffset - heightOfOrderSummary;
         }
+        var sidebarWidth = jQuery("#scrollingPanelContainer").width();
         if (jQuery(window).scrollTop() > offset.top) {
-            $orderSummaryEl.stop().animate({
-                marginTop: newTopOffset
-            }, 150, 'linear');
+            $orderSummaryEl.css({
+                position: 'fixed',
+                top: '20px',
+                width: sidebarWidth,
+            });
         } else {
-            $orderSummaryEl.stop().animate({
-                marginTop: 0
-            }, 150, 'linear');
+            $orderSummaryEl.css({
+                position: 'static',
+                top: 'auto',
+            });
         }
     }
+    jQuery( window ).resize(function() {
+      if (jQuery("#scrollingPanelContainer").css('float') != 'left') {
+          $orderSummaryEl.css('position', 'static');
+      }
+      $orderSummaryEl.css({
+          width:  jQuery("#scrollingPanelContainer").width(),
+      });
+    });
 
     jQuery("#btnCompleteProductConfig").click(function() {
         var btnOriginalText = jQuery(this).html();
