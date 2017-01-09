@@ -30,7 +30,23 @@ jQuery(document).ready(function(){
         jQuery('#inputCardCVV').payment('formatCardCVC');
         jQuery('#inputCardStart').payment('formatCardExpiry');
         jQuery('#inputCardExpiry').payment('formatCardExpiry');
+        
+        jQuery('#inputCardNumber').keyup(function(){
+          
+          var cardType = jQuery.payment.cardType(jQuery(this).val());
+          
+          if (cardType != null){
+            var $cc_visual = card_type_get_visual(cardType);
+            
+            jQuery('#selectedCardType span.type').text( $cc_visual );
+            jQuery('input#cctype').val( $cc_visual );
+            jQuery('#selectedCardType').find('i.fa').attr( 'class', "fa " + card_type_get_fontawesome(cardType) );
+          }
+          
+        });
     }
+  
+
 
     var $orderSummaryEl = jQuery("#orderSummary");
     if ($orderSummaryEl.length) {
@@ -1076,4 +1092,45 @@ function catchEnter(e) {
         addtocart();
         e.returnValue=false;
     }
+}
+
+/** Added by Websavers **/
+
+/** Helper functions added by Jordan @ Websavers **/
+
+function card_type_get_visual($cardtype){
+  switch($cardtype) {
+  case "visa":
+      return "Visa";
+  case "mastercard":
+      return "Mastercard";
+  case "amex":
+      return "American Express";
+  case "discover":
+      return "Discover";
+  case "jcb":
+      return "JCB";
+  case "diners-club":
+      return "Diners Club";
+  default:
+      return "Credit Card"
+  }
+}
+function card_type_get_fontawesome($cardtype){
+  switch($cardtype) {
+  case "visa":
+      return "fa-cc-visa";
+  case "mastercard":
+      return "fa-cc-mastercard";
+  case "amex":
+      return "fa-cc-amex";
+  case "discover":
+      return "fa-cc-discover";
+  case "jcb":
+      return "fa-cc-jcb";
+  case "diners-club":
+      return "fa-cc-diners-club";
+  default:
+      return "fa-credit-card"
+  }
 }
