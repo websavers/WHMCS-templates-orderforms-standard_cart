@@ -3,10 +3,22 @@
 <div id="loginfrm" style="{if $custtype eq 'existing' && !$loggedin}{else}display:none;{/if} padding: 10px 0;">	
 				
 	<h2 class="textcenter" style="padding: 10px;">{$LANG.login}</h2>
-	<div class="col30 center clear" style="margin: 0 auto;float:none">
-	    <input type="email" name="username" id="username" value="{$username}" placeholder="{$LANG.loginemail}" />
-		<input type="password" name="password" id="password" placeholder="{$LANG.loginpassword}" />
+	<div class="col40 center clear" style="margin: 0 auto;float:none">
+			<div class="form-group prepend-icon">
+					<label for="inputLoginEmail" class="field-icon">
+							<i class="fa fa-envelope"></i>
+					</label>
+					<input type="email" name="loginemail" id="inputLoginEmail" class="field" placeholder="{$LANG.orderForm.emailAddress}">
+			</div>
+			<div class="form-group prepend-icon">
+					<label for="inputLoginPassword" class="field-icon">
+							<i class="fa fa-lock"></i>
+					</label>
+					<input type="password" name="loginpassword" id="inputLoginPassword" class="field" placeholder="{$LANG.clientareapassword}">
+			</div>
+			
 		<button name="submitlogin" id="submitlogin" class="btn btn-primary" style="width:100%; padding:0.5em" />Login</button>
 	</div>
+	
 	
 </div>

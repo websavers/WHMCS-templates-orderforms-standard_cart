@@ -86,21 +86,24 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 col-centered">
                             <div class="form-group prepend-icon">
                                 <label for="inputLoginEmail" class="field-icon">
                                     <i class="fa fa-envelope"></i>
                                 </label>
-                                <input type="text" name="loginemail" id="inputLoginEmail" class="field" placeholder="{$LANG.orderForm.emailAddress}">
+                                <input type="email" name="loginemail" id="inputLoginEmail" class="field" placeholder="{$LANG.orderForm.emailAddress}">
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 col-centered">
                             <div class="form-group prepend-icon">
                                 <label for="inputLoginPassword" class="field-icon">
                                     <i class="fa fa-lock"></i>
                                 </label>
                                 <input type="password" name="loginpassword" id="inputLoginPassword" class="field" placeholder="{$LANG.clientareapassword}">
                             </div>
+                        </div>
+                        <div class="col-sm-6 col-centered">
+                        	<button name="submitlogin" id="submitlogin" class="btn btn-primary" style="width:100%; padding:0.5em" />Login</button>
                         </div>
                     </div>
 
