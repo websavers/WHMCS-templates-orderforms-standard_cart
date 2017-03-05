@@ -89,5 +89,6 @@
 {/foreach}
 <div style="clear:both;height:10px;"></div>
 
-<aside id="order-secure"><i class="fa fa-lock"></i> {$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}</aside>
-</div></div>
+</div>
+<aside id="order-secure" class="bluefoot"><i class="fa fa-lock"></i> {$LANG.ordersecure} (<strong>{$ipaddress}</strong>) {$LANG.ordersecure2}</aside>
+</div>
