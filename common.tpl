@@ -1,5 +1,2 @@
-<link rel="stylesheet" type="text/css" href="templates/orderforms/{$carttpl}/style.css" />
-<link href="{$BASE_PATH_CSS}/icheck/square/blue.css" rel="stylesheet">
-<link href="{$BASE_PATH_CSS}/icheck/square/green.css" rel="stylesheet">
-<script type="text/javascript" src="{$BASE_PATH_JS}/icheck.js"></script>
-<script type="text/javascript" src="templates/orderforms/{$carttpl}/base.js"></script>
+<link rel="stylesheet" type="text/css" href="templates/orderforms/{$carttpl}/css/all.min.css?v={$versionHash}" />
+<script type="text/javascript" src="templates/orderforms/{$carttpl}/js/scripts.min.js?v={$versionHash}"></script>

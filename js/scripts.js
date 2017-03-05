@@ -540,6 +540,22 @@ jQuery(document).ready(function(){
         jQuery('#inputCardCVV').payment('formatCardCVC');
         jQuery('#inputCardStart').payment('formatCardExpiry');
         jQuery('#inputCardExpiry').payment('formatCardExpiry');
+        
+        /** Websavers Custom **/
+        jQuery('#inputCardNumber').keyup(function(){
+          
+          var cardType = jQuery.payment.cardType(jQuery(this).val());
+          
+          if (cardType != null){
+            var $cc_visual = card_type_get_visual(cardType);
+            
+            jQuery('#selectedCardType span.type').text( $cc_visual );
+            jQuery('input#cctype').val( $cc_visual );
+            jQuery('#selectedCardType').find('i.fa').attr( 'class', "fa " + card_type_get_fontawesome(cardType) );
+          }
+          
+        });
+        /** End Websavers Custom **/
     }
 
     var $orderSummaryEl = jQuery("#orderSummary");
@@ -568,16 +584,34 @@ jQuery(document).ready(function(){
         if (newTopOffset > maxTopOffset - heightOfOrderSummary) {
             newTopOffset = maxTopOffset - heightOfOrderSummary;
         }
+        
+        /** Websavers Custom Scrolling Pane Overrides **/
+        var sidebarWidth = jQuery("#scrollingPanelContainer").width();
         if (jQuery(window).scrollTop() > offset.top) {
-            $orderSummaryEl.stop().animate({
-                marginTop: newTopOffset
+            $orderSummaryEl.css({
+                position: 'fixed',
+                top: '20px',
+                width: sidebarWidth,
             });
         } else {
-            $orderSummaryEl.stop().animate({
-                marginTop: 0
+            $orderSummaryEl.css({
+                position: 'static',
+                top: 'auto',
             });
         }
+        /** End Custom Scrolling Pane Overrides **/
     }
+    
+    /** Websavers Custom **/
+    jQuery( window ).resize(function() {
+      if (jQuery("#scrollingPanelContainer").css('float') != 'left') {
+          $orderSummaryEl.css('position', 'static');
+      }
+      $orderSummaryEl.css({
+          width:  jQuery("#scrollingPanelContainer").width(),
+      });
+    });
+    /** End Websavers Custom **/
 
     jQuery("#frmConfigureProduct").submit(function(e) {
         e.preventDefault();
@@ -606,7 +640,7 @@ jQuery(document).ready(function(){
     jQuery("#productConfigurableOptions").on('ifChecked', 'input', function() {
         recalctotals();
     });
-    jQuery("#productConfigurableOptions").on('ifUnchecked', 'input', function() {
+    jQuery("#productConfigurableOptions input[type=checkbox]").on('ifUnchecked', 'input', function() { /** Websavers Custom Fix **/
         recalctotals();
     });
     jQuery("#productConfigurableOptions").on('change', 'select', function() {
@@ -1652,3 +1686,47 @@ function validate_captcha(form)
         }
     });
 }
+
+
+/** Websavers Custom **/
+
+/** Helper functions added by Jordan @ Websavers **/
+
+function card_type_get_visual($cardtype){
+  switch($cardtype) {
+  case "visa":
+      return "Visa";
+  case "mastercard":
+      return "Mastercard";
+  case "amex":
+      return "American Express";
+  case "discover":
+      return "Discover";
+  case "jcb":
+      return "JCB";
+  case "diners-club":
+      return "Diners Club";
+  default:
+      return "Credit Card"
+  }
+}
+function card_type_get_fontawesome($cardtype){
+  switch($cardtype) {
+  case "visa":
+      return "fa-cc-visa";
+  case "mastercard":
+      return "fa-cc-mastercard";
+  case "amex":
+      return "fa-cc-amex";
+  case "discover":
+      return "fa-cc-discover";
+  case "jcb":
+      return "fa-cc-jcb";
+  case "diners-club":
+      return "fa-cc-diners-club";
+  default:
+      return "fa-credit-card"
+  }
+}
+
+/** End Websavers Custom **/
