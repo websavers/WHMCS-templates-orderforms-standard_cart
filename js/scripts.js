@@ -580,17 +580,19 @@ jQuery(document).ready(function(){
             return false;
         }
         var heightOfOrderSummary =  $orderSummaryEl.outerHeight();
-        var newTopOffset = jQuery(window).scrollTop() - offset.top + topPadding;
+        var newTopOffset = jQuery(window).scrollTop() - offset.top;
         if (newTopOffset > maxTopOffset - heightOfOrderSummary) {
             newTopOffset = maxTopOffset - heightOfOrderSummary;
         }
         
         /** Websavers Custom Scrolling Pane Overrides **/
         var sidebarWidth = jQuery("#scrollingPanelContainer").width();
-        if (jQuery(window).scrollTop() > offset.top) {
+        var sidebarTopMargin = 20;
+        
+        if (jQuery(window).scrollTop() > offset.top + sidebarTopMargin) {
             $orderSummaryEl.css({
                 position: 'fixed',
-                top: '20px',
+                top: sidebarTopMargin + 'px',
                 width: sidebarWidth,
             });
         } else {
