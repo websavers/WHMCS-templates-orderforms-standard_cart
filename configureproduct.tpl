@@ -49,8 +49,8 @@ var _localLang = {
                         </div>
 
                         {if $pricing.type eq "recurring"}
-                            <div class="field-container">
-                                <div class="form-group">
+                            <div class="field-container row">
+                                <div class="col-sm-12">
                                     <label for="inputBillingcycle">{$LANG.cartchoosecycle}</label>
                                     <select name="billingcycle" id="inputBillingcycle" class="form-control select-inline" onchange="{if $configurableoptions}updateConfigurableOptions({$i}, this.value);{else}recalctotals();{/if}">
                                         {if $pricing.monthly}
