@@ -63,7 +63,7 @@
                                             <div class="col-xs-9">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">{$LANG.orderForm.www}</span>
-                                                    <input type="text" id="registersld" value="{$sld}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
+                                                    <input type="text" id="registersld" value="{$sld}" class="form-control" autocomplete="none" autocorrect="none" autocapitalize="none" spellcheck="false" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
                                                 </div>
                                             </div>
                                             <div class="col-xs-3">
@@ -96,7 +96,7 @@
                                             <div class="col-xs-9">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">www.</span>
-                                                    <input type="text" id="transfersld" value="{$sld}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}"/>
+                                                    <input type="text" id="transfersld" value="{$sld}" class="form-control" autocomplete="none" autocorrect="none" autocapitalize="none" spellcheck="false" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}"/>
                                                 </div>
                                             </div>
                                             <div class="col-xs-3">
@@ -131,7 +131,7 @@
                                             <div class="col-xs-9">
                                               <div class="input-group">
                                                 <span class="input-group-addon">www.</span>
-                                                <input type="text" id="owndomainsld" value="{$sld}" placeholder="{$LANG.yourdomainplaceholder}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
+                                                <input type="text" id="owndomainsld" value="{$sld}" placeholder="{$LANG.yourdomainplaceholder}" class="form-control" autocomplete="none" autocorrect="none" autocapitalize="none" spellcheck="false" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
                                               </div>
                                             </div>
                                             <div class="col-xs-3">
@@ -163,7 +163,7 @@
                                                 <p class="form-control-static">http://</p>
                                             </div>
                                             <div class="col-xs-5">
-                                                <input type="text" id="subdomainsld" value="{$sld}" placeholder="yourname" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
+                                                <input type="text" id="subdomainsld" value="{$sld}" placeholder="yourname" class="form-control" autocomplete="none" autocorrect="none" autocapitalize="none" spellcheck="false" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
                                             </div>
                                             <div class="col-xs-5">
                                                 <select id="subdomaintld" class="form-control">
