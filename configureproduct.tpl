@@ -139,7 +139,7 @@ var _localLang = {
                                             <div class="col-sm-6" {if $configoption.optionname|strstr:"IP"}style="display:none"{/if}>
                                                 <div class="form-group">
                                                     <label for="inputConfigOption{$configoption.id}">{if $configoption.optionname eq "Operating System"}Linux System Package{else}{$configoption.optionname}{/if}</label>
-                                                    {if $configoption.optionname|stristr:"CPU" || $configoption.optionname|stristr:"Memory" || $configoption.optionname|stristr:"Disk"}
+                                                    {if $configoption.optionname|stristr:"CPU" || $configoption.optionname|stristr:"Memory" || $configoption.optionname|stristr:"Disk" || $configoption.optionname|stristr:"Storage"}
                                                         {if !$rangesliderincluded}
                                                             <script type="text/javascript" src="{$BASE_PATH_JS}/ion.rangeSlider.min.js"></script>
                                                             <link href="{$BASE_PATH_CSS}/ion.rangeSlider.css" rel="stylesheet">
