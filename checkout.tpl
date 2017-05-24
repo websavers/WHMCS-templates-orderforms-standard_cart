@@ -416,6 +416,12 @@
 
                 {/if}
 
+                {foreach $hookOutput as $output}
+                    <div>
+                        {$output}
+                    </div>
+                {/foreach}
+
                 <div class="sub-heading">
                     <span>{$LANG.orderForm.paymentDetails}</span>
                 </div>
