@@ -580,28 +580,23 @@ jQuery(document).ready(function(){
             return false;
         }
         var heightOfOrderSummary =  $orderSummaryEl.outerHeight();
-        var newTopOffset = jQuery(window).scrollTop() - offset.top;
+        var offsetTop = 0;
+        if (typeof offset !== "undefined") {
+            offsetTop = offset.top;
+        }
+        var newTopOffset = jQuery(window).scrollTop() - offsetTop + topPadding;
         if (newTopOffset > maxTopOffset - heightOfOrderSummary) {
             newTopOffset = maxTopOffset - heightOfOrderSummary;
         }
-        
-        /** Websavers Custom Scrolling Pane Overrides **/
-        var sidebarWidth = jQuery("#scrollingPanelContainer").width();
-        var sidebarTopMargin = 20;
-        
-        if (jQuery(window).scrollTop() > offset.top + sidebarTopMargin) {
-            $orderSummaryEl.css({
-                position: 'fixed',
-                top: sidebarTopMargin + 'px',
-                width: sidebarWidth,
+        if (jQuery(window).scrollTop() > offsetTop) {
+            $orderSummaryEl.stop().animate({
+                marginTop: newTopOffset
             });
         } else {
-            $orderSummaryEl.css({
-                position: 'static',
-                top: 'auto',
+            $orderSummaryEl.stop().animate({
+                marginTop: 0
             });
         }
-        /** End Custom Scrolling Pane Overrides **/
     }
     
     /** Websavers Custom **/
@@ -827,7 +822,7 @@ jQuery(document).ready(function(){
                     if (domain.isValidDomain) {
                         if (domain.isAvailable && typeof pricing !== 'string') {
                             if (domain.preferredTLDNotAvailable) {
-                                unavailable.show().find('strong').html(domain.domainName);
+                                unavailable.show().find('strong').html(domain.originalUnavailableDomain);
                             }
                             contactSupport.hide();
                             available.show().find('strong').html(domain.domainName);
@@ -1205,6 +1200,7 @@ jQuery(document).ready(function(){
                     unavailable = result.find('.domain-unavailable'),
                     invalid = result.find('.domain-invalid');
                 jQuery('.domain-lookup-primary-loader').hide();
+                result.find('.btn-add-to-cart').removeClass('checkout');
                 result.removeClass('hidden').show();
                 if (domain.isValidDomain) {
                     unavailable.hide();
@@ -1608,7 +1604,7 @@ function recalctotals() {
         jQuery("#orderSummaryLoader").fadeIn('fast');
     }
 
-    thisRequestId = Math.floor((Math.random() * 1000000) + 1);
+    var thisRequestId = Math.floor((Math.random() * 1000000) + 1);
     window.lastSliderUpdateRequestId = thisRequestId;
 
     var post = jQuery.post("cart.php", 'ajax=1&a=confproduct&calctotal=true&'+jQuery("#frmConfigureProduct").serialize());
