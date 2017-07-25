@@ -157,13 +157,13 @@
                             </label>
                             <div class="domain-input-group clearfix" id="domainsubdomain">
                                 <div class="row">
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8 col-sm-offset-1">
                                         <div class="row domains-row">
-                                            <div class="col-xs-2 text-right">
-                                                <p class="form-control-static">http://</p>
-                                            </div>
-                                            <div class="col-xs-5">
+                                            <div class="col-xs-7">
+                                              <div class="input-group">
+                                                <span class="input-group-addon">http://</span>
                                                 <input type="text" id="subdomainsld" value="{$sld}" placeholder="yourname" class="form-control" autocomplete="none" autocorrect="none" autocapitalize="none" spellcheck="false" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
+                                              </div>
                                             </div>
                                             <div class="col-xs-5">
                                                 <select id="subdomaintld" class="form-control">
