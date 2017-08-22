@@ -611,7 +611,6 @@ jQuery(document).ready(function(){
             newTopOffset = maxTopOffset - heightOfOrderSummary;
         }
         
-        /** Websavers Custom Scrolling Pane Overrides **/
         var sidebarWidth = jQuery("#scrollingPanelContainer").width();
         var sidebarTopMargin = 20;
         
@@ -627,7 +626,6 @@ jQuery(document).ready(function(){
                 top: 'auto',
             });
         }
-        /** End Custom Scrolling Pane Overrides **/
     }
     jQuery( window ).resize(function() {
       if (jQuery("#scrollingPanelContainer").css('float') != 'left') {
