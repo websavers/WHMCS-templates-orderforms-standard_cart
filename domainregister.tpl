@@ -107,7 +107,7 @@
                                                 <span class="added"><i class="glyphicon glyphicon-shopping-cart"></i> {lang key='checkout'}</span>
                                                 <span class="unavailable">{$LANG.domaincheckertaken}</span>
                                             </button>
-                                            <button type="button" class="btn btn-primary domain-contact-support hidden">Contact Support to Purchase</button>
+                                            <!-- <button type="button" class="btn btn-primary domain-contact-support hidden">Contact Support to Purchase</button>-->
                                         </div>
                                     </div>
                                 </div>
