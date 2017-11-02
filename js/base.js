@@ -515,7 +515,9 @@ jQuery(document).ready(function(){
         jQuery("#containerExistingUserSignin").slideUp('', function() {
             jQuery("#containerNewUserSignup").hide().removeClass('hidden').slideDown('', function() {
                 jQuery("#inputCustType").val('new');
-                jQuery("#containerNewUserSecurity").show();
+                if (jQuery("#passwdFeedback").html().length == 0) {
+                    jQuery("#containerNewUserSecurity").show();
+                }
                 jQuery("#btnNewUserSignup").fadeOut('', function() {
                     jQuery("#btnAlreadyRegistered").removeClass('hidden').fadeIn();
                 });
@@ -556,22 +558,33 @@ jQuery(document).ready(function(){
         }
     });
 
-    jQuery("#inputNewPassword1").keyup(function () {
-        passwordStrength = getPasswordStrength(jQuery(this).val());
-        if (passwordStrength >= 75) {
-            textLabel = langPasswordStrong;
-            cssClass = 'success';
-        } else if (passwordStrength >= 30) {
-            textLabel = langPasswordModerate;
-            cssClass = 'warning';
-        } else {
-            textLabel = langPasswordWeak;
-            cssClass = 'danger';
-        }
-        jQuery("#passwordStrengthTextLabel").html(langPasswordStrength + ': ' + passwordStrength + '% ' + textLabel);
-        jQuery("#passwordStrengthMeterBar").css('width', passwordStrength + '%').attr('aria-valuenow', passwordStrength);
-        jQuery("#passwordStrengthMeterBar").removeClass('progress-bar-success progress-bar-warning progress-bar-danger').addClass('progress-bar-' + cssClass);
-    });
+    if (typeof registerFormPasswordStrengthFeedback == 'function') {
+        jQuery("#inputNewPassword1").keyup(registerFormPasswordStrengthFeedback);
+    } else {
+        jQuery("#inputNewPassword1").keyup(function ()
+        {
+            passwordStrength = getPasswordStrength(jQuery(this).val());
+            if (passwordStrength >= 75) {
+                textLabel = langPasswordStrong;
+                cssClass = 'success';
+            } else
+                if (passwordStrength >= 30) {
+                    textLabel = langPasswordModerate;
+                    cssClass = 'warning';
+                } else {
+                    textLabel = langPasswordWeak;
+                    cssClass = 'danger';
+                }
+            jQuery("#passwordStrengthTextLabel").html(langPasswordStrength + ': ' + passwordStrength + '% ' + textLabel);
+            jQuery("#passwordStrengthMeterBar").css(
+                'width',
+                passwordStrength + '%'
+            ).attr('aria-valuenow', passwordStrength);
+            jQuery("#passwordStrengthMeterBar").removeClass(
+                'progress-bar-success progress-bar-warning progress-bar-danger').addClass(
+                'progress-bar-' + cssClass);
+        });
+    }
 
     jQuery('#inputDomain').on('shown.bs.tooltip', function () {
         setTimeout(function(input) {
@@ -821,7 +834,14 @@ jQuery(document).ready(function(){
             resultDomain = jQuery('#resultDomain'),
             resultDomainPricing = jQuery('#resultDomainPricingTerm');
 
-        buttons.attr('disabled', 'disabled');
+        buttons.attr('disabled', 'disabled').each(function() {
+            jQuery(this).css('width', jQuery(this).outerWidth());
+        });
+
+        var sideOrder =
+            ((jQuery(this).parents('.spotlight-tlds').length > 0)
+            ||
+            (jQuery(this).parents('.suggested-domains').length > 0)) ? 1 : 0;
 
         var addToCart = jQuery.post(
             window.location.pathname,
@@ -829,7 +849,8 @@ jQuery(document).ready(function(){
                 a: 'addToCart',
                 domain: domain,
                 token: csrfToken,
-                whois: whois
+                whois: whois,
+                sideorder: sideOrder
             },
             'json'
         ).done(function (data) {
@@ -1017,6 +1038,43 @@ jQuery(document).ready(function(){
     jQuery(document).on('click', '#btnAddUpSell', function(e) {
         needRefresh = true;
     });
+
+    var useFullCreditOnCheckout = jQuery('#iCheck-useFullCreditOnCheckout'),
+        skipCreditOnCheckout = jQuery('#iCheck-skipCreditOnCheckout');
+
+    useFullCreditOnCheckout.on('ifChecked', function() {
+        var radio = jQuery('#useFullCreditOnCheckout'),
+            selectedPaymentMethod = jQuery('input[name="paymentmethod"]:checked'),
+            isCcSelected = selectedPaymentMethod.hasClass('is-credit-card'),
+            firstNonCcGateway = jQuery('input[name="paymentmethod"]')
+            .not(jQuery('input.is-credit-card[name="paymentmethod"]'))
+            .first();
+        if (radio.prop('checked')) {
+            if (isCcSelected && firstNonCcGateway.length) {
+                firstNonCcGateway.iCheck('check');
+            } else if (isCcSelected) {
+                jQuery('#creditCardInputFields').slideUp();
+            }
+            jQuery('#paymentGatewaysContainer').slideUp();
+        }
+    });
+
+    skipCreditOnCheckout.on('ifChecked', function() {
+        var selectedPaymentMethod = jQuery('input[name="paymentmethod"]:checked'),
+            isCcSelected = selectedPaymentMethod.hasClass('is-credit-card'),
+            container = jQuery('#paymentGatewaysContainer');
+        if (!container.is(":visible")) {
+            container.slideDown();
+            if (isCcSelected) {
+                jQuery('#creditCardInputFields').slideDown();
+            }
+        }
+    });
+
+    if (typeof applyCredit !== "undefined" && applyCredit && useFullCreditOnCheckout.length) {
+        skipCreditOnCheckout.iCheck('check');
+        useFullCreditOnCheckout.iCheck('check');
+    }
 });
 
 function hasDomainLookupEnded() {

@@ -107,6 +107,7 @@
                         </div>
                     </div>
 
+                    {include file="orderforms/standard_cart/linkedaccounts.tpl" linkContext="checkout-existing"}
                 </div>
 
                 <div id="containerNewUserSignup"{if !$loggedin && $custtype eq "existing"} class="hidden"{/if}>
@@ -114,6 +115,8 @@
                     {if !$loggedin}
 
                         <div id="containerNewUserSecurity"{if !$loggedin && $custtype eq "existing"} class="hidden"{/if}>
+                          
+                            {include file="orderforms/standard_cart/linkedaccounts.tpl" linkContext="checkout-new"}
 
                             <div class="sub-heading">
                                 <span>{$LANG.orderForm.accountSecurity}</span>
@@ -256,7 +259,13 @@
                             </div>
                         </div>
                         <div class="col-sm-5">
-                            <div class="form-group">
+                            <div class="form-group prepend-icon">
+                                <label for="state" class="field-icon" id="inputStateIcon">
+                                    <i class="fa fa-map-signs"></i>
+                                </label>
+                                <label for="stateinput" class="field-icon" id="inputStateIcon">
+                                    <i class="fa fa-map-signs"></i>
+                                </label>
                                 <input type="text" name="state" id="inputState" class="field" placeholder="{$LANG.orderForm.state}" value="{$clientsdetails.state}"{if $loggedin} readonly="readonly"{/if}>
                             </div>
                         </div>
@@ -266,6 +275,20 @@
                                     <i class="fa fa-certificate"></i>
                                 </label>
                                 <input type="text" name="postcode" id="inputPostcode" class="field" placeholder="{$LANG.orderForm.postcode}" value="{$clientsdetails.postcode}"{if $loggedin} readonly="readonly"{/if}>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group prepend-icon">
+                                <label for="inputCountry" class="field-icon" id="inputCountryIcon">
+                                    <i class="fa fa-globe"></i>
+                                </label>
+                                <select name="country" id="inputCountry" class="field"{if $loggedin} disabled="disabled"{/if}>
+                                    {foreach $countries as $countrycode => $countrylabel}
+                                        <option value="{$countrycode}"{if (!$country && $countrycode == $defaultcountry) || $countrycode eq $country} selected{/if}>
+                                            {$countrylabel}
+                                        </option>
+                                    {/foreach}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -430,7 +453,29 @@
                     {$LANG.ordertotalduetoday}: &nbsp; <strong> {$total}</strong>
                 </div>
 
-                <div class="form-group">
+                {if $canUseCreditOnCheckout}
+                    <div class="apply-credit-container">
+                        <p>{lang key='cart.availableCreditBalance' amount=$creditBalance}</p>
+
+                        {if $creditBalance->toNumeric() >= $total->toNumeric()}
+                            <label class="radio">
+                                <input id="useFullCreditOnCheckout" type="radio" name="applycredit" value="1"{if $applyCredit} checked{/if}>
+                                {lang key='cart.applyCreditAmountNoFurtherPayment' amount=$total}
+                            </label>
+                        {else}
+                            <label class="radio">
+                                <input id="useCreditOnCheckout" type="radio" name="applycredit" value="1"{if $applyCredit} checked{/if}>
+                                {lang key='cart.applyCreditAmount' amount=$creditBalance}
+                            </label>
+                        {/if}
+
+                        <label class="radio">
+                            <input id="skipCreditOnCheckout" type="radio" name="applycredit" value="0"{if !$applyCredit} checked{/if}>
+                            {lang key='cart.applyCreditSkip' amount=$creditBalance}
+                        </label>
+                    </div>
+                {/if}
+                <div id="paymentGatewaysContainer" class="form-group">
                     <p class="small text-muted">{$LANG.orderForm.preferredPaymentMethod}</p>
 
                     <div class="text-center">
@@ -592,3 +637,6 @@
 </div>
 
 <script type="text/javascript" src="{$BASE_PATH_JS}/jquery.payment.js"></script>
+<script type="text/javascript">
+    var applyCredit = {$applyCredit};
+</script>

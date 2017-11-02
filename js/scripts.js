@@ -508,6 +508,589 @@
   }
 })(window.jQuery || window.Zepto);
 
+/**
+ * WHMCS core JS library reference
+ *
+ * @copyright Copyright (c) WHMCS Limited 2005-2017
+ * @license http://www.whmcs.com/license/ WHMCS Eula
+ */
+
+(function (window, factory) {
+    if (typeof window.WHMCS !== 'object') {
+        window.WHMCS = factory;
+    }
+}(
+    window,
+    {
+        hasModule: function (name) {
+            return (typeof WHMCS[name] !== 'undefined'
+                && Object.getOwnPropertyNames(WHMCS[name]).length > 0);
+        },
+        loadModule: function (name, module) {
+            if (this.hasModule(name)) {
+                return;
+            }
+
+            WHMCS[name] = {};
+            if (typeof module === 'function') {
+                (module).apply(WHMCS[name]);
+            } else {
+                for (var key in module) {
+                    if (module.hasOwnProperty(key)) {
+                        WHMCS[name][key] = {};
+                        (module[key]).apply(WHMCS[name][key]);
+                    }
+                }
+            }
+        }
+    }
+));
+
+/**
+ * WHMCS authentication module
+ *
+ * @copyright Copyright (c) WHMCS Limited 2005-2017
+ * @license http://www.whmcs.com/license/ WHMCS Eula
+ */
+
+(function(module) {
+    if (!WHMCS.hasModule('authn')) {
+        WHMCS.loadModule('authn', module);
+    }
+})({
+provider: function () {
+    var callbackFired = false;
+
+    /**
+     * @return {jQuery}
+     */
+    this.feedbackContainer = function () {
+        return jQuery(".providerLinkingFeedback");
+    };
+
+    /**
+     * @returns {jQuery}
+     */
+    this.btnContainer = function () {
+        return jQuery(".providerPreLinking");
+    };
+
+    this.feedbackMessage = function (context) {
+        if (typeof context === 'undefined') {
+            context = 'complete_sign_in';
+        }
+        var msgContainer = jQuery('p.providerLinkingMsg-preLink-' + context);
+        if (msgContainer.length) {
+            return msgContainer.first().html();
+        }
+
+        return '';
+    };
+
+    this.showProgressMessage = function(callback) {
+        this.feedbackContainer().fadeIn('fast', function () {
+            if (typeof callback === 'function' && !callbackFired) {
+                callbackFired = true;
+                callback();
+            }
+        });
+    };
+
+    this.preLinkInit = function (callback) {
+        var icon = '<i class="fa fa-fw fa-spinner fa-spin"></i> ';
+
+        this.feedbackContainer()
+            .removeClass('alert-danger alert-success')
+            .addClass('alert alert-info')
+            .html(icon + this.feedbackMessage())
+            .hide();
+
+        var btnContainer = this.btnContainer();
+        if (btnContainer.length) {
+            if (btnContainer.data('hideOnPrelink')) {
+                var self = this;
+                btnContainer.fadeOut('false', function ()
+                {
+                    self.showProgressMessage(callback)
+                });
+            } else if (btnContainer.data('disableOnPrelink')) {
+                btnContainer.find('.btn').addClass('disabled');
+                this.showProgressMessage(callback);
+            } else {
+                this.showProgressMessage(callback);
+            }
+        } else {
+            this.showProgressMessage(callback);
+        }
+    };
+
+    this.displayError = function (provider, errorCondition, providerErrorText){
+        jQuery('#providerLinkingMessages .provider-name').html(provider);
+
+        var feedbackMsg = this.feedbackMessage('connect_error');
+        if (errorCondition) {
+            var errorMsg = this.feedbackMessage(errorCondition);
+            if (errorMsg) {
+                feedbackMsg = errorMsg
+            }
+        }
+
+        if (providerErrorText && $('.btn-logged-in-admin').length > 0) {
+            feedbackMsg += ' Error: ' + providerErrorText;
+        }
+
+        this.feedbackContainer().removeClass('alert-info alert-success')
+            .addClass('alert alert-danger')
+            .html(feedbackMsg).slideDown();
+    };
+
+    this.displaySuccess = function (data, context, provider) {
+        var icon = provider.icon;
+        var htmlTarget = context.htmlTarget;
+        var targetLogin = context.targetLogin;
+        var targetRegister = context.targetRegister;
+        var displayName = provider.name;
+        var feedbackMsg = '';
+
+        switch (data.result) {
+            case "logged_in":
+            case "2fa_needed":
+                feedbackMsg = this.feedbackMessage('2fa_needed');
+                this.feedbackContainer().removeClass('alert-danger alert-warning alert-success')
+                    .addClass('alert alert-info')
+                    .html(feedbackMsg);
+                window.location = data.redirect_url ? data.redirect_url : context.redirectUrl;
+                break;
+
+            case "linking_complete":
+                var accountInfo = '';
+                if (data.remote_account.email) {
+                    accountInfo = data.remote_account.email;
+                } else {
+                    accountInfo = data.remote_account.firstname + " " + data.remote_account.lastname;
+                }
+
+                accountInfo = accountInfo.trim();
+
+                feedbackMsg = this.feedbackMessage('linking_complete').trim().replace(':displayName', displayName);
+                if (accountInfo) {
+                    feedbackMsg = feedbackMsg.replace(/\.$/, ' (' + accountInfo + ').');
+                }
+
+                this.feedbackContainer().removeClass('alert-danger alert-warning alert-info')
+                    .addClass('alert alert-success')
+                    .html(icon + feedbackMsg);
+                break;
+
+            case "login_to_link":
+                if (htmlTarget === targetLogin) {
+                    feedbackMsg = this.feedbackMessage('login_to_link-signin-required');
+                    this.feedbackContainer().removeClass('alert-danger alert-success alert-info')
+                        .addClass('alert alert-warning')
+                        .html(icon + feedbackMsg);
+                } else {
+                    var emailField = jQuery("input[name=email]");
+                    var firstNameField = jQuery("input[name=firstname]");
+                    var lastNameField = jQuery("input[name=lastname]");
+
+                    if (emailField.val() === "") {
+                        emailField.val(data.remote_account.email);
+                    }
+
+                    if (firstNameField.val() === "") {
+                        firstNameField.val(data.remote_account.firstname);
+                    }
+
+                    if (lastNameField.val() === "") {
+                        lastNameField.val(data.remote_account.lastname);
+                    }
+
+                    if (htmlTarget === targetRegister) {
+                        if (typeof WHMCS.client.registration === 'object') {
+                            WHMCS.client.registration.prefillPassword();
+                        }
+                        feedbackMsg = this.feedbackMessage('login_to_link-registration-required');
+                        this.feedbackContainer().fadeOut('slow', function () {
+                            $(this).removeClass('alert-danger alert-success alert-info')
+                                .addClass('alert alert-warning')
+                                .html(icon + feedbackMsg).fadeIn('fast');
+                        });
+
+                    } else {
+                        // this is checkout
+                        if (typeof WHMCS.client.registration === 'object') {
+                            WHMCS.client.registration.prefillPassword();
+                        }
+
+                        var self = this;
+                        this.feedbackContainer().each(function (i, el) {
+                            var container = $(el);
+                            var linkContext = container.siblings('div .providerPreLinking').data('linkContext');
+
+                            container.fadeOut('slow', function () {
+                                if (linkContext === 'checkout-new') {
+                                    feedbackMsg = self.feedbackMessage('checkout-new');
+                                } else {
+                                    feedbackMsg = self.feedbackMessage('login_to_link-signin-required');
+                                }
+                                container.removeClass('alert-danger alert-success alert-info')
+                                    .addClass('alert alert-warning')
+                                    .html(icon + feedbackMsg).fadeIn('fast');
+                            });
+                        });
+                    }
+                }
+
+                break;
+
+            case "other_user_exists":
+                feedbackMsg = this.feedbackMessage('other_user_exists');
+                this.feedbackContainer().removeClass('alert-info alert-success')
+                    .addClass('alert alert-danger')
+                    .html(icon + feedbackMsg).slideDown();
+                break;
+
+            case "already_linked":
+                feedbackMsg = this.feedbackMessage('already_linked');
+                this.feedbackContainer().removeClass('alert-info alert-success')
+                    .addClass('alert alert-danger')
+                    .html(icon + feedbackMsg).slideDown();
+                break;
+
+            default:
+                feedbackMsg = this.feedbackMessage('default');
+                this.feedbackContainer().removeClass('alert-info alert-success')
+                    .addClass('alert alert-danger')
+                    .html(icon + feedbackMsg).slideDown();
+                break;
+        }
+    };
+
+    this.signIn = function (config, context, provider, providerDone, providerError) {
+        jQuery.ajax(config).done(function(data) {
+            providerDone();
+            WHMCS.authn.provider.displaySuccess(data, context, provider);
+            var table = jQuery('#tableLinkedAccounts');
+            if (table.length) {
+                WHMCS.ui.dataTable.getTableById('tableLinkedAccounts').ajax.reload();
+            }
+        }).error(function() {
+            providerError();
+            WHMCS.authn.provider.displayError();
+        });
+    };
+
+    return this;
+}});
+
+/**
+ * WHMCS client module
+ *
+ * @copyright Copyright (c) WHMCS Limited 2005-2017
+ * @license http://www.whmcs.com/license/ WHMCS Eula
+ */
+(function(module) {
+    if (!WHMCS.hasModule('client')) {
+        WHMCS.loadModule('client', module);
+    }
+})({
+registration: function () {
+    this.prefillPassword = function (params) {
+        params = params || {};
+        if (typeof params.hideContainer === 'undefined') {
+            var id = (jQuery('#inputSecurityQId').attr('id')) ? '#containerPassword' : '#containerNewUserSecurity';
+            params.hideContainer = jQuery(id);
+            params.hideInputs = true;
+        } else if (typeof params.hideContainer === 'string' && params.hideContainer.length) {
+            params.hideContainer = jQuery(params.hideContainer);
+        }
+
+        if (typeof params.form === 'undefined') {
+            params.form = {
+                password: [
+                    {id: 'inputNewPassword1'},
+                    {id: 'inputNewPassword2'}
+                ]
+            };
+        }
+
+        var prefillFunc = function () {
+            var $randomPasswd = WHMCS.utils.simpleRNG();
+            for (var i = 0, len = params.form.password.length; i < len; i++) {
+                jQuery('#' + params.form.password[i].id)
+                    .val($randomPasswd).trigger('keyup');
+            }
+        };
+
+        if (params.hideInputs) {
+            params.hideContainer.slideUp('fast', prefillFunc);
+        } else {
+            prefillFunc();
+        }
+    };
+
+    return this;
+}});
+
+/**
+ * WHMCS UI module
+ *
+ * @copyright Copyright (c) WHMCS Limited 2005-2017
+ * @license http://www.whmcs.com/license/ WHMCS Eula
+ */
+(function(module) {
+    if (!WHMCS.hasModule('ui')) {
+        WHMCS.loadModule('ui', module);
+    }
+})({
+/**
+ * Confirmation PopUp
+ */
+confirmation: function () {
+
+    /**
+     * @type {Array} Registered confirmation root selectors
+     */
+    var toggles = [];
+
+    /**
+     * Register/Re-Register all confirmation elements with jQuery
+     * By default all elements of data toggle "confirmation" will be registered
+     *
+     * @param {(string|undefined)} rootSelector
+     * @return {Array} array of registered toggles
+     */
+    this.register = function (rootSelector) {
+        if (typeof rootSelector === 'undefined') {
+            rootSelector = '[data-toggle=confirmation]';
+        }
+        if (toggles.indexOf(rootSelector) < 0) {
+            toggles.push(rootSelector);
+        }
+
+        jQuery(rootSelector).confirmation({
+            rootSelector: rootSelector
+        });
+
+        return toggles;
+    };
+
+    return this;
+},
+
+/**
+ * Data Driven Table
+ */
+dataTable: function () {
+
+    /**
+     * @type {{}}
+     */
+    this.tables = {};
+
+    /**
+     * Register all tables on page with the class "data-driven"
+     */
+    this.register = function () {
+        var self = this;
+        jQuery('table.data-driven').each(function (i, table) {
+            self.getTableById(table.id, undefined);
+        });
+    };
+
+    /**
+     * Get a table by id; create table object on fly as necessary
+     *
+     * @param {string} id
+     * @param {({}|undefined)} options
+     * @returns {DataTable}
+     */
+    this.getTableById = function (id, options) {
+        var self = this;
+        var el = jQuery('#' + id);
+        if (typeof self.tables[id] === 'undefined') {
+            if (typeof options === 'undefined') {
+
+                options = {
+                    dom: '<"listtable"ift>pl',
+                    paging: false,
+                    searching: false,
+                    ordering: true,
+                    info: false,
+                    language: {
+                        emptyTable: (el.data('lang-empty-table')) ? el.data('lang-empty-table') : "No records found"
+                    },
+                    ajax: {
+                        url: el.data("ajax-url")
+                    }
+                };
+            }
+            var colCss = el.data('columns');
+            if (typeof colCss !== 'undefined' && colCss) {
+                options["columns"] = colCss;
+            }
+            var autoWidth = el.data('auto-width');
+            if (typeof autoWidth !== 'undefined') {
+                options["bAutoWidth"] = autoWidth;
+            }
+
+            self.tables[id] = self.initTable(el, options);
+        } else if (typeof options !== 'undefined') {
+            var oldTable = self.tables[id];
+            var initOpts = oldTable.init();
+            var newOpts = jQuery.extend( initOpts, options);
+            oldTable.destroy();
+            self.tables[id] = self.initTable(el, newOpts);
+        }
+
+        return self.tables[id];
+    };
+
+    this.initTable = function (el, options) {
+        var table = el.DataTable(options);
+        var self = this;
+        if (el.data('on-draw')) {
+            table.on('draw.dt', function (e, settings) {
+                var namedCallback = el.data('on-draw');
+                if (typeof window[namedCallback] === 'function') {
+                    window[namedCallback](e, settings);
+                }
+            });
+        } else if (el.data('on-draw-rebind-confirmation')) {
+            table.on('draw.dt', function (e) {
+                self.rebindConfirmation(e);
+            });
+        }
+
+        return table;
+    };
+
+    this.rebindConfirmation = function (e) {
+        var self = this;
+        var tableId = e.target.id;
+        var toggles = WHMCS.ui.confirmation.register();
+        for(var i = 0, len = toggles.length; i < len; i++ ) {
+            jQuery(toggles[i]).on(
+                'confirmed.bs.confirmation',
+                function (e)
+                {
+                    e.preventDefault();
+                    jQuery.post(
+                        jQuery(e.target).data('target-url'),
+                        {
+                            'token': csrfToken
+                        }
+                    ).done(function (data)
+                    {
+                        if (data.status === 'success' || data.status === 'okay') {
+                            self.getTableById(tableId, undefined).ajax.reload();
+                        }
+                    });
+
+                }
+            );
+        }
+    };
+
+    return this;
+}});
+
+/**
+ * Form module
+ *
+ * @copyright Copyright (c) WHMCS Limited 2005-2017
+ * @license http://www.whmcs.com/license/ WHMCS Eula
+ */
+(function(module) {
+    if (!WHMCS.hasModule('form')) {
+        WHMCS.loadModule('form', module);
+    }
+})(
+function () {
+    this.register = function () {
+        this.bindCheckAll();
+    };
+
+    this.bindCheckAll = function ()
+    {
+        var huntSelector = '.btn-check-all';
+        jQuery(huntSelector).click(function (e) {
+            var btn = jQuery(e.target);
+
+            var textDeselect = 'Deselect All';
+            var textSelect = 'Select All';
+            if (btn.data('label-text-deselect')) {
+                textDeselect = btn.data('label-text-deselect');
+            }
+            if (btn.data('label-text-select')) {
+                textSelect = btn.data('label-text-select');
+            }
+
+            var targetInputs = jQuery(
+                '#' + btn.data('checkbox-container') + ' input[type="checkbox"]'
+            );
+            if (btn.hasClass('toggle-active')) {
+                targetInputs.prop('checked',false);
+                btn.text(textDeselect);
+                btn.removeClass('toggle-active');
+            } else {
+                targetInputs.prop('checked',true);
+                btn.text(textSelect);
+                btn.addClass('toggle-active');
+            }
+        });
+    };
+
+    return this;
+});
+
+/**
+ * General utilities module
+ *
+ * @copyright Copyright (c) WHMCS Limited 2005-2017
+ * @license http://www.whmcs.com/license/ WHMCS Eula
+ */
+(function(module) {
+    if (!WHMCS.hasModule('utils')) {
+        WHMCS.loadModule('utils', module);
+    }
+})(
+function () {
+    /**
+     * Not crypto strong; server-side must discard for
+     * something with more entropy; the value is sufficient
+     * for strong client-side validation check
+     */
+    this.simpleRNG = function () {
+        var chars = './$_-#!,^*()|';
+        var r = 0;
+        for (var i = 0; r < 3; i++) {
+            r += Math.floor((Math.random() * 10) / 2);
+        }
+        r = Math.floor(r);
+        var s = '';
+        for (var x = 0; x < r; x++) {
+            v = (Math.random() + 1).toString(24).split('.')[1];
+            if ((Math.random()) > 0.5) {
+                s += btoa(v).substr(0,4)
+            } else {
+                s += v
+            }
+
+            if ((Math.random()) > 0.5) {
+                s += chars.substr(
+                    Math.floor(Math.random() * 13),
+                    1
+                );
+            }
+        }
+
+        return s;
+    };
+
+    return this;
+});
+
 if (typeof localTrans === 'undefined') {
     localTrans = function (phraseId, fallback)
     {
@@ -1079,7 +1662,9 @@ jQuery(document).ready(function(){
         jQuery("#containerExistingUserSignin").slideUp('', function() {
             jQuery("#containerNewUserSignup").hide().removeClass('hidden').slideDown('', function() {
                 jQuery("#inputCustType").val('new');
-                jQuery("#containerNewUserSecurity").show();
+                if (jQuery("#passwdFeedback").html().length == 0) {
+                    jQuery("#containerNewUserSecurity").show();
+                }
                 jQuery("#btnNewUserSignup").fadeOut('', function() {
                     jQuery("#btnAlreadyRegistered").removeClass('hidden').fadeIn();
                 });
@@ -1120,22 +1705,33 @@ jQuery(document).ready(function(){
         }
     });
 
-    jQuery("#inputNewPassword1").keyup(function () {
-        passwordStrength = getPasswordStrength(jQuery(this).val());
-        if (passwordStrength >= 75) {
-            textLabel = langPasswordStrong;
-            cssClass = 'success';
-        } else if (passwordStrength >= 30) {
-            textLabel = langPasswordModerate;
-            cssClass = 'warning';
-        } else {
-            textLabel = langPasswordWeak;
-            cssClass = 'danger';
-        }
-        jQuery("#passwordStrengthTextLabel").html(langPasswordStrength + ': ' + passwordStrength + '% ' + textLabel);
-        jQuery("#passwordStrengthMeterBar").css('width', passwordStrength + '%').attr('aria-valuenow', passwordStrength);
-        jQuery("#passwordStrengthMeterBar").removeClass('progress-bar-success progress-bar-warning progress-bar-danger').addClass('progress-bar-' + cssClass);
-    });
+    if (typeof registerFormPasswordStrengthFeedback == 'function') {
+        jQuery("#inputNewPassword1").keyup(registerFormPasswordStrengthFeedback);
+    } else {
+        jQuery("#inputNewPassword1").keyup(function ()
+        {
+            passwordStrength = getPasswordStrength(jQuery(this).val());
+            if (passwordStrength >= 75) {
+                textLabel = langPasswordStrong;
+                cssClass = 'success';
+            } else
+                if (passwordStrength >= 30) {
+                    textLabel = langPasswordModerate;
+                    cssClass = 'warning';
+                } else {
+                    textLabel = langPasswordWeak;
+                    cssClass = 'danger';
+                }
+            jQuery("#passwordStrengthTextLabel").html(langPasswordStrength + ': ' + passwordStrength + '% ' + textLabel);
+            jQuery("#passwordStrengthMeterBar").css(
+                'width',
+                passwordStrength + '%'
+            ).attr('aria-valuenow', passwordStrength);
+            jQuery("#passwordStrengthMeterBar").removeClass(
+                'progress-bar-success progress-bar-warning progress-bar-danger').addClass(
+                'progress-bar-' + cssClass);
+        });
+    }
 
     jQuery('#inputDomain').on('shown.bs.tooltip', function () {
         setTimeout(function(input) {
@@ -1385,7 +1981,14 @@ jQuery(document).ready(function(){
             resultDomain = jQuery('#resultDomain'),
             resultDomainPricing = jQuery('#resultDomainPricingTerm');
 
-        buttons.attr('disabled', 'disabled');
+        buttons.attr('disabled', 'disabled').each(function() {
+            jQuery(this).css('width', jQuery(this).outerWidth());
+        });
+
+        var sideOrder =
+            ((jQuery(this).parents('.spotlight-tlds').length > 0)
+            ||
+            (jQuery(this).parents('.suggested-domains').length > 0)) ? 1 : 0;
 
         var addToCart = jQuery.post(
             window.location.pathname,
@@ -1393,7 +1996,8 @@ jQuery(document).ready(function(){
                 a: 'addToCart',
                 domain: domain,
                 token: csrfToken,
-                whois: whois
+                whois: whois,
+                sideorder: sideOrder
             },
             'json'
         ).done(function (data) {
@@ -1581,6 +2185,43 @@ jQuery(document).ready(function(){
     jQuery(document).on('click', '#btnAddUpSell', function(e) {
         needRefresh = true;
     });
+
+    var useFullCreditOnCheckout = jQuery('#iCheck-useFullCreditOnCheckout'),
+        skipCreditOnCheckout = jQuery('#iCheck-skipCreditOnCheckout');
+
+    useFullCreditOnCheckout.on('ifChecked', function() {
+        var radio = jQuery('#useFullCreditOnCheckout'),
+            selectedPaymentMethod = jQuery('input[name="paymentmethod"]:checked'),
+            isCcSelected = selectedPaymentMethod.hasClass('is-credit-card'),
+            firstNonCcGateway = jQuery('input[name="paymentmethod"]')
+            .not(jQuery('input.is-credit-card[name="paymentmethod"]'))
+            .first();
+        if (radio.prop('checked')) {
+            if (isCcSelected && firstNonCcGateway.length) {
+                firstNonCcGateway.iCheck('check');
+            } else if (isCcSelected) {
+                jQuery('#creditCardInputFields').slideUp();
+            }
+            jQuery('#paymentGatewaysContainer').slideUp();
+        }
+    });
+
+    skipCreditOnCheckout.on('ifChecked', function() {
+        var selectedPaymentMethod = jQuery('input[name="paymentmethod"]:checked'),
+            isCcSelected = selectedPaymentMethod.hasClass('is-credit-card'),
+            container = jQuery('#paymentGatewaysContainer');
+        if (!container.is(":visible")) {
+            container.slideDown();
+            if (isCcSelected) {
+                jQuery('#creditCardInputFields').slideDown();
+            }
+        }
+    });
+
+    if (typeof applyCredit !== "undefined" && applyCredit && useFullCreditOnCheckout.length) {
+        skipCreditOnCheckout.iCheck('check');
+        useFullCreditOnCheckout.iCheck('check');
+    }
 });
 
 function hasDomainLookupEnded() {
