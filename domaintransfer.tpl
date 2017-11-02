@@ -3,6 +3,8 @@
 <div id="order-standard_cart">
 
     <div class="row">
+      
+        <div class="alert alert-warning">Haven't transferred a domain before? <a href="https://websavers.ca/transfer-domain-registration-websavers/" target="_blank">Click here to learn how to ensure a successful transfer.</a></div>
 
         <div class="pull-md-right col-md-9">
 
@@ -82,7 +84,7 @@
                 </div>
 
             </form>
-
+            
             <p class="text-center small">* {lang key='orderForm.extendExclusions'}</p>
 
         </div>
