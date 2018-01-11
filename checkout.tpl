@@ -110,7 +110,7 @@
                     {include file="orderforms/standard_cart/linkedaccounts.tpl" linkContext="checkout-existing"}
                 </div>
 
-                <div id="containerNewUserSignup"{if !$loggedin && $custtype eq "existing"} class="hidden"{/if}>
+                <div id="containerNewUserSignup"{if $loggedin || $custtype eq "existing"} class="hidden"{/if}>
 
                     {if !$loggedin}
 
