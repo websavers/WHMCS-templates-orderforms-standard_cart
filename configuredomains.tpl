@@ -11,16 +11,7 @@
 
     <div class="row">
 
-    	{if $registrations > 0 && $atleastonenohosting}
-    	<div class="alert alert-info">
-    	    <p><i class="fa fa-white fa-info-circle"></i> {$LANG.cartnameserversdesc}</p>
-    	</div>
-    	{/if}
-    	{if $transfers > 0}
-    	<div class="alert alert-warning">
-    		<p><i class="fa fa-white fa-warning"></i> <strong>For domain transfers, the change of name servers can only be done manually, either before or after the transfer completes. They will not be automatically updated.</strong></p>
-    	</div>
-    	{/if}
+    	{if $registrations > 0 && $atleastonenohosting}{include file="orderforms/$carttpl/login.tpl"}{/if}
 
         <div class="pull-md-right col-md-9">
 
@@ -54,15 +45,17 @@
                     </div>
                 {/if}
 
-                {if $atleastonenohosting}
+								{* Avoid confusion:
+									- If any domain doesn't have hosting attached, show name server options (it's auto otherwise)
+									- If registrations, show name servers options (ie: don't show them when transfers)
+								*}
+                {if $atleastonenohosting && $registrations > 0}
 
                     <div class="sub-heading">
                         <span>{$LANG.domainnameservers}</span>
                     </div>
 
                     <!-- <p>{$LANG.cartnameserversdesc}</p> -->
-
-                    {include file="orderforms/$carttpl/login.tpl"}
 
                     <div style="text-align: left; margin: 20px auto 15px;" class="col70 center">
                     	{if $loggedin}
@@ -121,7 +114,7 @@
                         </div>
                         *}
                     </div>
-
+										
                 {/if}
 
                 {foreach $domains as $num => $domain}
