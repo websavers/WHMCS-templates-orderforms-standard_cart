@@ -211,10 +211,11 @@
                                     </div>
                                 </div>
                             {/if}
-                        {/if}
+            {/if}
 
-                        </div>
+											</div><!-- .addon-products -->
                     {/if}
+										
                     {if $domain.fields}<div class="extra-domain-fields col70 center">
                     {foreach from=$domain.fields key=domainfieldname item=domainfield}
                         <div class="row extra-field">
