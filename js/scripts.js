@@ -2523,4 +2523,51 @@ function card_type_get_fontawesome($cardtype){
   }
 }
 
+/** Addon Pricing Fixes **/
+function ws_update_addon_cycle_pricing(){
+  
+  var $billingcycle = jQuery('#inputBillingcycle').find(":selected").val();
+  
+  jQuery(".addon-products .panel-addon").each( function(){
+
+    var $addon_title = jQuery(this).find('label').text();
+    var $addon_inputname = jQuery(this).find('label input').attr('name');
+    var $addon_price = jQuery(this).find('.panel-price');
+    
+    if ($addon_price.text().indexOf('One Time') === -1){ //not one-time cycle
+
+      var cycle_matched_price = jQuery.post("cart.php", {
+        ajax: 1,
+        a: 'confproduct',
+        calctotal: true,
+        configure: true,
+        i: 0,
+        billingcycle: $billingcycle,
+        [$addon_inputname]: 'on',
+        
+      }).done(function(html) {
+        jQuery(html).find('.pull-left').each(function(){
+          if ( jQuery(this).text().indexOf($addon_title.trim()) > -1 ){
+            $addon_price.text(jQuery(this).siblings('.pull-right').text());
+            //recalctotals(); //refresh cart
+          }
+        });   	
+      });
+      
+    }
+    
+  });
+  
+}
+//triggers
+jQuery(document).ready(function(){
+  
+  ws_update_addon_cycle_pricing();
+  
+  jQuery('#inputBillingcycle').change(function(){
+    ws_update_addon_cycle_pricing();
+  });
+  
+});
+
 /** End Websavers Custom **/
