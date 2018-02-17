@@ -191,7 +191,10 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="form-group">
+                            <div class="form-group prepend-icon">
+                                <label for="inputCountry" class="field-icon" id="inputCountryIcon">
+                                    <i class="fa fa-globe"></i>
+                                </label>
                                 <select name="country" id="inputCountry" class="field"{if $loggedin} disabled="disabled"{/if}>
                                     {foreach $countries as $countrycode => $countrylabel}
                                         <option value="{$countrycode}"{if (!$country && $countrycode == $defaultcountry) || $countrycode eq $country} selected{/if}>
@@ -275,20 +278,6 @@
                                     <i class="fa fa-certificate"></i>
                                 </label>
                                 <input type="text" name="postcode" id="inputPostcode" class="field" placeholder="{$LANG.orderForm.postcode}" value="{$clientsdetails.postcode}"{if $loggedin} readonly="readonly"{/if}>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group prepend-icon">
-                                <label for="inputCountry" class="field-icon" id="inputCountryIcon">
-                                    <i class="fa fa-globe"></i>
-                                </label>
-                                <select name="country" id="inputCountry" class="field"{if $loggedin} disabled="disabled"{/if}>
-                                    {foreach $countries as $countrycode => $countrylabel}
-                                        <option value="{$countrycode}"{if (!$country && $countrycode == $defaultcountry) || $countrycode eq $country} selected{/if}>
-                                            {$countrylabel}
-                                        </option>
-                                    {/foreach}
-                                </select>
                             </div>
                         </div>
                     </div>
