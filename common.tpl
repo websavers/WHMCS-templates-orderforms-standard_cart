@@ -1,4 +1,4 @@
-{if $debug eq 1}
+{if $smarty.request.debug eq true}
 <link rel="stylesheet" type="text/css" href="templates/orderforms/{$carttpl}/css/all.css?v={$versionHash}" />
 <script type="text/javascript" src="templates/orderforms/{$carttpl}/js/scripts.js?v={$versionHash}"></script>
 {else}
