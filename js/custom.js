@@ -63,8 +63,6 @@ jQuery(document).ready(function(){
 	 	});
 	 	
 	 }
-
-	var $KEYUP_DELAY = 1000;
 	 
 	 /** VPS Hostname **/
 	 if ( jQuery('#inputHostname').length > 0 ){
@@ -75,23 +73,18 @@ jQuery(document).ready(function(){
 	 	$hostname_elem.keyup( function(){
 	 	delay(function(){
 	 	
-	 	 	var hostname = sanitize_hostname( $hostname_elem );
+	 	 	var $hostname = sanitize_hostname( $hostname_elem );
+      
+      $hostname_elem.val($hostname); //update on page
 	 	 	
-	 	 	if ( hostname.indexOf('.') !== -1 ){ //need a dot character
+	 	 	if ( $hostname.indexOf('.') !== -1 ){ //need a dot character
 	 	 		validation_pass( $hostname_elem );
-	 	 		
- 	 			var domain_parts = hostname.split('.');
- 	 			var domain = '';
- 	 			if (domain_parts.length > 1){
- 	 				domain = domain_parts[domain_parts.length-2] + '.' + domain_parts[domain_parts.length-1];
- 	 			}
-	 	 			
 	 	 	}
 	 	 	else{
 		 	 	validation_fail( $hostname_elem, '<i class="fa fa-warning"></i> A hostname must be a domain or subdomain like xyz.com or sub.xyz.com' );
 		 	}
 	 	
-	 	}, $KEYUP_DELAY );
+	 	}, 1000 ); //1s delay
 	 	});
 	 	
 	 }
@@ -187,32 +180,31 @@ function showloginform() {
     }
 }
 
-function sanitize_domain(element, allowdots = false){
+function sanitize_domain(element, allowdots = false, updatedirect = true ){
 	
 	var $str = element.val();
+	if ($str == "") return $str;
 	
-	if ($str != ""){
+	$str = $str.replace(/^(https?:\/\/)?(www\.)?/g, '');
+	$str = $str.replace(/[^a-zA-Z1-9\-\.]/g, '');
+	$str = $str.toLowerCase();
 	
-		$str = $str.replace(/^(https?:\/\/)?(www\.)?/g, '');
-		$str = $str.replace(/[^a-zA-Z1-9\-\.]/g, '');
-		$str = $str.toLowerCase();
+	if (element.attr('id').indexOf('tld') !== -1 || allowdots == true){
+    if (updatedirect) element.val($str);
+    else return $str; //Allow dots in TLD (ex: .com.au)
+	}
+	else{ //don't allow dots
 		
-		if (element.attr('id').indexOf('tld') !== -1 || allowdots == true){
-			return $str; //Allow dots in TLD (ex: .com.au)
-		}
-		else{ //don't allow dots
-			
-			//Split first part of domain from its TLD into an array: [websavers][ca]
-			var domain_parts = $str.split(/\.(.*)/);
+		//Split first part of domain from its TLD into an array: [websavers][ca]
+		var domain_parts = $str.split(/\.(.*)/);
 
-			if ( domain_parts[0] != ""){
-				element.val(domain_parts[0]); //set domain without TLD
-				
-				if (typeof domain_parts[1] === "undefined"){
-					return; //we're done.
-				} 	
-			}
+		if ( domain_parts[0] != ""){
+      if (updatedirect) element.val(domain_parts[0]); //set domain without TLD
+      else return domain_parts[0];
 			
+			if (typeof domain_parts[1] === "undefined"){
+				return; //we're done.
+			} 	
 		}
 		
 	}
@@ -220,7 +212,7 @@ function sanitize_domain(element, allowdots = false){
 }
 
 function sanitize_hostname(element){
-	return sanitize_domain(element, true);
+	return sanitize_domain(element, true, false);
 }
 
 var delay = (function(){
