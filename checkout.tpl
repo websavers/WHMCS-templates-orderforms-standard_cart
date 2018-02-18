@@ -156,7 +156,10 @@
                             {if $securityquestions}
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <div class="form-group">
+                                        <div class="form-group prepend-icon">
+                                            <label for="inputSecurityQId" class="field-icon" id="inputSecurityQIdIcon">
+                                                <i class="fa fa-question-circle"></i>
+                                            </label>
                                             <select name="securityqid" id="inputSecurityQId" class="field">
                                                 <option value="">{$LANG.clientareasecurityquestion}</option>
                                                 {foreach $securityquestions as $question}
