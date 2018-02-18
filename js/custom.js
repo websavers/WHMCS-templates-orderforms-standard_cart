@@ -166,7 +166,7 @@ function validation_pass(formElement){
 }
  
 
-function showloginform() {
+function ws_showloginform() {
     if (jQuery("#custtype").val()=="new") {
         jQuery("#custtype").val("existing");
         jQuery("#signupfrm").fadeToggle("slow",function(){

@@ -3,7 +3,7 @@
 	<p style="font-size:1.2em">
 		<i class="fa fa-white fa-info-circle" style="margin-top:1px"></i> 
 		<strong>{$LANG.orderForm.domains_alreadyregistered}</strong> 
-		<a href="{$smarty.server.PHP_SELF}?a=login" onclick="showloginform();return false;">{$LANG.clickheretologin}</a>
+		<a href="{$smarty.server.PHP_SELF}?a=login" onclick="ws_showloginform();return false;">{$LANG.clickheretologin}</a>
 	</p>
 </div>
 {/if}
