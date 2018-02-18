@@ -71,7 +71,7 @@ jQuery(document).ready(function(){
 	 	$hostname_elem.after('<small class="infotext"><i class="fa fa-info-circle"></i> This is the name for your server, often a subdomain of your website or organization. If you do not have a domain to use, you may use [a_name].myserver.ws and we will configure the DNS for you.</small>');
 	 	
 	 	$hostname_elem.keyup( function(){
-	 	delay(function(){
+	 	ws_delay(function(){
 	 	
 	 	 	var $hostname = sanitize_hostname( $hostname_elem );
       
@@ -148,6 +148,32 @@ jQuery(document).ready(function(){
 		});
 		
 	}
+	
+	/**
+	 * Order form taxation auto-apply
+	 * This is for the checkout page only, not cart
+	 * Used for tax calcs update.
+	 */
+
+	if (jQuery('form[name=orderfrm]').length > 0){
+		jQuery('select#stateselect').ready( function(){
+		 	jQuery(this).change( function(){
+				var $target = jQuery('form[name=orderfrm] .alert.alert-success.text-center.large-text strong');
+				$target.html('<i class="fa fas fa-spinner fa-spin"></i>');
+				jQuery.post("cart.php", {
+					ajax: 1,
+					calctotal: true,
+					configure: true,
+					a: 'setstateandcountry',
+					state: jQuery('#stateselect').val(),
+					country: jQuery('#inputCountry').val(),
+				}).done(function(html) {
+					var total_amnt = jQuery(html).find('#totalDueToday').html();
+					$target.html(total_amnt);
+				}); 
+			});
+		});
+	}
 
 }); /* Document Ready */
 
@@ -214,37 +240,13 @@ function sanitize_hostname(element){
 	return sanitize_domain(element, true, false);
 }
 
-var delay = (function(){
+var ws_delay = (function(){
   var timer = 0;
   return function(callback, ms){
     clearTimeout (timer);
     timer = setTimeout(callback, ms);
   };
 })();
-
-/**
- * Order form taxation auto-apply
- * This is for the checkout page only, not cart
- * Used for tax calcs update.
- */
-jQuery('select#stateselect').ready( function(){
- 	jQuery(this).change( function(){
-		var $target = jQuery('form[name=orderfrm] .alert.alert-success.text-center.large-text strong');
-		$target.html('<i class="fa fas fa-spinner fa-spin"></i>');
-		jQuery.post("cart.php", {
-			ajax: 1,
-			calctotal: true,
-			configure: true,
-			i: 0,
-			a: 'setstateandcountry',
-			state: jQuery('#stateselect').val(),
-			country: jQuery('#inputCountry').val(),
-		}).done(function(html) {
-			var total_amnt = jQuery(html).find('#totalDueToday').html();
-			$target.html(total_amnt);
-		}); 
-	});
-});
 
 /**
  * Password Creation
@@ -335,6 +337,7 @@ function ws_update_addon_cycle_pricing(){
   
 }
 //triggers
+
 jQuery(document).ready(function(){
   
   ws_update_addon_cycle_pricing();
