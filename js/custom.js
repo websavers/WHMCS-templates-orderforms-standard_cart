@@ -210,7 +210,6 @@ function sanitize_domain(element, allowdots = false, updatedirect = true ){
 	}
 	
 }
-
 function sanitize_hostname(element){
 	return sanitize_domain(element, true, false);
 }
@@ -224,47 +223,27 @@ var delay = (function(){
 })();
 
 /**
+ * Order form taxation auto-apply
  * This is for the checkout page only, not cart
  * Used for tax calcs update.
  */
- 
- 
-function recalctotals_checkout() {
-
-    thisRequestId = Math.floor((Math.random() * 1000000) + 1);
-    window.lastSliderUpdateRequestId = thisRequestId;
-    
-    var state = jQuery('#stateselect').val();
-    var country = jQuery('#inputCountry').val();
-
-    var state_update = jQuery.post("cart.php", 'ajax=1&a=setstateandcountry&state=' + state + '&country=' + country);
-    state_update.done(
-        function(html) {
-            if (thisRequestId == window.lastSliderUpdateRequestId) {            	
-            	var total_amnt = jQuery(html).find('#totalDueToday').html();
-            	//console.log("Total: " + total_amnt); //////Debug
-            	jQuery('form[name=orderfrm] .alert.alert-success.text-center.large-text strong').html(total_amnt);
-            }
-        }
-    );
-    state_update.always(
-        function() {
-            //jQuery("#orderSummaryLoader").delay(500).fadeOut('slow');
-        }
-    );    
-    
-}
-
-/**
- * Order form taxation auto-apply
- */
- 
 jQuery('select#stateselect').ready( function(){
- 
- 	jQuery('select#stateselect').change( function(){
- 		recalctotals_checkout();
- 	});
- 	
+ 	jQuery(this).change( function(){
+		var $target = jQuery('form[name=orderfrm] .alert.alert-success.text-center.large-text strong');
+		$target.html('<i class="fa fas fa-spinner fa-spin"></i>');
+		jQuery.post("cart.php", {
+			ajax: 1,
+			calctotal: true,
+			configure: true,
+			i: 0,
+			a: 'setstateandcountry',
+			state: jQuery('#stateselect').val(),
+			country: jQuery('#inputCountry').val(),
+		}).done(function(html) {
+			var total_amnt = jQuery(html).find('#totalDueToday').html();
+			$target.html(total_amnt);
+		}); 
+	});
 });
 
 /**
