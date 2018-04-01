@@ -339,11 +339,13 @@ function ws_update_addon_cycle_pricing(){
 //triggers
 
 jQuery(document).ready(function(){
-  
+
+/* Disabled due to reports of issues with adding plans at 1yr to cart
   ws_update_addon_cycle_pricing();
   
   jQuery('#inputBillingcycle').change(function(){
     ws_update_addon_cycle_pricing();
   });
+*/
   
 });
