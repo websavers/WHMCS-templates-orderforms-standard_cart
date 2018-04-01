@@ -323,7 +323,12 @@ var _localLang = {
                                                 {$addon.description}
                                             </div>
                                             <div class="panel-price">
-                                                {$addon.pricing}
+                                                {if $billingcycle}
+                                                  {foreach from=$addon.billingCycles key=cyclename item=cycledata}
+                                                    {if $cyclename eq $billingcycle}{assign var="properprice" value="{$cycledata.price} {$cyclename|capitalize}"}{else}{assign var="properprice" value="{$addon.pricing}"}{/if}
+                                                  {/foreach}
+                                                {/if}
+                                                {$properprice}
                                             </div>
                                             <div class="panel-add">
                                                 <i class="fa fa-plus"></i>
