@@ -1,28 +1,18 @@
-{include file="orderforms/{$carttpl}/common.tpl"}
+{include file="orderforms/standard_cart/common.tpl"}
 
 <div id="order-standard_cart">
 
+    <div class="header-lined">
+        <h1>
+            {$LANG.cartfraudcheck}
+        </h1>
+    </div>
+
     <div class="row">
 
-        <div class="pull-md-right col-md-9">
+        <div class="col-md-10 col-md-offset-1">
 
-            <div class="header-lined">
-                <h1>
-                    {$LANG.cartfraudcheck}
-                </h1>
-            </div>
-
-        </div>
-
-        <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
-
-            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
-
-        </div>
-
-        <div class="col-md-9 pull-md-right">
-
-            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
+            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
 
             <div class="alert alert-danger error-heading">
                 <i class="fa fa-warning"></i>

@@ -177,8 +177,9 @@
                                             {if is_object($tldinfo.register)}
                                                 {$tldinfo.register->toPrefixed()}{if $tldinfo.period > 1}{lang key="orderForm.shortPerYears" years={$tldinfo.period}}{else}{lang key="orderForm.shortPerYear" years=''}{/if}
                                             {else}
-                                                N/A
-                                            {/if}</div>
+                                                {lang key="domainregnotavailable"}
+                                            {/if}
+                                        </div>
                                     </div>
                                 </div>
                             {/foreach}
@@ -190,7 +191,7 @@
 
                 <div class="tld-filters">
                     {foreach $categoriesWithCounts as $category => $count}
-                        <a href="#" data-category="{$category}" class="label label-default">{$category} ({$count})</a>
+                        <a href="#" data-category="{$category}" class="label label-default">{lang key="domainTldCategory.$category" defaultValue=$category} ({$count})</a>
                     {/foreach}
                 </div>
 
