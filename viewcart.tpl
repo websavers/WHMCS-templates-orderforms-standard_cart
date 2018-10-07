@@ -95,12 +95,12 @@
                                                 <span class="item-title">
                                                     {$product.productinfo.name}
                                                     <a href="{$smarty.server.PHP_SELF}?a=confproduct&i={$num}" class="btn btn-link btn-xs">
-                                                        <i class="fa fa-pencil"></i>
+                                                        <i class="fas fa-pencil-alt"></i>
                                                         {$LANG.orderForm.edit}
                                                     </a>
                                                     <span class="visible-xs-inline">
                                                         <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
-                                                            <i class="fa fa-times"></i>
+                                                            <i class="fas fa-times"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
                                                     </span>
@@ -141,7 +141,7 @@
                                             </div>
                                             <div class="col-sm-1 hidden-xs">
                                                 <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
-                                                    <i class="fa fa-times"></i>
+                                                    <i class="fas fa-times"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -186,7 +186,7 @@
                                                     {$addon.name}
                                                     <span class="visible-xs-inline">
                                                         <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
-                                                            <i class="fa fa-times"></i>
+                                                            <i class="fas fa-times"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
                                                     </span>
@@ -211,7 +211,7 @@
                                             </div>
                                             <div class="col-sm-1 hidden-xs">
                                                 <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
-                                                    <i class="fa fa-times"></i>
+                                                    <i class="fas fa-times"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -225,13 +225,13 @@
                                                 <span class="item-title">
                                                     {if $domain.type eq "register"}{$LANG.orderdomainregistration}{else}{$LANG.orderdomaintransfer}{/if}
                                                     <a href="{$smarty.server.PHP_SELF}?a=confdomains" class="btn btn-link btn-xs">
-                                                        <i class="fa fa-pencil"></i>
+                                                        <i class="fas fa-pencil-alt"></i>
                                                         {$LANG.orderForm.edit}
                                                     </a>
                                                     <span class="visible-xs-inline">
                                                       {if array_search(141, $products) == false} {* Not Helium *}
                                                         <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
-                                                            <i class="fa fa-times"></i>
+                                                            <i class="fas fa-times"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
                                                       {/if}
@@ -278,7 +278,7 @@
                                             {if $heliumWithDomain != $domain.domain}
                                             <div class="col-sm-1 hidden-xs">
                                                 <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
-                                                    <i class="fa fa-times"></i>
+                                                    <i class="fas fa-times"></i>
                                                 </button>
                                             </div>
                                             {/if}
@@ -306,7 +306,7 @@
                                             </div>
                                             <div class="col-sm-1">
                                                 <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('r','{$num}')">
-                                                    <i class="fa fa-times"></i>
+                                                    <i class="fas fa-times"></i>
                                                     <span class="visible-xs">{$LANG.orderForm.remove}</span>
                                                 </button>
                                             </div>
@@ -340,7 +340,7 @@
                                             </div>
                                             <div class="col-sm-1">
                                                 <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('u','{$num}')">
-                                                    <i class="fa fa-times"></i>
+                                                    <i class="fas fa-times"></i>
                                                     <span class="visible-xs">{$LANG.orderForm.remove}</span>
                                                 </button>
                                             </div>
@@ -374,7 +374,7 @@
                             {if $cartitems > 0}
                                 <div class="empty-cart">
                                     <button type="button" class="btn btn-link btn-xs" id="btnEmptyCart">
-                                        <i class="fa fa-trash"></i>
+                                        <i class="fas fa-trash-alt"></i>
                                         <span>{$LANG.emptycart}</span>
                                     </button>
                                 </div>
@@ -420,7 +420,7 @@
                                         <form method="post" action="cart.php?a=view">
                                             <div class="form-group prepend-icon ">
                                                 <label for="cardno" class="field-icon">
-                                                    <i class="fa fa-ticket"></i>
+                                                    <i class="fas fa-ticket-alt"></i>
                                                 </label>
                                                 <input type="text" name="promocode" id="inputPromotionCode" class="field" placeholder="{lang key="orderPromoCodePlaceholder"}" required="required">
                                             </div>
@@ -469,7 +469,7 @@
 
                         <div class="order-summary" id="orderSummary">
                             <div class="loader" id="orderSummaryLoader" style="display: none;">
-                                <i class="fa fa-fw fa-refresh fa-spin"></i>
+                                <i class="fas fa-fw fa-sync fa-spin"></i>
                             </div>
                             <h2>{$LANG.ordersummary}</h2>
                             <div class="summary-container">
@@ -532,7 +532,7 @@
                                 <div class="text-right">
                                     <a href="cart.php?a=checkout" class="btn btn-success btn-lg btn-checkout{if $cartitems == 0} disabled{/if}" id="checkout">
                                         {$LANG.orderForm.checkout}
-                                        <i class="fa fa-arrow-right"></i>
+                                        <i class="fas fa-arrow-right"></i>
                                     </a><br />
                                     <a href="cart.php" class="btn btn-link btn-continue-shopping" id="continueShopping">
                                         {$LANG.orderForm.continueShopping}
@@ -558,7 +558,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             <h4 class="modal-title">
-                                <i class="fa fa-times fa-3x"></i>
+                                <i class="fas fa-times fa-3x"></i>
                                 <span>{$LANG.orderForm.removeItem}</span>
                             </h4>
                         </div>
@@ -584,7 +584,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             <h4 class="modal-title">
-                                <i class="fa fa-trash fa-3x"></i>
+                                <i class="fas fa-trash-alt fa-3x"></i>
                                 <span>{$LANG.emptycart}</span>
                             </h4>
                         </div>

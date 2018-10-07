@@ -132,8 +132,8 @@
                             <div class="col-sm-4 eppcode">
                                 <div class="form-group prepend-icon">
                                     <input type="text" name="epp[{$num}]" id="inputEppcode{$num}" value="{$domain.eppvalue}" class="field" placeholder="{$LANG.domaineppcode}" />
-                                    <label for="epp[{$num}]" class="field-icon">
-                                        <i class="fa fa-keyboard-o"></i>
+                                    <label for="inputEppcode{$num}" class="field-icon">
+                                        <i class="fas fa-keyboard-o"></i>
                                     </label>
                                     <span class="field-help-text">
                                         {$LANG.domaineppcodedesc}
@@ -161,7 +161,7 @@
                                             {$domain.dnsmanagementprice} / {$domain.regperiod} {$LANG.orderyears}
                                         </div>
                                         <div class="panel-add">
-                                            <i class="fa fa-plus"></i>
+                                            <i class="fas fa-plus"></i>
                                             {$LANG.orderForm.addToCart}
                                         </div>
                                     </div>
@@ -183,7 +183,7 @@
                                             {$domain.idprotectionprice} / {$domain.regperiod} {$LANG.orderyears}
                                         </div>
                                         <div class="panel-add">
-                                            <i class="fa fa-plus"></i>
+                                            <i class="fas fa-plus"></i>
                                             {$LANG.orderForm.addToCart}
                                         </div>
                                     </div>
@@ -205,7 +205,7 @@
                                             {$domain.emailforwardingprice} / {$domain.regperiod} {$LANG.orderyears}
                                         </div>
                                         <div class="panel-add">
-                                            <i class="fa fa-plus"></i>
+                                            <i class="fas fa-plus"></i>
                                             {$LANG.orderForm.addToCart}
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-lg">
                         {$LANG.continue}
-                        &nbsp;<i class="fa fa-arrow-circle-right"></i>
+                        &nbsp;<i class="fas fa-arrow-circle-right"></i>
                     </button>
                 </div>
 

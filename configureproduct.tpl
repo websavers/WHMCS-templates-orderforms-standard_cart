@@ -331,7 +331,7 @@ var _localLang = {
                                                 {$properprice}
                                             </div>
                                             <div class="panel-add">
-                                                <i class="fa fa-plus"></i>
+                                                <i class="fas fa-plus"></i>
                                                 {$LANG.addtocart}
                                             </div>
                                         </div>
@@ -347,7 +347,7 @@ var _localLang = {
                         <div id="orderSummary">
                             <div class="order-summary">
                                 <div class="loader" id="orderSummaryLoader">
-                                    <i class="fa fa-fw fa-refresh fa-spin"></i>
+                                    <i class="fas fa-fw fa-sync fa-spin"></i>
                                 </div>
                                 <h2>{$LANG.ordersummary}</h2>
                                 <div class="summary-container" id="producttotal"></div>
@@ -355,7 +355,7 @@ var _localLang = {
                             <div class="text-center">
                                 <button type="submit" id="btnCompleteProductConfig" class="btn btn-primary btn-lg">
                                     {$LANG.continue}
-                                    <i class="fa fa-arrow-circle-right"></i>
+                                    <i class="fas fa-arrow-circle-right"></i>
                                 </button>
                             </div>
                         </div>
@@ -368,7 +368,7 @@ var _localLang = {
         </div>
     </div>
     <div class="bluefoot">
-        <i class="fa fa-question-circle"></i>
+        <i class="fas fa-question-circle"></i>
         {$LANG.orderForm.haveQuestionsContact} <a href="contact.php" target="_blank" class="alert-link">{$LANG.orderForm.haveQuestionsClickHere}</a>
     </div>
 </div>
