@@ -212,7 +212,7 @@ function sanitize_domain(element, allowdots = false, updatedirect = true ){
 	if ($str == "") return $str;
 	
 	$str = $str.replace(/^(https?:\/\/)?(www\.)?/g, '');
-	$str = $str.replace(/[^a-zA-Z1-9\-\.]/g, '');
+	$str = $str.replace(/[^a-zA-Z0-9\-\.]/g, '');
 	$str = $str.toLowerCase();
 	
 	if (element.attr('id').indexOf('tld') !== -1 || allowdots == true){
