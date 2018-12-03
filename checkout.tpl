@@ -518,7 +518,7 @@
                                 <div class="dropdown" id="cardType" style="width:auto;position:absolute;top:0;right:0;z-index:4;">
                                     <button class="btn btn-default dropdown-toggle field" type="button" style="width:auto;border:none;padding-left:10px;background-color:transparent;" id="creditCardType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span id="selectedCardType">
-                                            <i class="fas {if $cctype}{getFontAwesomeCCIcon ccType=$cctype|trim}{else}{getFontAwesomeCCIcon ccType=$acceptedcctypes.0}{/if} fa-fw"></i>
+                                            <i class="{if $cctype}{getFontAwesomeCCIcon ccType=$cctype|trim}{else}{getFontAwesomeCCIcon ccType=$acceptedcctypes.0}{/if} fa-fw"></i>
                                             <span class="type">{if $cctype}{$cctype}{else}{$acceptedcctypes.0|trim}{/if}</span>
                                         </span>
                                         <span class="fas fa-caret-down fa-fw"></span>
