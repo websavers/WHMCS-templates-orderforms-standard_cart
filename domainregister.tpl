@@ -296,15 +296,15 @@
         {if !$lookupTerm}
         <div id="domain-registration-features" style="margin-top: 50px" class="greyfoot">
           <div class="col33 textcenter">
-            <i class="fa fa-server"></i>
+            <i class="fas fa-server"></i>
             <p>FREE DNS, web, and Mail hosting available with our <a href="http://www.websavershosting.ca" target="_blank">Helium Hosting Plan</a></p>
           </div>
           <div class="col33 textcenter">
-            <i class="fa-arrow-down"></i>
+            <i class="fas fa-cart-arrow-down"></i>
             <p>Simplify your online life by having all web services in one spot. Right here with Websavers.</p>
           </div>
           <div class="col33 textcenter">
-            <i class="fa-map-marker"></i>
+            <i class="fas fa-map-marked-alt"></i>
             <p>Why throw your money across the border when you could invest in your local Canadian economy?</p>
           </div>
           <div class="clearfix"></div>
