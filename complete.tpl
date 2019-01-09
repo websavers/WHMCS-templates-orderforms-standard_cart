@@ -52,38 +52,30 @@
 
            {if $ispaid}
              <!-- Enter any HTML code which needs to be displayed once a user has completed the checkout of their order here - for example conversion tracking and affiliate tracking scripts -->
-             {* Google Analytics Trasaction Recording *}
              {literal}
-             <script type="text/javascript">
-
-               var ws_cc = _gaq || []; //dedicated cc account
-               ws_cc.push(['_setAccount', 'UA-3271728-22']);
-               ws_cc.push(['_trackPageview']);
-               ws_cc.push(['_addTrans',
-                 '{$ordernumber}',           // transaction ID - required
-                 'Websavers Inc',  // affiliation or store name
-                 '{$amount}',          // total - required
-                 'Dartmouth',       // city
-                 'Nova Scotia',     // state or province
-                 'Canada'             // country
-               ]);
-
-               ws_cc.push(['_trackTrans']); //submits transaction to the Analytics servers
-               
+             <script>
+             /* Hopefully the WHMCS module provides the data for Tag manager to do this for us now?
+              gtag('event', 'conversion', {
+                'send_to': 'AW-957418798/SswiCM3v6JIBEK6axMgD',
+                'value': {/literal}{$amount}{literal},
+                'currency': 'CAD',
+                'transaction_id': '{/literal}{$ordernumber}{literal}',
+              });
+              */
+              /* Google Analytics eCommerce Tracking. Not needed anymore as we're using a WHMCS module
                var ws_dot_ca = _gaq || []; //merged ga acct.
                ws_dot_ca.push(['_setAccount', 'UA-3271728-25']);
                ws_dot_ca.push(['_trackPageview']);
                ws_dot_ca.push(['_addTrans',
-                 '{$ordernumber}',           // transaction ID - required
+                 '{/literal}{$ordernumber}{literal}',           // transaction ID - required
                  'Websavers Inc',  // affiliation or store name
-                 '{$amount}',          // total - required
+                 '{/literal}{$amount}{literal}',          // total - required
                  'Dartmouth',       // city
                  'Nova Scotia',     // state or province
                  'Canada'             // country
                ]);
-
                ws_dot_ca.push(['_trackTrans']); //submits transaction to the Analytics servers
-
+               */
              </script>
              {/literal}
            {/if}
