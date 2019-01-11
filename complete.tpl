@@ -52,32 +52,15 @@
 
            {if $ispaid}
              <!-- Enter any HTML code which needs to be displayed once a user has completed the checkout of their order here - for example conversion tracking and affiliate tracking scripts -->
-             {literal}
              <script>
-             /* Hopefully the WHMCS module provides the data for Tag manager to do this for us now?
+             /* Tag manager should be doing this, but it doesn't seem to be, so including here. */
               gtag('event', 'conversion', {
                 'send_to': 'AW-957418798/SswiCM3v6JIBEK6axMgD',
-                'value': {/literal}{$amount}{literal},
+                'value': {$amount},
                 'currency': 'CAD',
-                'transaction_id': '{/literal}{$ordernumber}{literal}',
+                'transaction_id': '{$ordernumber}',
               });
-              */
-              /* Google Analytics eCommerce Tracking. Not needed anymore as we're using a WHMCS module
-               var ws_dot_ca = _gaq || []; //merged ga acct.
-               ws_dot_ca.push(['_setAccount', 'UA-3271728-25']);
-               ws_dot_ca.push(['_trackPageview']);
-               ws_dot_ca.push(['_addTrans',
-                 '{/literal}{$ordernumber}{literal}',           // transaction ID - required
-                 'Websavers Inc',  // affiliation or store name
-                 '{/literal}{$amount}{literal}',          // total - required
-                 'Dartmouth',       // city
-                 'Nova Scotia',     // state or province
-                 'Canada'             // country
-               ]);
-               ws_dot_ca.push(['_trackTrans']); //submits transaction to the Analytics servers
-               */
              </script>
-             {/literal}
            {/if}
 
             <div class="text-center">
