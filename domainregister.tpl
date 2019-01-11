@@ -24,7 +24,7 @@
 
             {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 
-            <p>{$LANG.orderForm.findNewDomain}</p>
+            <p style="font-size: 1.3em;">{$LANG.orderForm.findNewDomain}</p>
 
             <div class="domain-checker-container">
                 <div class="domain-checker-bg clearfix">
