@@ -673,7 +673,11 @@ provider: function () {
                 this.feedbackContainer().removeClass('alert-danger alert-warning alert-success')
                     .addClass('alert alert-info')
                     .html(feedbackMsg);
-                window.location = data.redirect_url ? data.redirect_url : context.redirectUrl;
+
+                window.location = data.redirect_url
+                    ? decodeURIComponent(data.redirect_url)
+                    : decodeURIComponent(context.redirectUrl);
+
                 break;
 
             case "linking_complete":
@@ -919,6 +923,40 @@ jqClient: function () {
                 }
             )
         );
+    };
+
+    /**
+     * @param options
+     * @returns {*}
+     */
+    this.jsonPost = function (options) {
+        options = options || {};
+        this.post(options.url, options.data, function(response) {
+            if (response.warning) {
+                console.log('[WHMCS] Warning: ' + response.warning);
+                if (typeof options.warning === 'function') {
+                    options.warning(response.warning);
+                }
+            } else if (response.error) {
+                console.log('[WHMCS] Error: ' + response.error);
+                if (typeof options.error === 'function') {
+                    options.error(response.error);
+                }
+            } else {
+                if (typeof options.success === 'function') {
+                    options.success(response);
+                }
+            }
+        }, 'json').error(function(xhr, errorMsg){
+            console.log('[WHMCS] Error: ' + errorMsg);
+            if (typeof options.fail === 'function') {
+                options.fail(errorMsg);
+            }
+        }).always(function() {
+            if (typeof options.always === 'function') {
+                options.always();
+            }
+        });
     };
 
     return this;
@@ -1288,6 +1326,8 @@ function () {
  * @copyright Copyright (c) WHMCS Limited 2005-2018
  * @license http://www.whmcs.com/license/ WHMCS Eula
  */
+var recaptchaLoadComplete = false;
+
 (function(module) {
     if (!WHMCS.hasModule('recaptcha')) {
         WHMCS.loadModule('recaptcha', module);
@@ -1296,6 +1336,9 @@ function () {
     function () {
 
         this.register = function () {
+            if (recaptchaLoadComplete) {
+                return;
+            }
             var postLoad = [];
             var recaptchaForms = jQuery(".btn-recaptcha").parents('form');
             recaptchaForms.each(function (i, el){
@@ -1305,13 +1348,20 @@ function () {
                 }
                 var frm = jQuery(el);
                 var btnRecaptcha = frm.find(".btn-recaptcha");
-                var isInvisible = btnRecaptcha.hasClass('btn-recaptcha-invisible');
+                var isInvisible = btnRecaptcha.hasClass('btn-recaptcha-invisible'),
+                    required = (typeof requiredText !== 'undefined') ? requiredText : 'Required';
 
                 // if no recaptcha element, make one
-                var recaptchaContent = frm.find("#divDynamicRecaptcha .g-recaptcha");
+                var recaptchaContent = frm.find("#divDynamicRecaptcha .g-recaptcha"),
+                    recaptchaElement = frm.find('.recaptcha-container'),
+                    appendElement = frm;
+
+                if (recaptchaElement.length) {
+                    appendElement = recaptchaElement;
+                }
                 if (!recaptchaContent.length) {
-                    frm.append('<div id="divDynamicRecaptcha" class="g-recaptcha"></div>');
-                    recaptchaContent = frm.find("#divDynamicRecaptcha");
+                    appendElement.append('<div id="divDynamicRecaptcha" class="g-recaptcha" data-toggle="tooltip" data-placement="bottom" data-trigger="manual" title="' + required + '"></div>');
+                    recaptchaContent = appendElement.find("#divDynamicRecaptcha");
                 }
                 // propagate invisible recaptcha if necessary
                 if (isInvisible) {
@@ -1341,13 +1391,6 @@ function () {
                 window[funcName] = function () {
                     if (isInvisible) {
                         frm.submit();
-                    } else {
-                        btnRecaptcha.prop("disabled", false);
-                        recaptchaContent.slideUp('fast', function () {
-                            recaptchaContent.hide();
-                            btnRecaptcha.slideDown();
-                        });
-
                     }
                 };
                 recaptchaContent.attr('data-callback', funcName);
@@ -1357,20 +1400,20 @@ function () {
                 // has inject DOM
                 if (isInvisible) {
                     btnRecaptcha.on('click', function (event) {
-                        event.preventDefault();
-                        grecaptcha.execute();
+                        if (!grecaptcha.getResponse().trim()) {
+                            event.preventDefault();
+                            grecaptcha.execute();
+                        }
                     });
                 } else {
                     postLoad.push(function () {
-                        btnRecaptcha.slideUp('fast', function () {
-                            btnRecaptcha.hide();
-                            btnRecaptcha.prop("disabled", true);
+                        recaptchaContent.slideDown('fast', function() {
+                            // just in case there's a delay in DOM; rare
                             recaptchaContent.find(':first').addClass('center-block');
-                            recaptchaContent.slideDown('fast', function() {
-                                // just in case there's a delay in DOM; rare
-                                recaptchaContent.find(':first').addClass('center-block');
-                            });
                         });
+                    });
+                    postLoad.push(function() {
+                        recaptchaContent.find(':first').addClass('center-block');
                     });
                 }
             });
@@ -1384,6 +1427,7 @@ function () {
                     }
                 });
             }
+            recaptchaLoadComplete = true;
         };
 
         return this;
@@ -1479,6 +1523,10 @@ function () {
 
         return '';
     };
+
+    this.normaliseStringValue = function(status) {
+        return status ? status.toLowerCase().replace(/\s/g, '-') : '';
+    }
 
     return this;
 });
@@ -1793,7 +1841,10 @@ jQuery(document).ready(function(){
                     {
                         token: csrfToken,
                         type: 'domain',
-                        domain: sld + tld
+                        domain: sld + tld,
+                        sld: sld,
+                        tld: tld,
+                        source: 'cartAddDomain'
                     },
                     'json'
                 ),
@@ -1802,7 +1853,10 @@ jQuery(document).ready(function(){
                     {
                         token: csrfToken,
                         type: 'spotlight',
-                        domain: sld + tld
+                        domain: sld + tld,
+                        sld: sld,
+                        tld: tld,
+                        source: 'cartAddDomain'
                     },
                     'json'
                 ),
@@ -1811,7 +1865,10 @@ jQuery(document).ready(function(){
                     {
                         token: csrfToken,
                         type: 'suggestions',
-                        domain: sld + tld
+                        domain: sld + tld,
+                        sld: sld,
+                        tld: tld,
+                        source: 'cartAddDomain'
                     },
                     'json'
                 );
@@ -1974,7 +2031,10 @@ jQuery(document).ready(function(){
                 {
                     token: csrfToken,
                     type: 'transfer',
-                    domain: sld + tld
+                    domain: sld + tld,
+                    sld: sld,
+                    tld: tld,
+                    source: 'cartAddDomain'
                 },
                 'json'
             );
@@ -2023,7 +2083,10 @@ jQuery(document).ready(function(){
                     token: csrfToken,
                     type: domainoption,
                     pid: pid,
-                    domain: sld + tld
+                    domain: sld + tld,
+                    sld: sld,
+                    tld: tld,
+                    source: 'cartAddDomain'
                 },
                 'json'
             );
@@ -2157,7 +2220,7 @@ jQuery(document).ready(function(){
         var frmDomain = jQuery('#frmDomainChecker'),
             inputDomain = jQuery('#inputDomain'),
             suggestions = jQuery('#domainSuggestions'),
-            reCaptchaContainer = jQuery('#google-recaptcha'),
+            reCaptchaContainer = jQuery('#divDynamicRecaptcha'),
             captcha = jQuery('#inputCaptcha');
 
         domainLookupCallCount = 0;
@@ -2230,7 +2293,8 @@ jQuery(document).ready(function(){
                     availablePrice = result.find('.domain-price'),
                     contactSupport = result.find('.domain-contact-support'),
                     unavailable = result.find('.domain-unavailable'),
-                    invalid = result.find('.domain-invalid');
+                    invalid = result.find('.domain-invalid'),
+                    error = result.find('.domain-error');
                 jQuery('.domain-lookup-primary-loader').hide();
                 result.find('.btn-add-to-cart').removeClass('checkout');
                 result.removeClass('hidden').show();
@@ -2239,6 +2303,7 @@ jQuery(document).ready(function(){
                     unavailable.hide();
                     contactSupport.hide();
                     invalid.hide();
+                    error.hide();
                     if (domain.isAvailable && typeof pricing !== 'string') {
                         if (domain.preferredTLDNotAvailable) {
                             unavailable.show().find('strong').html(domain.originalUnavailableDomain);
@@ -2260,14 +2325,23 @@ jQuery(document).ready(function(){
                     availablePrice.hide();
                     unavailable.hide();
                     contactSupport.hide();
-                    var invalidLength = invalid.find('span.domain-length-restrictions');
+                    invalid.hide();
+                    error.hide();
+                    var invalidLength = invalid.find('span.domain-length-restrictions'),
+                        done = false;
                     invalidLength.hide();
                     if (domain.minLength > 0 && domain.maxLength > 0) {
                         invalidLength.find('.min-length').html(domain.minLength).end()
                             .find('.max-length').html(domain.maxLength).end();
                         invalidLength.show();
+                    } else if (data.result.error) {
+                        error.html(data.result.error);
+                        error.show();
+                        done = true;
                     }
-                    invalid.show();
+                    if (!done) {
+                        invalid.show();
+                    }
                 }
 
             });
@@ -2443,7 +2517,7 @@ jQuery(document).ready(function(){
             domain = inputDomain.val(),
             authCode = authField.val(),
             redirect = false,
-            reCaptchaContainer = jQuery('#google-recaptcha'),
+            reCaptchaContainer = jQuery('#divDynamicRecaptcha'),
             captcha = jQuery('#inputCaptcha');
 
         if (!domain) {
@@ -2519,7 +2593,7 @@ jQuery(document).ready(function(){
     jQuery("#cardType li a").click(function (e) {
         e.preventDefault();
         jQuery("#selectedCardType").html(jQuery(this).html());
-        jQuery("#cctype").val(jQuery('span.type', this).html());
+        jQuery("#cctype").val(jQuery('span.type', this).html().trim());
     });
 
     jQuery(document).on('click', '.domain-contact-support', function(e) {
@@ -2678,8 +2752,6 @@ jQuery(document).ready(function(){
             jQuery(this).toggle(jQuery(this).data('domain').toLowerCase().indexOf(inputText) > -1);
         });
     });
-
-    WHMCS.recaptcha.register();
 });
 
 function hasDomainLookupEnded() {
@@ -2867,7 +2939,7 @@ function loadMoreSuggestions()
 function validate_captcha(form)
 {
     var reCaptcha = jQuery('#g-recaptcha-response'),
-        reCaptchaContainer = jQuery('#google-recaptcha'),
+        reCaptchaContainer = jQuery('#divDynamicRecaptcha'),
         captcha = jQuery('#inputCaptcha');
 
     if (reCaptcha.length && !reCaptcha.val()) {

@@ -528,9 +528,7 @@
                                             <li>
                                                 <a href="#">
                                                     <i class="{getFontAwesomeCCIcon ccType=$cardType} fa-fw"></i>
-                                                    <span class="type">
-                                                        {$cardType|trim}
-                                                    </span>
+                                                    <span class="type">{$cardType}</span>
                                                 </a>
                                             </li>
                                         {/foreach}
@@ -621,10 +619,15 @@
                             </label>
                         </p>
                     {/if}
+                    {if $captcha}
+                        <div class="text-center margin-bottom">
+                            {include file="$template/includes/captcha.tpl"}
+                        </div>
+                    {/if}
 
                     <button type="submit"
                             id="btnCompleteOrder"
-                            class="btn btn-primary btn-lg disable-on-click spinner-on-click{if $recaptcha} btn-recaptcha{/if}{if $recaptchaInvisible} btn-recaptcha-invisible{/if}"
+                            class="btn btn-primary btn-lg disable-on-click spinner-on-click{if $captcha}{$captcha->getButtonClass($captchaForm)}{/if}"
                             {if $cartitems==0}disabled="disabled"{/if}
                             onclick="this.value='{$LANG.pleasewait}'">
                         {$LANG.completeorder}
