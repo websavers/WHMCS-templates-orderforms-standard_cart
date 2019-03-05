@@ -212,6 +212,7 @@ function sanitize_domain(element, allowdots = false, updatedirect = true ){
 	if ($str == "") return $str;
 	
 	$str = $str.replace(/^(https?:\/\/)?(www\.)?/g, '');
+	$str = $str.replace(/(:\d+)?$/g, ''); //remove ports in string like :8443
 	$str = $str.replace(/[^a-zA-Z0-9\-\.]/g, '');
 	$str = $str.toLowerCase();
 	
