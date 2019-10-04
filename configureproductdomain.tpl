@@ -238,44 +238,45 @@
 
               <div id="DomainSearchResults" class="hidden">
 
-                <div id="searchDomainInfo">
-                  <p id="primaryLookupSearching" class="domain-lookup-loader domain-lookup-primary-loader domain-searching domain-checker-result-headline">
-                      <i class="fas fa-spinner fa-spin"></i>
-                      <span class="domain-lookup-register-loader">{lang key='orderForm.checkingAvailability'}...</span>
-                      <span class="domain-lookup-transfer-loader">{lang key='orderForm.verifyingTransferEligibility'}...</span>
-                      <span class="domain-lookup-other-loader">{lang key='orderForm.verifyingDomain'}...</span>
-                  </p>
-                  <div id="primaryLookupResult" class="domain-lookup-result domain-lookup-primary-results hidden">
-                      <div class="domain-unavailable domain-checker-unavailable headline">{lang key='orderForm.domainIsUnavailable'}</div>
-                      <div class="domain-available domain-checker-available headline">{$LANG.domainavailable1} <strong></strong> {$LANG.domainavailable2}</div>
-                      <div class="btn btn-primary domain-contact-support headline">{$LANG.domainContactUs}</div>
-                      <div class="transfer-eligible">
-                          <p class="domain-checker-available headline">{lang key='orderForm.transferEligible'}</p>
-                          <p>{lang key='orderForm.transferUnlockBeforeContinuing'}</p>
-                      </div>
-                      <div class="transfer-not-eligible">
-                          <p class="domain-checker-unavailable headline">{lang key='orderForm.transferNotEligible'}</p>
-                          <p>{lang key='orderForm.transferNotRegistered'}</p>
-                          <p>{lang key='orderForm.trasnferRecentlyRegistered'}</p>
-                          <p>{lang key='orderForm.transferAlternativelyRegister'}</p>
-                      </div>
-                      <div class="domain-invalid">
-                          <p class="domain-checker-unavailable headline">{lang key='orderForm.domainInvalid'}</p>
-                          <p>
-                              {lang key='orderForm.domainLetterOrNumber'}<span class="domain-length-restrictions">{lang key='orderForm.domainLengthRequirements'}</span><br />
-                              {lang key='orderForm.domainInvalidCheckEntry'}
-                          </p>
-                      </div>
-                      <div class="domain-price">
-                          <span class="register-price-label">{lang key='orderForm.domainPriceRegisterLabel'}</span>
-                          <span class="transfer-price-label hidden">{lang key='orderForm.domainPriceTransferLabel'}</span>
-                          <span class="price"></span>
-                      </div>
-                      <input type="hidden" id="resultDomainOption" name="domainoption" />
-                      <input type="hidden" id="resultDomain" name="domains[]" />
-                      <input type="hidden" id="resultDomainPricingTerm" />
-                  </div>
-                </div>
+                    <div id="searchDomainInfo">
+                        <p id="primaryLookupSearching" class="domain-lookup-loader domain-lookup-primary-loader domain-searching domain-checker-result-headline">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span class="domain-lookup-register-loader">{lang key='orderForm.checkingAvailability'}...</span>
+                            <span class="domain-lookup-transfer-loader">{lang key='orderForm.verifyingTransferEligibility'}...</span>
+                            <span class="domain-lookup-other-loader">{lang key='orderForm.verifyingDomain'}...</span>
+                        </p>
+                        <div id="primaryLookupResult" class="domain-lookup-result domain-lookup-primary-results hidden">
+                            <div class="domain-unavailable domain-checker-unavailable headline">{lang key='orderForm.domainIsUnavailable'}</div>
+                            <div class="domain-available domain-checker-available headline">{$LANG.domainavailable1} <strong></strong> {$LANG.domainavailable2}</div>
+                            <div class="btn btn-primary domain-contact-support headline">{$LANG.domainContactUs}</div>
+                            <div class="transfer-eligible">
+                                <p class="domain-checker-available headline">{lang key='orderForm.transferEligible'}</p>
+                                <p>{lang key='orderForm.transferUnlockBeforeContinuing'}</p>
+                            </div>
+                            <div class="transfer-not-eligible">
+                                <p class="domain-checker-unavailable headline">{lang key='orderForm.transferNotEligible'}</p>
+                                <p>{lang key='orderForm.transferNotRegistered'}</p>
+                                <p>{lang key='orderForm.trasnferRecentlyRegistered'}</p>
+                                <p>{lang key='orderForm.transferAlternativelyRegister'}</p>
+                            </div>
+                            <div class="domain-invalid">
+                                <p class="domain-checker-unavailable headline">{lang key='orderForm.domainInvalid'}</p>
+                                <p>
+                                    {lang key='orderForm.domainLetterOrNumber'}<span class="domain-length-restrictions">{lang key='orderForm.domainLengthRequirements'}</span><br />
+                                    {lang key='orderForm.domainInvalidCheckEntry'}
+                                </p>
+                            </div>
+                            <div class="domain-price">
+                                <span class="register-price-label">{lang key='orderForm.domainPriceRegisterLabel'}</span>
+                                <span class="transfer-price-label hidden">{lang key='orderForm.domainPriceTransferLabel'}</span>
+                                <span class="price"></span>
+                            </div>
+                            <p class="domain-error domain-checker-unavailable headline"></p>
+                            <input type="hidden" id="resultDomainOption" name="domainoption" />
+                            <input type="hidden" id="resultDomain" name="domains[]" />
+                            <input type="hidden" id="resultDomainPricingTerm" />
+                        </div>
+                    </div>
 
                 {if $registerdomainenabled}
                     {if $spotlightTlds}
