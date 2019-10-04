@@ -117,6 +117,18 @@
 										
                 {/if}
 
+								<script>
+								function disable_epp(num){
+									jQuery(document).ready(function($){
+										$('#inputEppcode' + num).prop('readonly', function(i, v) { 
+											if (!v) $(this).val('ENTERLATER');
+											else $(this).val('');
+											return !v; 
+										});
+									});
+								} 
+								</script>
+								
                 {foreach $domains as $num => $domain}
                 <div class="domain-config">
 
@@ -133,10 +145,10 @@
                                 <div class="form-group prepend-icon">
                                     <input type="text" name="epp[{$num}]" id="inputEppcode{$num}" value="{$domain.eppvalue}" class="field" placeholder="{$LANG.domaineppcode}" />
                                     <label for="inputEppcode{$num}" class="field-icon">
-                                        <i class="fas fa-keyboard-o"></i>
+                                        <i class="fas fa-qrcode"></i>
                                     </label>
                                     <span class="field-help-text">
-                                        {$LANG.domaineppcodedesc}
+                                        {$LANG.domaineppcodedesc}. <a href="#" onclick="disable_epp({$num});return false;">Click here to skip entering the EPP code</a>. This will prevent the transfer from beginning until you supply the correct EPP code in the Client Centre. 
                                     </span>
                                 </div>
                             </div>
