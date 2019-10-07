@@ -128,11 +128,9 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                  <button type="button" class="btn btn-default btn-sm generate-password" data-targetfields="inputNewPassword1,inputNewPassword2">
-                                      {$LANG.generatePassword.btnLabel}
-                                  </button>
-                              </div>
-                            <div class="col-sm-6">
+                              <button type="button" class="btn btn-default btn-sm generate-password" data-targetfields="inputNewPassword1,inputNewPassword2">
+                                  {$LANG.generatePassword.btnLabel}
+                              </button>
                               <div class="password-strength-meter">
                                 <div class="progress" style="margin-bottom:0;">
                                     <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="passwordStrengthMeterBar"></div>
