@@ -4,9 +4,9 @@ jQuery(document).ready(function(){
 	 * Order form steps box 
 	 */
 	 
-	if ( jQuery('#order-standard_cart').length > 0 ){
+	if ( jQuery('html.cart').length > 0 ){
 	
-		jQuery( '#order-standard_cart > .row' ).before('<div id="stepsbox-container"><div class="stepsbox inactive"><a href="cart.php">Choose Service</a></div><div class="stepsbox inactive">Domain Options</div><div class="stepsbox inactive">Configure Service</div><div class="stepsbox inactive"><a href="cart.php?a=view">Cart</a></div><div class="stepsbox inactive"><a href="cart.php?a=checkout">Checkout</a></div></div>');
+		jQuery( 'html.cart #content' ).prepend('<div id="stepsbox-container"><div class="stepsbox inactive"><a href="cart.php">Choose Service</a></div><div class="stepsbox inactive">Domain Options</div><div class="stepsbox inactive">Configure Service</div><div class="stepsbox inactive"><a href="cart.php?a=view">Cart</a></div><div class="stepsbox inactive"><a href="cart.php?a=checkout">Checkout</a></div></div>');
 		
 	}
 
