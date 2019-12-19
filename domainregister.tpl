@@ -8,7 +8,7 @@
 
             <div class="header-lined">
                 <h1>
-                    {$LANG.registerdomain}
+                    {$LANG.registerdomainname}
                 </h1>
             </div>
 
@@ -31,7 +31,25 @@
                     <form method="post" action="cart.php" id="frmDomainChecker">
                         <input type="hidden" name="a" value="checkDomain">
                         <div class="row">
-                            <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
+                        {if $captcha->isEnabled() && !$captcha->recaptcha->isInvisible()}
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="captcha-container" id="captchaContainer">
+                                    {if $captcha == "recaptcha"}
+                                        <br>
+                                        <div class="form-group recaptcha-container"></div>
+                                    {elseif $captcha != "recaptcha"}
+                                        <div class="default-captcha default-captcha-register-margin">
+                                            <p>{lang key="cartSimpleCaptcha"}</p>
+                                            <div>
+                                                <img id="inputCaptchaImage" src="includes/verifyimage.php" align="middle" />
+                                                <input id="inputCaptcha" type="text" name="code" maxlength="5" class="form-control input-sm" data-toggle="tooltip" data-placement="right" data-trigger="manual" title="{lang key='orderForm.required'}" />
+                                            </div>
+                                        </div>
+                                    {/if}
+                                </div>
+                            </div>
+                        {/if}
+                            <div class="col-md-8 col-md-offset-2">
                                 <div class="input-group input-group-lg input-group-box">
                                     <input type="text" name="domain" class="form-control" placeholder="{$LANG.findyourdomain}" value="{$lookupTerm}" id="inputDomain" autocomplete="none" autocorrect="none" autocapitalize="none" spellcheck="false" data-toggle="tooltip" data-placement="left" data-trigger="manual" title="{lang key='orderForm.domainOrKeyword'}" />
                                     <span class="input-group-btn">
@@ -39,25 +57,6 @@
                                     </span>
                                 </div>
                             </div>
-
-                            {if $captcha->isEnabled() && !$captcha->recaptcha->isInvisible()}
-                                <div class="col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1">
-                                    <div class="captcha-container" id="captchaContainer">
-                                        {if $captcha == "recaptcha"}
-                                            <br>
-                                            <div class="form-group recaptcha-container"></div>
-                                        {elseif $captcha != "recaptcha"}
-                                            <div class="default-captcha default-captcha-register-margin">
-                                                <p>{lang key="cartSimpleCaptcha"}</p>
-                                                <div>
-                                                    <img id="inputCaptchaImage" src="includes/verifyimage.php" align="middle" />
-                                                    <input id="inputCaptcha" type="text" name="code" maxlength="5" class="form-control input-sm" data-toggle="tooltip" data-placement="right" data-trigger="manual" title="{lang key='orderForm.required'}" />
-                                                </div>
-                                            </div>
-                                        {/if}
-                                    </div>
-                                </div>
-                            {/if}
                         </div>
                     </form>
                 </div>
@@ -157,6 +156,56 @@
                 </div>
 
             </div>
+            
+            {if !$lookupTerm}
+            
+              <div class="row" id="domain-registration-features">
+                <div class="col-md-4 textcenter">
+                  <i class="fas fa-server"></i>
+                  <p>FREE web hosting available with our <a href="https://websavers.ca/shared-web-hosting" target="_blank">Helium Hosting Plan</a></p>
+                </div>
+                <div class="col-md-4 textcenter">
+                  <i class="fas fa-atom"></i>
+                  <p>Simplify your online life by having all web services in one spot. Right here with Websavers.</p>
+                </div>
+                <div class="col-md-4 textcenter">
+                  <i class="fas fa-coins"></i>
+                  <p>Stop getting nickel and dimed. We provide FREE ID protection, DNS management, and Email Forwarding.</p>
+                </div>
+              </div>
+                            
+              <style>
+                #domain-registration-features{
+                  margin: 20px auto 5px;
+                  padding: 50px 0;
+                }
+                #domain-registration-features p{
+                  font-size: 1.4em;
+                  padding: 0 7%;
+                }
+                #domain-registration-features i{
+                  font-size: 33px;
+                  height: 70px;
+                  width: 70px;
+                  padding: 10px;
+                  line-height: 1.5em;
+                  vertical-align: middle;
+                  display: block;
+                  text-align: center;
+                  margin: 0 auto 10px;
+                  
+                  background-color: #555;
+                  border-radius: 100%;
+                  color: white;
+                  
+                  transition: background-color 0.3s;
+                }
+                #domain-registration-features div:hover i{
+                  background-color: #8AC542;
+                }
+              </style>
+
+            {/if}
 
             <div class="domain-pricing">
 
@@ -188,6 +237,7 @@
                             {/foreach}
                         </div>
                     </div>
+                    <style>.featured-tld .price.ca{ background-color: #C8102E; color: white; }</style>
                 {/if}
 
                 <h4>{lang key='pricing.browseExtByCategory'}</h4>
@@ -253,10 +303,14 @@
                         <br><br>
                     </div>
                 </div>
+                
+                <div class="row" style="padding-bottom:0">
+                  <div class="bluefoot" style="margin: 20px 0;">Looking for a TLD you don't see here? <a href="submitticket.php">Ask us!</a></div>
+                </div>
 
             </div>
-
-            <div class="row">
+            
+            <div class="row greyfoot" style="margin-bottom:15px;">
               {*
                 <div class="{if $domainTransferEnabled}col-md-6{else}col-md-8 col-md-offset-2{/if}">
                     <div class="domain-promo-box">
@@ -296,29 +350,9 @@
             </div>
             
         </div>
-        {if !$lookupTerm}
-        <div id="domain-registration-features" style="margin-top: 50px" class="greyfoot">
-          <div class="col33 textcenter">
-            <i class="fas fa-server"></i>
-            <p>FREE DNS, web, and Mail hosting available with our <a href="http://www.websavershosting.ca" target="_blank">Helium Hosting Plan</a></p>
-          </div>
-          <div class="col33 textcenter">
-            <i class="fas fa-cart-arrow-down"></i>
-            <p>Simplify your online life by having all web services in one spot. Right here with Websavers.</p>
-          </div>
-          <div class="col33 textcenter">
-            <i class="fas fa-map-marked-alt"></i>
-            <p>Why throw your money across the border when you could invest in your local Canadian economy?</p>
-          </div>
-          <div class="clearfix"></div>
-        </div>
 
-</div>
-<div class="clearfix"></div>
-
-        {/if}
     </div>
-    <div class="bluefoot">Looking for a TLD you don't see here? <a href="submitticket.php">Ask us!</a></div>
+
 </div>
 
 <script>
