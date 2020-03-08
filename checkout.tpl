@@ -588,7 +588,7 @@
                                      <label for="inputCardNumber" class="field-icon">
                                          <i class="fas fa-credit-card"></i>
                                      </label>
-                                     <input type="tel" name="ccnumber" id="inputCardNumber" class="field cc-number-field" placeholder="{$LANG.orderForm.cardNumber}" autocomplete="cc-number" data-message-unsupported="{lang key='paymentMethodsManage.unsupportedCardType'}" data-message-invalid="{lang key='paymentMethodsManage.cardNumberNotValid'}" data-supported-cards="{$supportedCardTypes}" />
+                                     <input type="tel" name="ccnumber" id="inputCardNumber" class="field cc-number-field" value="{$ccnumber}" placeholder="{$LANG.orderForm.cardNumber}" autocomplete="cc-number" data-message-unsupported="{lang key='paymentMethodsManage.unsupportedCardType'}" data-message-invalid="{lang key='paymentMethodsManage.cardNumberNotValid'}" data-supported-cards="{$supportedCardTypes}" />
                                      <span class="field-error-msg"></span>
                                  </div>
                              </div>
@@ -597,7 +597,7 @@
                                      <label for="inputCardExpiry" class="field-icon">
                                          <i class="fas fa-calendar-alt"></i>
                                      </label>
-                                     <input type="tel" name="ccexpirydate" id="inputCardExpiry" class="field" placeholder="MM / YY{if $showccissuestart} ({$LANG.creditcardcardexpires}){/if}" autocomplete="cc-exp">
+                                     <input type="tel" name="ccexpirydate" id="inputCardExpiry" class="field" value="{if $ccexpirymonth neq ""}{$ccexpirymonth} / {$ccexpiryyear}{/if}" placeholder="MM / YY{if $showccissuestart} ({$LANG.creditcardcardexpires}){/if}" autocomplete="cc-exp">
                                      <span class="field-error-msg">{lang key="paymentMethodsManage.expiryDateNotValid"}</span>
                                  </div>
                              </div>
@@ -607,7 +607,7 @@
                                          <i class="fas fa-barcode"></i>
                                      </label>
                                      <div class="input-group">
-                                         <input type="tel" name="cccvv" id="inputCardCVV" class="field" placeholder="{$LANG.creditcardcvvnumbershort}" autocomplete="cc-cvc">
+                                         <input type="tel" name="cccvv" id="inputCardCVV" class="field" value="{$cccvv}" placeholder="{$LANG.creditcardcvvnumbershort}" autocomplete="cc-cvc">
                                          <span class="input-group-btn">
                                              <button type="button" class="btn btn-default" data-toggle="popover" data-placement="bottom" data-content="<img src='{$BASE_PATH_IMG}/ccv.gif' width='210' />">
                                                  ?
@@ -623,7 +623,7 @@
                                          <label for="inputCardStart" class="field-icon">
                                              <i class="far fa-calendar-check"></i>
                                          </label>
-                                         <input type="tel" name="ccstartdate" id="inputCardStart" class="field" placeholder="MM / YY ({$LANG.creditcardcardstart})" autocomplete="cc-exp">
+                                         <input type="tel" name="ccstartdate" id="inputCardStart" class="field" value="{if $ccstartmonth neq ""}{$ccstartmonth} / {$ccstartyear}{/if}" placeholder="MM / YY ({$LANG.creditcardcardstart})" autocomplete="cc-exp">
                                      </div>
                                  </div>
                                  <div class="col-sm-3 new-card-container">
@@ -631,7 +631,7 @@
                                          <label for="inputCardIssue" class="field-icon">
                                              <i class="fas fa-asterisk"></i>
                                          </label>
-                                         <input type="tel" name="ccissuenum" id="inputCardIssue" class="field" placeholder="{$LANG.creditcardcardissuenum}">
+                                         <input type="tel" name="ccissuenum" value="{$ccissuenum}" id="inputCardIssue" class="field" placeholder="{$LANG.creditcardcardissuenum}">
                                      </div>
                                  </div>
                              {/if}
@@ -643,7 +643,7 @@
                                          <label for="inputDescription" class="field-icon">
                                              <i class="fas fa-pencil"></i>
                                          </label>
-                                         <input type="text" class="field" id="inputDescription" name="ccdescription" autocomplete="off" value="" placeholder="{$LANG.paymentMethods.descriptionInput} {$LANG.paymentMethodsManage.optional}" />
+                                         <input type="text" class="field" id="inputDescription" name="ccdescription" value="{$ccdescription}" autocomplete="off" value="" placeholder="{$LANG.paymentMethods.descriptionInput} {$LANG.paymentMethodsManage.optional}" />
                                      </div>
                                  </div>
                                  {if $allowClientsToRemoveCards}
