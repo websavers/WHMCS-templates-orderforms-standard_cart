@@ -147,9 +147,7 @@
                                     <label for="inputEppcode{$num}" class="field-icon">
                                         <i class="fas fa-qrcode"></i>
                                     </label>
-                                    <span class="field-help-text">
-                                        {$LANG.domaineppcodedesc}. <a href="#" onclick="disable_epp({$num});return false;">Click here to skip entering the EPP code</a>. This will prevent the transfer from beginning until you supply the correct EPP code in the Client Centre. 
-                                    </span>
+                                    <span class="field-help-text">{$LANG.domaineppcodedesc}</span>
                                 </div>
                             </div>
                         {/if}
