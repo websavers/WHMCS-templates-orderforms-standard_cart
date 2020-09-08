@@ -1,6 +1,14 @@
+{include file="orderforms/{$carttpl}/common.tpl"}
+
 <div id="order-standard_cart">
 
     <div class="row">
+      
+{if $errormessage}
+    <div class="alert alert-danger">
+        {$errormessage}
+    </div>
+{/if}
     
 {if $gid eq 8}
 <div class="alert alert-info">
