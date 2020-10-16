@@ -65,10 +65,10 @@
                     	<div id="nameservers-servers" style="display:none">
                     		{if $nameservers_serverlist}
                     	    <select name="servers" style="width: 70%;margin: 5px 0 0 20px">
-                    	    	<option id="0" value="null">Select a Server</option>
+                    	    	<option id="0" value="null">Select a Hosting Plan / Server</option>
                     	    	{foreach $nameservers_serverlist as $server}
                     	    		{foreach $nameservers as $current_ns}{if $current_ns.value == $server.nameserver1}{assign 'nsmatch' true}{/if}{/foreach}
-                    	    		<option id="{$server.id}" value="{$server.nameserver1},{$server.nameserver2},{$server.nameserver3},{$server.nameserver4}" {if $nsmatch}selected="selected"{/if}>{$server.name} - {$server.domain}</option>
+															<option id="{$server.id}" value="{$server.nameserver1},{$server.nameserver2},{$server.nameserver3},{$server.nameserver4}" {if $nsmatch == 1}selected="selected"{/if}>[{$server.servername}] {$server.planname}{if $nameservers_serverlist|@count > 1 || $server.servername == 'VPS'} - {if $server.domain}{$server.domain}{else}Reseller: {$server.username}{/if}{/if}</option>
                     	    	{/foreach}
                     	    </select>
                     	    {else}
