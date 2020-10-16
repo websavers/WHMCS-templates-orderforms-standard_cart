@@ -47,6 +47,12 @@
                 </div>
                 <p>{$LANG.orderForm.enterPersonalDetails}</p>
             </div>
+            
+            <div id="containerExistingUserSignin"{if $loggedin || $custtype neq "existing"} class="hidden"{/if}>
+
+                {include file="orderforms/$carttpl/login.tpl"}
+                
+            </div>
 
             {if $errormessage}
                 <div class="alert alert-danger checkout-error-feedback" role="alert">
@@ -61,37 +67,6 @@
             <form method="post" action="{$smarty.server.PHP_SELF}?a=checkout" name="orderfrm" id="frmCheckout">
                 <input type="hidden" name="submit" value="true" />
                 <input type="hidden" name="custtype" id="inputCustType" value="{$custtype}" />
-
-                <div id="containerExistingUserSignin"{if $loggedin || $custtype neq "existing"} class="hidden"{/if}>
-
-                    <div class="sub-heading">
-                        <span>{$LANG.orderForm.existingCustomerLogin}</span>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-6 col-centered">
-                            <div class="form-group prepend-icon">
-                                <label for="inputLoginEmail" class="field-icon">
-                                    <i class="fas fa-envelope"></i>
-                                </label>
-                                <input type="email" name="loginemail" id="inputLoginEmail" class="field" placeholder="{$LANG.orderForm.emailAddress}" value="{$loginemail}">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-centered">
-                            <div class="form-group prepend-icon">
-                                <label for="inputLoginPassword" class="field-icon">
-                                    <i class="fas fa-lock"></i>
-                                </label>
-                                <input type="password" name="loginpassword" id="inputLoginPassword" class="field" placeholder="{$LANG.clientareapassword}">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-centered">
-                        	<button name="submitlogin" id="submitlogin" class="btn btn-primary" style="width:100%; padding:0.5em" />Login</button>
-                        </div>
-                    </div>
-
-                    {include file="orderforms/standard_cart/linkedaccounts.tpl" linkContext="checkout-existing"}
-                </div>
                 
                 {if !$loggedin}
                   

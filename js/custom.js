@@ -14,6 +14,7 @@ jQuery(document).ready(function(){
 	 * Dynamic Order Form login fields
 	 */
 	 
+	 /*
 	 if ( jQuery('#submitlogin').length > 0 ){
 	 
 		 jQuery( "#submitlogin" ).click(function() {
@@ -33,6 +34,7 @@ jQuery(document).ready(function(){
 		 });
 		 
 	 }
+	 */
 	 
 	 /** Hosting domain form **/
 	 if ( jQuery('#registersld').length > 0 ){

@@ -11,7 +11,9 @@
 
     <div class="row">
 
-    	{if $registrations > 0 && $atleastonenohosting}{include file="orderforms/$carttpl/login.tpl"}{/if}
+    	{if $registrations > 0 && $atleastonenohosting}
+				{include file="orderforms/$carttpl/login.tpl"}
+			{/if}
 
         <div class="pull-md-right col-md-9">
 
