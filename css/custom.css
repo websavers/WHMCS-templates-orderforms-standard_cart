@@ -108,10 +108,7 @@ div.stepsboxinactive:hover{ }
 .cart .btn-checkout{
 	width: 100%;
 }
-.cart .sidebar,
-.cart .categories-collapsed{
-  	 display: none !important;
-}
+
 .cart .pull-md-right{
 	 float: none;
 	 width: 100%;
@@ -131,6 +128,11 @@ div.stepsboxinactive:hover{ }
 .input-group-lg>.input-group-btn>.btn,
 .cart #order-standard_cart .view-cart-items-header{
 	 border-radius: 0;
+}
+
+#order-standard_cart select.form-control{
+  padding-bottom: 6px;
+  padding-top: 6px;
 }
 .cart #order-standard_cart p{
 	margin: 1em auto;
@@ -378,4 +380,17 @@ input#inputEppcode0.field{
 
 #order-standard_cart .item-title .btn{
 	margin-bottom: 0;
+}
+
+/* WHMCS 8.1 Updates*/
+#order-standard_cart .cart-sidebar{
+  display:none;
+} 
+#order-standard_cart .cart-body{ 
+  width: 100%;
+  float: none;
+}
+
+#order-standard_cart .sub-heading span{
+  background-color: white;
 }

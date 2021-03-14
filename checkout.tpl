@@ -205,6 +205,20 @@
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group prepend-icon">
+                                <label for="inputCountry" class="field-icon" id="inputCountryIcon">
+                                    <i class="fas fa-globe"></i>
+                                </label>
+                                <select name="country" id="inputCountry" class="field form-control">
+                                    {foreach $countries as $countrycode => $countrylabel}
+                                        <option value="{$countrycode}"{if (!$country && $countrycode == $defaultcountry) || $countrycode eq $country} selected{/if}>
+                                            {$countrylabel}
+                                        </option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group prepend-icon">
                                 <label for="inputAddress1" class="field-icon">
                                     <i class="far fa-building"></i>
                                 </label>
@@ -244,20 +258,6 @@
                                     <i class="fas fa-certificate"></i>
                                 </label>
                                 <input type="text" name="postcode" id="inputPostcode" class="field form-control" placeholder="{$LANG.orderForm.postcode}" value="{$clientsdetails.postcode}">
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group prepend-icon">
-                                <label for="inputCountry" class="field-icon" id="inputCountryIcon">
-                                    <i class="fas fa-globe"></i>
-                                </label>
-                                <select name="country" id="inputCountry" class="field form-control">
-                                    {foreach $countries as $countrycode => $countrylabel}
-                                        <option value="{$countrycode}"{if (!$country && $countrycode == $defaultcountry) || $countrycode eq $country} selected{/if}>
-                                            {$countrylabel}
-                                        </option>
-                                    {/foreach}
-                                </select>
                             </div>
                         </div>
                         {if $showTaxIdField}
