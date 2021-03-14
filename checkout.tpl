@@ -17,9 +17,11 @@
 <div id="order-standard_cart">
 
     <div class="row">
+      {*
         <div class="cart-sidebar">
-            {*include file="orderforms/{$carttpl}/sidebar-categories.tpl"*}
+            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
         </div>
+      *}
         <div class="cart-body">
             <div class="header-lined">
                 <h1 class="font-size-36">{$LANG.orderForm.checkout}</h1>
