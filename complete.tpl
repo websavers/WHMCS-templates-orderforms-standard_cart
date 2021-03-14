@@ -25,7 +25,7 @@
             <p>{$LANG.orderreceived}</p>
 
             <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
+                <div class="col-sm-8 col-sm-offset-2 offset-sm-2">
                     <div class="alert alert-info order-confirmation">
                         {$LANG.ordernumberis} <span>{$ordernumber}</span>
                     </div>
@@ -77,7 +77,6 @@
                     &nbsp;<i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
-
         </div>
 
         <div class="alert alert-info">Have a friend that might want to host with us? Send them coupon code IMAFRIEND for 15% off their order!</div>

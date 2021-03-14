@@ -160,7 +160,7 @@
 
 						{if !$domain.hosting} {* Don't show these if ordering hosting *}
                             {if $domain.dnsmanagement}
-                                <div class="col-sm-{math equation="12 / numAddons" numAddons=$domain.addonsCount}">
+                                <div class="col-sm-{math equation="12 / numAddons" numAddons=$domain.addonsCount} mb-3">
                                     <div class="panel panel-default panel-addon{if $domain.dnsmanagementselected} panel-addon-selected{/if}">
                                         <div class="panel-body">
                                             <label>
@@ -182,13 +182,13 @@
 						{/if}
 
                             {if $domain.idprotection}
-                                <div class="col-sm-{math equation="12 / numAddons" numAddons=$domain.addonsCount}">
+                                <div class="col-sm-{math equation="12 / numAddons" numAddons=$domain.addonsCount} mb-3">
                                     <div class="panel panel-default panel-addon{if $domain.idprotectionselected} panel-addon-selected{/if}">
                                         <div class="panel-body">
                                             <label>
                                                 <input type="checkbox" name="idprotection[{$num}]"{if $domain.idprotectionselected} checked{/if} />
                                                 {$LANG.domainidprotection}
-                                                </label><br />
+                                            </label><br />
                                             {$LANG.domainaddonsidprotectioninfo}
                                         </div>
                                         <div class="panel-price">
@@ -204,7 +204,7 @@
 
 						{if !$domain.hosting} {* Don't show these if ordering hosting *}
                             {if $domain.emailforwarding}
-                                <div class="col-sm-{math equation="12 / numAddons" numAddons=$domain.addonsCount}">
+                                <div class="col-sm-{math equation="12 / numAddons" numAddons=$domain.addonsCount} mb-3">
                                     <div class="panel panel-default panel-addon{if $domain.emailforwardingselected} panel-addon-selected{/if}">
                                         <div class="panel-body">
                                             <label>
@@ -231,7 +231,7 @@
                     {if $domain.fields}<div class="extra-domain-fields col70 center">
                     {foreach from=$domain.fields key=domainfieldname item=domainfield}
                         <div class="row extra-field">
-                            <div class="col-sm-4">{$domainfieldname}:</div>
+                            <div class="col-sm-4 text-sm-right">{$domainfieldname}:</div>
                             <div class="col-sm-8">{$domainfield}</div>
                         </div>
                     {/foreach}
