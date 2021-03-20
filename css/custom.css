@@ -396,7 +396,8 @@ input#inputEppcode0.field{
 /* WHMCS 8.1 Updates*/
 #order-standard_cart > .row > .pull-md-right.col-md-9 > .header-lined > h1{ display:none; } /* duplicate */
 #order-standard_cart .cart-sidebar,
-#order-standard_cart .sidebar{
+#order-standard_cart .sidebar,
+#order-standard_cart .sidebar-collapsed{
   display:none;
 } 
 #order-standard_cart .cart-body{ 
