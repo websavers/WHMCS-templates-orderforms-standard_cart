@@ -72,6 +72,17 @@ div.stepsbox:last-child::after{
 div.stepsboxinactive:hover{ }
  
 /****** Order Steps END ********/
+
+/** NEW ORDER STEPS **/
+body.cart .breadcrumb-item.active{
+  font-weight: bold;
+}
+body.cart .breadcrumb-item + .breadcrumb-item::before{
+  content: "\f30b";
+  font-family: 'Font Awesome 5 Pro';
+  font-weight: 400;
+}
+/*********************/
  
  
 .cart .clientcentre .fl-page-header,

@@ -4,10 +4,11 @@ jQuery(document).ready(function(){
 	 * Order form steps box 
 	 */
 	 
-	if ( jQuery('html.cart').length > 0 ){
-	
+	if ( jQuery('html.cart').length > 0 ){ /* websavers theme */
 		jQuery( 'html.cart #content' ).prepend('<div id="stepsbox-container"><div class="stepsbox inactive"><a href="cart.php">Choose Service</a></div><div class="stepsbox inactive">Domain Options</div><div class="stepsbox inactive">Configure Service</div><div class="stepsbox inactive"><a href="cart.php?a=view">Cart</a></div><div class="stepsbox inactive"><a href="cart.php?a=checkout">Checkout</a></div></div>');
-		
+	}
+	if ( jQuery('body.cart').length > 0 ){ /* websavers21 theme */
+		jQuery( 'body.cart ol.breadcrumb' ).append('<li class="breadcrumb-item inactive"><a href="cart.php">Choose Service</a></li><li class="breadcrumb-item inactive">Domain Options</li><li class="breadcrumb-item inactive">Configure Service</li><li class="breadcrumb-item inactive"><a href="cart.php?a=view">Cart</a></li><li class="breadcrumb-item inactive"><a href="cart.php?a=checkout">Checkout</a></li>');
 	}
 
 	/**
