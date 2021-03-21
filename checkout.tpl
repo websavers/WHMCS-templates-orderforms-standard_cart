@@ -24,7 +24,7 @@
       *}
         <div class="cart-body">
             <div class="header-lined">
-                <h1 class="font-size-36">{$LANG.orderForm.checkout}</h1>
+                <h1 class="font-size-36 text-center">{$LANG.orderForm.checkout}</h1>
             </div>
             {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 

@@ -342,12 +342,6 @@ input#inputEppcode0.field{
 	margin-bottom: 0 !important;
 	padding: 5px;
 }
-.clientcentre #order-standard_cart .checkout-security-msg i{
-	font-size:  1em;
-	float: none;
-	display: inline;
-	margin-right: 4px;
-}
 
 #order-standard_cart #btnAlreadyRegistered{
 	margin-left: 0 !important;
@@ -399,12 +393,19 @@ input#inputEppcode0.field{
 }
 
 /* WHMCS 8.1 Updates*/
-/* body.cart section#main-body{ background-color: white; } */
+body.cart section#main-body{ background-color: white; }
 #order-standard_cart .sidebar{ display:none; }
 #order-standard-cart > .row > .col-md-9,
 #order-standard_cart .col-md-9.pull-md-right{ width: 100%; max-width: 100%; flex: 0 0 100%; }
 #order-standard_cart .btn-remove-from-cart{ border-width: 1px; }
-body.cart #order-standard_cart .checkout-security-msg i{ font-size: 1.5em; }
+@media screen and (min-width: 900px){
+  body.cart #order-standard_cart .checkout-security-msg i{ 
+    font-size: 1.5em;
+  	float: none;
+  	display: inline;
+  	margin-right: 4px;
+  }
+}
 
 #order-standard_cart .order-summary{
   margin-bottom: 0 !important;
@@ -432,3 +433,15 @@ body.cart #order-standard_cart .checkout-security-msg i{ font-size: 1.5em; }
 }
 
 .icheckbox_square-blue{ margin-right: 5px; }
+
+/* Input field icons are just a little out of vertical alignment.
+ * This is probably due to font size. This fixes that */
+#order-standard_cart .prepend-icon .field-icon{
+  height: 38px;
+  line-height: 38px;
+}
+
+.marketing-email-optin{
+  margin: 15px 0;
+  padding: 15px;
+}

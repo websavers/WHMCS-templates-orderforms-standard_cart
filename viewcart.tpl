@@ -1,7 +1,5 @@
- {if $checkout}
-
+{if $checkout}
     {include file="orderforms/$carttpl/checkout.tpl"}
-
 {else}
 
     <script>
