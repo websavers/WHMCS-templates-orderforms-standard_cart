@@ -430,3 +430,5 @@ body.cart #order-standard_cart .checkout-security-msg i{ font-size: 1.5em; }
 #order-standard_cart .sub-heading span{
   background-color: white;
 }
+
+.icheckbox_square-blue{ margin-right: 5px; }
