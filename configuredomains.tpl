@@ -11,14 +11,15 @@
 
     <div class="row">
 
-    	{if $registrations > 0 && $atleastonenohosting}
-				{include file="orderforms/$carttpl/includes/login.tpl"}
-			{/if}
-
 			<div class="cart-sidebar">
 					{include file="orderforms/standard_cart/sidebar-categories.tpl"}
 			</div>
 			<div class="cart-body">
+				
+					{if $registrations > 0 && $atleastonenohosting}
+						{include file="orderforms/$carttpl/includes/login.tpl"}
+					{/if}
+				
 					<div class="header-lined">
 							<h1 class="font-size-36">{$LANG.cartdomainsconfig}</h1>
 					</div>

@@ -2,18 +2,10 @@
 	
 	{if $smarty.get.a != 'checkout'}
 	<div class="alert alert-message alert-info">
-		<p style="font-size:1.2em">
-			<i class="fa fa-white fa-info-circle" style="margin-top:1px"></i> 
-			<strong>{$LANG.orderForm.domains_alreadyregistered}</strong> 
-			<a href="{$smarty.server.PHP_SELF}?a=login" onclick="ws_showloginform();return false;">{$LANG.clickheretologin}</a>
-		</p>
+		<i class="fa fa-white fa-info-circle" style="margin-top:1px"></i> 
+		<strong>{$LANG.orderForm.domains_alreadyregistered}</strong> 
+		<a href="{$smarty.server.PHP_SELF}?a=login" onclick="ws_showloginform();return false;">{$LANG.clickheretologin}</a>
 	</div>
-	{/if}
-	
-	{if $smarty.get.incorrect == 'true'}
-		<div class="alert alert-message alert-error">
-			It appears you have 2 factor authentication enabled in your account. You must <a href="https://clients.websavers.ca/whmcs/login.php" target="_blank">login here first</a>, then return to this page and refresh it to proceed.
-		</div>
 	{/if}
 
 	<div id="loginfrm" {if $smarty.get.a != 'checkout'}style="display:none"{/if} class="logincontainer{if $linkableProviders} with-social{/if}">

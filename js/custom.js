@@ -8,7 +8,25 @@ jQuery(document).ready(function(){
 		jQuery( 'html.cart #content' ).prepend('<div id="stepsbox-container"><div class="stepsbox inactive"><a href="cart.php">Choose Service</a></div><div class="stepsbox inactive">Domain Options</div><div class="stepsbox inactive">Configure Service</div><div class="stepsbox inactive"><a href="cart.php?a=view">Cart</a></div><div class="stepsbox inactive"><a href="cart.php?a=checkout">Checkout</a></div></div>');
 	}
 	if ( jQuery('body.cart').length > 0 ){ /* websavers21 theme */
-		jQuery( 'body.cart ol.breadcrumb' ).append('<li class="breadcrumb-item inactive"><a href="cart.php">Choose Service</a></li><li class="breadcrumb-item inactive">Domain Options</li><li class="breadcrumb-item inactive">Configure Service</li><li class="breadcrumb-item inactive"><a href="cart.php?a=view">Cart</a></li><li class="breadcrumb-item inactive"><a href="cart.php?a=checkout">Checkout</a></li>');
+		jQuery( 'body.cart ol.breadcrumb' ).append('<!--<li class="breadcrumb-item"><a href="cart.php">Choose Service</a></li>--><li class="breadcrumb-item"><a>Domain Options</a></li><li class="breadcrumb-item"><a>Configure Services/Domains</a></li><li class="breadcrumb-item"><a href="cart.php?a=view">Cart</a></li><li class="breadcrumb-item"><a href="cart.php?a=checkout">Checkout</a></li>');
+		var params = new window.URLSearchParams(window.location.search);
+		var num = 1;
+		switch (params.get('a')) {
+			case 'add': //configure product domain
+		    num = 2;
+		    break;
+		  case 'confproduct':
+			case 'confdomains':
+		    num = 3;
+		    break;
+		  case 'view': //cart
+				num = 4;
+				break;
+		  case 'checkout':
+				num = 5;
+		    break;
+		}
+		jQuery( 'body.cart ol.breadcrumb li:nth-child(' + num + ')' ).addClass('active');
 	}
 
 	/**
