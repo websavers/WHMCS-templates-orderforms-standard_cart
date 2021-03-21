@@ -145,11 +145,15 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
   padding-bottom: 6px;
   padding-top: 6px;
 }
+/*
 .cart #order-standard_cart p{
 	margin: 1em auto;
 	text-align: center;
 }
-
+*/
+.product-info br{
+  display:none; /* these line breaks are auto-inserted and unwanted */
+}
 #order-standard_cart .prepend-icon .field{ /* override websavers.ca default */
   padding-bottom: 5px !important; 
 }
@@ -394,6 +398,23 @@ input#inputEppcode0.field{
 }
 
 /* WHMCS 8.1 Updates*/
+body.cart section#main-body{ background-color: white; }
+#order-standard_cart .sidebar{ display:none; }
+#order-standard-cart > .row > .col-md-9,
+#order-standard_cart .col-md-9.pull-md-right{ width: 100%; max-width: 100%; flex: 0 0 100%; }
+#order-standard_cart .btn-remove-from-cart{ border-width: 1px; }
+body.cart #order-standard_cart .checkout-security-msg i{ font-size: 1.5em; }
+
+#order-standard_cart .order-summary{
+  margin-bottom: 0 !important;
+}
+@media only screen and (max-width: 991px){
+  #orderSummary,
+  #order-standard_cart .secondary-cart-sidebar {
+      width: 100% !important;
+  }
+}
+
 #order-standard_cart > .row > .pull-md-right.col-md-9 > .header-lined > h1{ display:none; } /* duplicate */
 #order-standard_cart .cart-sidebar,
 #order-standard_cart .sidebar,
@@ -401,7 +422,7 @@ input#inputEppcode0.field{
   display:none;
 } 
 #order-standard_cart .cart-body{ 
-  width: 100%;
+  margin: 0 auto;
   float: none;
 }
 
