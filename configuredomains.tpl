@@ -128,10 +128,10 @@
                   <div class="sub-heading">
                       <span>{$domain.domain}<br /><small>{$domain.regperiod} {$LANG.orderyears}</small></span>
                   </div>
-
-                  <div class="row">
-
-                      {if $registrations == 1 || $transfers == 1}<p class="textcenter">{if $domain.hosting}<span style="color:#009900;">{$LANG.cartdomainshashosting}</span>{else}<a href="cart.php" style="color:#cc0000;">{$LANG.cartdomainsnohosting}</a>{/if}</p>{/if}
+									
+									{if $registrations == 1 || $transfers == 1}<br /><p class="text-center">{if $domain.hosting}<span style="color:#009900;">{$LANG.cartdomainshashosting}</span>{else}<a href="cart.php" style="color:#cc0000;">{$LANG.cartdomainsnohosting}</a>{/if}</p>{/if}
+                  
+									<div class="row">
 
                       {if $domain.eppenabled}
                           <div class="col-sm-4 eppcode">
@@ -147,7 +147,7 @@
                   </div>
 
                   {if $domain.dnsmanagement || $domain.emailforwarding || $domain.idprotection}
-                      <div class="row addon-products">
+                      <div class="row addon-products justify-content-center">
 
 					{if !$domain.hosting} {* Don't show these if ordering hosting *}
                           {if $domain.dnsmanagement}

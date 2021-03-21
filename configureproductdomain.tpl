@@ -2,25 +2,16 @@
 
 <div id="order-standard_cart">
 
-    <div class="row">
+  <div class="row">
+      <div class="cart-sidebar">
+          {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+      </div>
 
-        <div class="pull-md-right col-md-9">
-
-            <div class="header-lined">
-                <h1>{$LANG.domaincheckerchoosedomain}</h1>
-            </div>
-
-        </div>
-
-        <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
-
-            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
-
-        </div>
-
-        <div class="col-md-9 pull-md-right">
-
-            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
+      <div class="cart-body">
+          <div class="header-lined">
+              <h1 class="font-size-36">{$LANG.domaincheckerchoosedomain}</h1>
+          </div>
+          {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
 
             <form id="frmProductDomain">
                 <input type="hidden" id="frmProductDomainPid" value="{$pid}" />

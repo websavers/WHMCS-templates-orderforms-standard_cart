@@ -154,9 +154,6 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 .product-info br{
   display:none; /* these line breaks are auto-inserted and unwanted */
 }
-#order-standard_cart .prepend-icon .field{ /* override websavers.ca default */
-  padding-bottom: 5px !important; 
-}
 
 .cart #order-standard_cart small.infotext{
 	display: block;
@@ -398,7 +395,7 @@ input#inputEppcode0.field{
 }
 
 /* WHMCS 8.1 Updates*/
-body.cart section#main-body{ background-color: white; }
+/* body.cart section#main-body{ background-color: white; } */
 #order-standard_cart .sidebar{ display:none; }
 #order-standard-cart > .row > .col-md-9,
 #order-standard_cart .col-md-9.pull-md-right{ width: 100%; max-width: 100%; flex: 0 0 100%; }
