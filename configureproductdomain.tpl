@@ -42,6 +42,7 @@
                             </div>
                         </div>
                     {/if}
+                    
                     {* Do not allow manual entry of own domain with Helium *}
                     {if $productinfo.pid == 141}{assign 'owndomainenabled' 0}{/if}
                     {if $domains_existing}
@@ -69,6 +70,7 @@
                             </div>
                         </div>
                     {/if}
+                    
                     {if $registerdomainenabled}
                         <div class="option">
                             <label>
