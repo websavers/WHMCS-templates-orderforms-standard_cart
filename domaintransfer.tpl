@@ -3,8 +3,6 @@
 <div id="order-standard_cart">
 
     <div class="row">
-      
-        <div class="alert alert-warning">Haven't transferred a domain before? <a href="https://websavers.ca/transfer-domain-registration-websavers/" target="_blank">Click here to learn how to ensure a successful transfer.</a></div>
 
         <div class="pull-md-right col-md-9">
           
@@ -25,13 +23,9 @@
         <div class="col-md-9 pull-md-right">
 
             {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
-
-            <div class="text-center">
-                <!--<h2>{lang key='orderForm.transferToUs'}</h2>-->
-                <p>{lang key='orderForm.transferExtend'}*</p>
-            </div>
-            <br />
-
+            
+            <div class="alert alert-warning text-center">{lang key='orderForm.transferExtend'}* Haven't transferred a domain before? <a href="https://websavers.ca/transfer-domain-registration-websavers/" target="_blank">Click here to learn how to ensure a successful transfer.</a></div>
+            
             <form method="post" action="cart.php" id="frmDomainTransfer">
                 <input type="hidden" name="a" value="addDomainTransfer">
 
