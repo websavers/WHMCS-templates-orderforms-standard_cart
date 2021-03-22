@@ -706,7 +706,7 @@
 
                 <div class="text-center">
                     {if $accepttos}
-                        <p>
+                        <p class="mt-4">
                             <label class="checkbox-inline">
                                 <input type="checkbox" name="accepttos" id="accepttos" />
                                 &nbsp;
