@@ -433,7 +433,9 @@ body.cart section#main-body{ background-color: white; }
   background-color: white;
 }
 
-#inputNoStoreContainer{ margin-top: 15px; }
+@media screen and (max-width: 767px){
+  #inputNoStoreContainer{ margin-top: 15px; }
+}
 
 .icheckbox_square-blue{ margin-right: 5px; }
 
