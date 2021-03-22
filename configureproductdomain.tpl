@@ -42,6 +42,33 @@
                             </div>
                         </div>
                     {/if}
+                    {* Do not allow manual entry of own domain with Helium *}
+                    {if $productinfo.pid == 141}{assign 'owndomainenabled' 0}{/if}
+                    {if $domains_existing}
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="domainoption" value="incart" id="selincart" />{$LANG.cartproductdomainuseincart}
+                            </label>
+                            <div class="domain-input-group clearfix" id="domainincart">
+                                <div class="row">
+                                    <div class="col-sm-8 col-sm-offset-1 col-md-6 col-md-offset-2 offset-sm-1 offset-md-2">
+                                        <div class="domains-row">
+                                            <select id="incartsld" name="incartdomain" class="form-control">
+                                                {foreach $domains_existing as $d}
+                                                    <option sld="{$d->sld}" tld="{$d->tld}" value="{$d->domain}">{$d->domain}</option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            {$LANG.orderForm.use}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
                     {if $registerdomainenabled}
                         <div class="option">
                             <label>
@@ -113,7 +140,7 @@
                         </div>
                     {/if}
 
-                    {if $owndomainenabled && $productinfo.pid != 141} {* Helium PID *}
+                    {if $owndomainenabled}
                         <div class="option">
                             <label>
                                 <input type="radio" name="domainoption" value="owndomain" id="selowndomain"{if $domainoption eq "owndomain"} checked{/if} />{$LANG.cartexistingdomainchoice|sprintf2:$companyname}
@@ -132,51 +159,6 @@
                                             </div>
                                             <div class="col-xs-3 col-3">
                                                 <input type="text" id="owndomaintld" value="{$tld|substr:1}" placeholder="{$LANG.yourtldplaceholder}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.required'}" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <button type="submit" class="btn btn-primary btn-block" id="useOwnDomain">
-                                            {$LANG.orderForm.use}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {/if}
-                    
-                    {if $owndomainenabled && $domains_existing && $productinfo.pid == 141}
-                        <div class="option">
-                            <label>
-                                <input type="radio" name="domainoption" value="owndomain" id="selowndomain" />{$LANG.cartexistingdomainchoice|sprintf2:$companyname}
-                            </label>
-                            <div class="domain-input-group clearfix" id="domainowndomain">
-                                <div class="row">
-                                    <div class="col-sm-8 col-sm-offset-1">
-                                        <div class="row domains-row">
-                                            <div class="col-xs-12">
-                                              <div class="input-group">
-                                                <div class="input-group-addon input-group-prepend">
-                                                  <span class="input-group-text">{$LANG.orderForm.www}</span>
-                                                </div>
-                                                <select id="owndomain" class="form-control" onchange="wsSplitDomain();">
-                                                    {foreach $domains_existing as $d}
-                                                        <option sld="{$d->sld}" tld="{$d->tld}" value="{$d->domain}">{$d->domain}</option>
-                                                    {/foreach}
-                                                </select>
-                                                {* These will be filled from selection above using javascript below *}
-                                                <input type="hidden" id="owndomainsld" value="" placeholder="{$LANG.yourdomainplaceholder}" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
-                                                <input type="hidden" id="owndomaintld" value="" placeholder="{$LANG.yourtldplaceholder}" data-placement="top" data-trigger="manual" title="{lang key='orderForm.required'}" />
-                                                <script>
-                                                  function wsSplitDomain(){ //Transfer selected domain to WHMCS accepted input (SLD/TLD)
-                                                    var d_sld = jQuery('select#owndomain option:selected').attr('sld');
-                                                    jQuery('input[type=hidden]#owndomainsld').val(d_sld);
-                                                    var d_tld = jQuery('select#owndomain option:selected').attr('tld');
-                                                    jQuery('input[type=hidden]#owndomaintld').val(d_tld);
-                                                  }
-                                                  wsSplitDomain(); //call on page load
-                                                </script>
-                                              </div>
                                             </div>
                                         </div>
                                     </div>
