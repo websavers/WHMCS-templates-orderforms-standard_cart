@@ -26,7 +26,9 @@ jQuery(document).ready(function(){
 				num = 5;
 		    break;
 		}
-		jQuery( 'body.cart ol.breadcrumb li:nth-child(' + num + ')' ).addClass('active');
+		bc_selector = 'body.cart ol.breadcrumb li:nth-child(' + num + ')';
+		jQuery( bc_selector ).addClass('active');
+		jQuery( 'body.cart ol.breadcrumb').scrollLeft( jQuery( bc_selector ).position().left );
 	}
 
 	/**
