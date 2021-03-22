@@ -224,29 +224,31 @@ var _localLang = {
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
+                                                    <select name="configoption[{$configoption.id}]" id="inputConfigOption{$configoption.id}" class="form-control">
                                                     {foreach key=num2 item=options from=$configoption.options}
                                                         <option value="{$options.id}"{if $configoption.selectedvalue eq $options.id} selected="selected"{/if}>
                                                             {$options.name}
                                                         </option>
                                                     {/foreach}
-                                                </select>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {elseif $configoption.optiontype eq 2}
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
-                                                {foreach key=num2 item=options from=$configoption.options}
-                                                    <br />
-                                                    <label>
-                                                        <input type="radio" name="configoption[{$configoption.id}]" value="{$options.id}"{if $configoption.selectedvalue eq $options.id} checked="checked"{/if} />
-                                                        {if $options.name}
-                                                            {$options.name}
-                                                        {else}
-                                                            {$LANG.enable}
-                                                        {/if}
-                                                    </label>
-                                                {/foreach}
+                                        {elseif $configoption.optiontype eq 3}
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
+                                                    {foreach key=num2 item=options from=$configoption.options}
+                                                        <br />
+                                                        <label>
+                                                            <input type="radio" name="configoption[{$configoption.id}]" value="{$options.id}"{if $configoption.selectedvalue eq $options.id} checked="checked"{/if} />
+                                                            {if $options.name}
+                                                                {$options.name}
+                                                            {else}
+                                                                {$LANG.enable}
+                                                            {/if}
+                                                        </label>
+                                                    {/foreach}
+                                                </div>
                                             </div>
                                         {elseif $configoption.optiontype eq 4}
                                             <div class="col-sm-12">
@@ -289,53 +291,6 @@ var _localLang = {
                                                         {$LANG.enable}
                                                     {/if}
                                                 </label>
-                                            </div>
-                                        </div>
-                                    {elseif $configoption.optiontype eq 4}
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
-                                                {if $configoption.qtymaximum}
-                                                {if !$rangesliderincluded}
-                                                    <script type="text/javascript" src="{$BASE_PATH_JS}/ion.rangeSlider.min.js"></script>
-                                                <link href="{$BASE_PATH_CSS}/ion.rangeSlider.css" rel="stylesheet">
-                                                <link href="{$BASE_PATH_CSS}/ion.rangeSlider.skinModern.css" rel="stylesheet">
-                                                    {assign var='rangesliderincluded' value=true}
-                                                {/if}
-                                                    <input type="text" name="configoption[{$configoption.id}]" value="{if $configoption.selectedqty}{$configoption.selectedqty}{else}{$configoption.qtyminimum}{/if}" id="inputConfigOption{$configoption.id}" class="form-control" />
-                                                    <script>
-                                                        var sliderTimeoutId = null;
-                                                        var sliderRangeDifference = {$configoption.qtymaximum} - {$configoption.qtyminimum};
-                                                        // The largest size that looks nice on most screens.
-                                                        var sliderStepThreshold = 25;
-                                                        // Check if there are too many to display individually.
-                                                        var setLargerMarkers = sliderRangeDifference > sliderStepThreshold;
-
-                                                        jQuery("#inputConfigOption{$configoption.id}").ionRangeSlider({
-                                                            min: {$configoption.qtyminimum},
-                                                            max: {$configoption.qtymaximum},
-                                                            grid: true,
-                                                            grid_snap: setLargerMarkers ? false : true,
-                                                            onChange: function() {
-                                                                if (sliderTimeoutId) {
-                                                                    clearTimeout(sliderTimeoutId);
-                                                                }
-
-                                                                sliderTimeoutId = setTimeout(function() {
-                                                                    sliderTimeoutId = null;
-                                                                    recalctotals();
-                                                                }, 250);
-                                                            }
-                                                        });
-                                                    </script>
-                                                {else}
-                                                    <div>
-                                                        <input type="number" name="configoption[{$configoption.id}]" value="{if $configoption.selectedqty}{$configoption.selectedqty}{else}{$configoption.qtyminimum}{/if}" id="inputConfigOption{$configoption.id}" min="{$configoption.qtyminimum}" onchange="recalctotals()" onkeyup="recalctotals()" class="form-control form-control-qty" />
-                                                        <span class="form-control-static form-control-static-inline">
-                                                                x {$configoption.options.0.name}
-                                                            </span>
-                                                    </div>
-                                                {/if}
                                             </div>
                                         </div>
                                     {/if}
