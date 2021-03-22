@@ -90,8 +90,8 @@
                                                         {$LANG.orderForm.edit}
                                                     </a>
                                                     <span class="visible-xs-inline d-inline d-sm-none">
-                                                        <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
-                                                            <i class="fas fa-times"></i>
+                                                        <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('p','{$num}')">
+                                                            <i class="fas fa-times-circle"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
                                                     </span>
@@ -131,7 +131,7 @@
                                                 {if $product.proratadate}<br />({$LANG.orderprorata} {$product.proratadate}){/if}
                                             </div>
                                             <div class="col-sm-1 hidden-xs d-none d-sm-block">
-                                                <button type="button" class="btn-link btn-remove-from-cart" onclick="removeItem('p','{$num}')">
+                                                <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('p','{$num}')">
                                                     <i class="fas fa-times-circle"></i>
                                                 </button>
                                             </div>
@@ -186,7 +186,7 @@
                                                 <span class="item-title">
                                                     {$addon.name}
                                                     <span class="visible-xs-inline d-inline d-sm-none">
-                                                        <button type="button" class="btn-link btn-remove-from-cart" onclick="removeItem('a','{$num}')">
+                                                        <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('a','{$num}')">
                                                             <i class="fas fa-times-circle"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
@@ -241,7 +241,7 @@
                                                     </a>
                                                     <span class="visible-xs-inline d-inline d-sm-none">
                                                       {if array_search(141, $products) == false} {* Not Helium *}
-                                                        <button type="button" class="btn-link btn-remove-from-cart" onclick="removeItem('d','{$num}')">
+                                                        <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('d','{$num}')">
                                                             <i class="fas fa-times-circle"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
@@ -288,7 +288,7 @@
                                             </div>
                                             {if $heliumWithDomain != $domain.domain}
                                             <div class="col-sm-1 hidden-xs d-none d-sm-block">
-                                                <button type="button" class="btn-link btn-remove-from-cart" onclick="removeItem('d','{$num}')">
+                                                <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('d','{$num}')">
                                                     <i class="fas fa-times-circle"></i>
                                                 </button>
                                             </div>
@@ -316,7 +316,7 @@
                                                 <span class="cycle">{$domain.regperiod} {$LANG.orderyears}</span>
                                             </div>
                                             <div class="col-sm-1">
-                                                <button type="button" class="btn-link btn-remove-from-cart" onclick="removeItem('r','{$num}')">
+                                                <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('r','{$num}')">
                                                     <i class="fas fa-times-circle"></i>
                                                     <span class="visible-xs d-block d-sm-none">{$LANG.orderForm.remove}</span>
                                                 </button>
@@ -360,7 +360,7 @@
                                                 <span class="cycle">{$upgrade->localisedNewCycle}</span>
                                             </div>
                                             <div class="col-sm-1">
-                                                <button type="button" class="btn btn-link btn-remove-from-cart" onclick="removeItem('u','{$num}')">
+                                                <button type="button" class="btn btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('u','{$num}')">
                                                     <i class="fas fa-times-circle"></i>
                                                     <span class="visible-xs d-block d-sm-none">{$LANG.orderForm.remove}</span>
                                                 </button>
