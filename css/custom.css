@@ -346,7 +346,8 @@ input#inputEppcode0.field{
 	margin-left: 0 !important;
 }
 
-#order-standard_cart .iradio_square-blue + label{
+#order-standard_cart .iradio_square-blue + label,
+#order-standard_cart .icheckbox_square-blue + label{
 	display: inline;
 }
 
