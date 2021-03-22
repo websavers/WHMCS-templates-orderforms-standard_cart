@@ -53,14 +53,13 @@ div.stepsbox a{
 div.stepsbox.active,
 .breadcrumb li.active a{
 	font-weight: bold;
-  padding: 1px 3px;
-  background-color: rgba(255,255,255,0.75);
-  color: #333;
+  padding: 1px 5px;
+  background-color: #8BC542;
+  color: white;
   border-radius: 3px;
 }
 .breadcrumb li.active a:hover{
   text-decoration: none;
-  color: #333;
 }
 
 div.stepsbox::after{
@@ -404,6 +403,8 @@ body.cart section#main-body{ background-color: white; }
   	float: none;
   	display: inline;
   	margin-right: 4px;
+    margin-left: 4px;
+    padding-left: 0;
   }
 }
 
@@ -432,7 +433,17 @@ body.cart section#main-body{ background-color: white; }
   background-color: white;
 }
 
+#inputNoStoreContainer{ margin-top: 15px; }
+
 .icheckbox_square-blue{ margin-right: 5px; }
+
+/* Reduce left/right spacing on CC Expiry */
+@media screen and (min-width: 576px){
+  #newCardInfo .col-sm-3.new-card-container{
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
 
 /* Input field icons are just a little out of vertical alignment.
  * This is probably due to font size. This fixes that */

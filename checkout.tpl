@@ -474,6 +474,7 @@
                         {if $securityquestions}
                             <div class="row">
                                 <div class="col-sm-6">
+                                  <div class="form-group">
                                     <select name="securityqid" id="inputSecurityQId" class="field form-control">
                                         <option value="">{$LANG.clientareasecurityquestion}</option>
                                         {foreach $securityquestions as $question}
@@ -482,6 +483,7 @@
                                             </option>
                                         {/foreach}
                                     </select>
+                                  </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group prepend-icon">
