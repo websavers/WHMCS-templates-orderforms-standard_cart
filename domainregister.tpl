@@ -1,30 +1,20 @@
-{include file="orderforms/{$carttpl}/common.tpl"}
+{include file="orderforms/standard_cart/common.tpl"}
 
 <div id="order-standard_cart">
 
-    <div class="row" style="padding-bottom:0">
-
-        <div class="pull-md-right col-md-9">
-
+    <div class="row">
+        <div class="cart-sidebar">
+            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+        </div>
+        <div class="cart-body">
             <div class="header-lined">
-                <h1>
-                    {$LANG.registerdomainname}
+                <h1 class="font-size-36">
+                    {$LANG.registerdomain}
                 </h1>
             </div>
+            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
 
-        </div>
-
-        <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
-
-            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
-
-        </div>
-
-        <div class="col-md-9 pull-md-right">
-
-            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
-
-            <p style="font-size: 1.3em;">{$LANG.orderForm.findNewDomain}</p>
+            <p>{$LANG.orderForm.findNewDomain}</p>
 
             <div class="domain-checker-container">
                 <div class="domain-checker-bg clearfix">
@@ -139,11 +129,9 @@
                                                 <span class="added"><i class="far fa-shopping-cart"></i> {lang key='checkout'}</span>
                                                 <span class="unavailable">{$LANG.domaincheckertaken}</span>
                                             </button>
-                                            <!--
                                             <button type="button" class="btn btn-primary domain-contact-support w-hidden">
                                                 {lang key='domainChecker.contactSupport'}
                                             </button>
-                                          -->
                                         </div>
                                     </div>
                                 </div>
@@ -274,7 +262,6 @@
                             {/foreach}
                         </div>
                     </div>
-                    <style>.featured-tld .price.ca{ background-color: #C8102E; color: white; }</style>
                 {/if}
 
                 <h4 class="font-size-18">{lang key='pricing.browseExtByCategory'}</h4>
@@ -350,15 +337,14 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="row" style="padding-bottom:0">
-                  <div class="bluefoot" style="margin: 20px 0;">Looking for a TLD you don't see here? <a href="submitticket.php">Ask us!</a></div>
-                </div>
 
             </div>
             
-            <div class="row greyfoot" style="margin-bottom:15px;">
-              {*
+            <div class="row" style="margin: 20px 0">
+              <div class="bluefoot col-12">Looking for a TLD you don't see here? <a href="submitticket.php">Ask us!</a></div>
+            </div>
+
+            <div class="row">
                 <div class="{if $domainTransferEnabled}col-md-6{else}col-md-8 col-md-offset-2 offset-md-2{/if}">
                     <div class="domain-promo-box">
 
@@ -370,14 +356,13 @@
 
                         <p>{lang key='orderForm.packagesForBudget'}</p>
 
-                        <a href="cart.php" class="btn btn-warning">
+                        <a href="https://websavers.ca/shared-web-hosting" class="btn btn-warning">
                             {lang key='orderForm.exploreNow'}
                         </a>
                     </div>
                 </div>
-              *}
                 {if $domainTransferEnabled}
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="domain-promo-box">
 
                             <div class="clearfix">
@@ -386,7 +371,7 @@
                                 <p class="font-bold text-primary">{lang key='orderForm.transferExtend'}*</p>
                             </div>
 
-                            <a href="cart.php?a=add&domain=transfer" class="btn btn-primary btn-large">
+                            <a href="cart.php?a=add&domain=transfer" class="btn btn-primary">
                                 {lang key='orderForm.transferDomain'}
                             </a>
 
@@ -396,9 +381,7 @@
                 {/if}
             </div>
         </div>
-
     </div>
-
 </div>
 
 <script>
