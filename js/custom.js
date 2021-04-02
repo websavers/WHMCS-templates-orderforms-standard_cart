@@ -160,9 +160,12 @@ jQuery(document).ready(function(){
 	if ( jQuery('.domain-config .extra-domain-fields').length > 0 ){
 		
 		jQuery('.domain-config').each(function( index ){
-			//Set Canadian Citizen as default
+			//Set Canadian Citizen as default and make drop down not-selectable
 			if ( jQuery('select[name="domainfield[' + index + '][0]"] option[value="Corporation"]:selected') ){
-				jQuery('select[name="domainfield[' + index + '][0]"]').val("Canadian Citizen");
+				jQuery('select[name="domainfield[' + index + '][0]"]')
+					.val("Canadian Citizen")
+					.css("pointer-events","none")
+					.after('<div><small><em>Legal type cannot be changed as we are only able to register .ca domains to Canadian Citizens.</em></small></div>');
 			}
 			jQuery('input[type="checkbox"][name="domainfield[' + index + '][1]"]').parent().iCheck('check'); // CIRA Agreement Checkbox
 			jQuery('input[type="checkbox"][name="domainfield[' + index + '][2]"]').parent().iCheck('check'); // Hide WHOIS Checkbox
