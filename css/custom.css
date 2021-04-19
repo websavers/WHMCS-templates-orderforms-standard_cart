@@ -459,3 +459,9 @@ body.cart section#main-body{ background-color: white; }
   margin: 15px 0;
   padding: 15px;
 }
+
+/* .ca domain colours */
+.featured-tld .price.ca{
+	background-color: #CA1833;
+	color: white;
+}
