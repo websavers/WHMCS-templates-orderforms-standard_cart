@@ -78,7 +78,7 @@
                             </label>
                             <div class="domain-input-group clearfix" id="domainregister">
                                 <div class="row">
-                                    <div class="col-sm-8 col-sm-offset-1 offset-sm-1">
+                                    <div class="col-md-8 col-md-offset-1 offset-md-1">
                                         <div class="row domains-row">
                                             <div class="col-xs-9 col-9">
                                                 <div class="input-group">
@@ -97,7 +97,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary btn-block">
                                             {$LANG.orderForm.check}
                                         </button>
@@ -113,7 +113,7 @@
                             </label>
                             <div class="domain-input-group clearfix" id="domaintransfer">
                                 <div class="row">
-                                    <div class="col-sm-8 col-sm-offset-1 offset-sm-1">
+                                    <div class="col-md-8 col-md-offset-1 offset-md-1">
                                         <div class="row domains-row">
                                             <div class="col-xs-9 col-9">
                                                 <div class="input-group">
@@ -132,7 +132,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary btn-block">
                                             {$LANG.orderForm.transfer}
                                         </button>
@@ -181,15 +181,15 @@
                             </label>
                             <div class="domain-input-group clearfix" id="domainsubdomain">
                                 <div class="row">
-                                    <div class="col-sm-8 col-sm-offset-1">
+                                    <div class="col-md-8 col-md-offset-1 offset-md-1">
                                         <div class="row domains-row">
-                                            <div class="col-xs-7">
+                                            <div class="col-sm-7">
                                               <div class="input-group">
-                                                <span class="input-group-addon">http://</span>
+                                                <span class="input-group-addon input-group-prepend"><span class="input-group-text">https://</span></span>
                                                 <input type="text" id="subdomainsld" value="{$sld}" placeholder="yourname" class="form-control" autocomplete="none" autocorrect="none" autocapitalize="none" spellcheck="false" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
                                               </div>
                                             </div>
-                                            <div class="col-xs-5 col-5">
+                                            <div class="col-sm-5">
                                                 <select id="subdomaintld" class="form-control">
                                                     {foreach $subdomains as $subid => $subdomain}
                                                         <option value="{$subid}">{$subdomain}</option>
@@ -198,7 +198,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary btn-block">
                                             {$LANG.orderForm.check}
                                         </button>
