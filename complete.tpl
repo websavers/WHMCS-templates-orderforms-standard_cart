@@ -58,15 +58,6 @@
 
            {if $ispaid}
              <!-- Enter any HTML code which needs to be displayed once a user has completed the checkout of their order here - for example conversion tracking and affiliate tracking scripts -->
-             <script>
-             /* Tag manager should be doing this, but it doesn't seem to be, so including here. */
-              gtag('event', 'conversion', {
-                'send_to': 'AW-957418798/SswiCM3v6JIBEK6axMgD',
-                'value': {$amount},
-                'currency': 'CAD',
-                'transaction_id': '{$ordernumber}',
-              });
-             </script>
            {/if}
 
             <div class="text-center" style="margin:50px 0;">
