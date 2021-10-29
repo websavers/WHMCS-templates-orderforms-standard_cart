@@ -388,6 +388,10 @@
 
                             {if $cartitems > 0}
                                 <div class="empty-cart">
+                                    <a href="https://clients.websavers.ca/whmcs/cart.php?a=add&domain=register" class="btn btn-link btn-xs" id="btnAddDomain">
+                                        <i class="fas fa-plus-circle"></i>
+                                        <span>Add a Domain</span>
+                                    </a>
                                     <button type="button" class="btn btn-link btn-xs" id="btnEmptyCart">
                                         <i class="fas fa-trash-alt"></i>
                                         <span>{$LANG.emptycart}</span>
