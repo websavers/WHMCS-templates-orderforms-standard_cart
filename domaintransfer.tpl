@@ -1,26 +1,32 @@
-{include file="orderforms/standard_cart/common.tpl"}
+{include file="orderforms/{$carttpl}/common.tpl"}
 
 <div id="order-standard_cart">
 
     <div class="row">
-        <div class="cart-sidebar">
-            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
-        </div>
-        <div class="cart-body">
+
+        <div class="pull-md-right col-md-9">
+          
             <div class="header-lined">
                 <h1 class="font-size-36">
                     {$LANG.transferdomain}
                 </h1>
             </div>
-            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
 
-            <div class="text-center">
-                <h2 class="font-size-30">{lang key='orderForm.transferToUs'}</h2>
-                <p>{lang key='orderForm.transferExtend'}*</p>
-            </div>
-            <br />
+        </div>
 
-            <form method="post" action="{$WEB_ROOT}/cart.php" id="frmDomainTransfer">
+        <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
+
+            {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
+
+        </div>
+
+        <div class="col-md-9 pull-md-right">
+
+            {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
+            
+            <div class="alert alert-warning text-center">{lang key='orderForm.transferExtend'}* Haven't transferred a domain before? <a href="https://websavers.ca/transfer-domain-registration-websavers/" target="_blank">Click here to learn how to ensure a successful transfer.</a></div>
+            
+            <form method="post" action="cart.php" id="frmDomainTransfer">
                 <input type="hidden" name="a" value="addDomainTransfer">
 
                 <div class="row">
@@ -72,7 +78,7 @@
                 </div>
 
             </form>
-
+            
             <p class="text-center small">* {lang key='orderForm.extendExclusions'}</p>
         </div>
     </div>

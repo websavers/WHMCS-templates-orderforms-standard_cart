@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2 offset-md-2 col-xs-10 col-xs-offset-1 col-10 offset-1">
                                 <div class="input-group input-group-lg input-group-box">
-                                    <input type="text" name="domain" class="form-control" placeholder="{$LANG.findyourdomain}" value="{$lookupTerm}" id="inputDomain" data-toggle="tooltip" data-placement="left" data-trigger="manual" title="{lang key='orderForm.domainOrKeyword'}" />
+                                    <input type="text" name="domain" class="form-control" placeholder="{$LANG.findyourdomain}" value="{$lookupTerm}" id="inputDomain" autocapitalize="none" data-toggle="tooltip" data-placement="left" data-trigger="manual" title="{lang key='orderForm.domainOrKeyword'}" />
                                     <span class="input-group-btn input-group-append">
                                         <button type="submit" id="btnCheckAvailability" class="btn btn-primary domain-check-availability{$captcha->getButtonClass($captchaForm)}">{$LANG.search}</button>
                                     </span>
@@ -181,6 +181,56 @@
                 </div>
 
             </div>
+            
+            {if !$lookupTerm}
+            
+              <div class="row" id="domain-registration-features">
+                <div class="col-md-4 textcenter">
+                  <i class="fas fa-server"></i>
+                  <p>FREE web hosting available with our <a href="https://websavers.ca/shared-web-hosting" target="_blank">Helium Hosting Plan</a></p>
+                </div>
+                <div class="col-md-4 textcenter">
+                  <i class="fas fa-atom"></i>
+                  <p>Simplify your online life by having all web services in one spot. Right here with Websavers.</p>
+                </div>
+                <div class="col-md-4 textcenter">
+                  <i class="fas fa-coins"></i>
+                  <p>Stop getting nickel and dimed. We provide FREE ID protection, DNS management, and Email Forwarding.</p>
+                </div>
+              </div>
+                            
+              <style>
+                #domain-registration-features{
+                  margin: 20px auto 5px;
+                  padding: 50px 0;
+                }
+                #domain-registration-features p{
+                  font-size: 1.4em;
+                  padding: 0 7%;
+                }
+                #domain-registration-features i{
+                  font-size: 33px;
+                  height: 70px;
+                  width: 70px;
+                  padding: 10px;
+                  line-height: 1.5em;
+                  vertical-align: middle;
+                  display: block;
+                  text-align: center;
+                  margin: 0 auto 10px;
+                  
+                  background-color: #555;
+                  border-radius: 100%;
+                  color: white;
+                  
+                  transition: background-color 0.3s;
+                }
+                #domain-registration-features div:hover i{
+                  background-color: #8AC542;
+                }
+              </style>
+
+            {/if}
 
             <div class="domain-pricing">
 
@@ -289,6 +339,10 @@
                 </div>
 
             </div>
+            
+            <div class="row" style="margin: 20px 0">
+              <div class="bluefoot col-12">Looking for a TLD you don't see here? <a href="submitticket.php">Ask us!</a></div>
+            </div>
 
             <div class="row">
                 <div class="{if $domainTransferEnabled}col-md-6{else}col-md-8 col-md-offset-2 offset-md-2{/if}">
@@ -302,7 +356,7 @@
 
                         <p>{lang key='orderForm.packagesForBudget'}</p>
 
-                        <a href="{$WEB_ROOT}/cart.php" class="btn btn-warning">
+                        <a href="https://websavers.ca/shared-web-hosting" class="btn btn-warning">
                             {lang key='orderForm.exploreNow'}
                         </a>
                     </div>

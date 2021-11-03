@@ -1,7 +1,5 @@
 {if $checkout}
-
     {include file="orderforms/$carttpl/checkout.tpl"}
-
 {else}
 
     <script>
@@ -9,7 +7,7 @@
         var statesTab = 10;
         var stateNotRequired = true;
     </script>
-    {include file="orderforms/standard_cart/common.tpl"}
+    {include file="orderforms/{$carttpl}/common.tpl"}
     <script type="text/javascript" src="{$BASE_PATH_JS}/StatesDropdown.js"></script>
 
     <div id="order-standard_cart">
@@ -17,7 +15,7 @@
         <div class="row">
             <div class="cart-sidebar">
 
-                {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+                {include file="orderforms/{$carttpl}/sidebar-categories.tpl"}
 
             </div>
             <div class="cart-body">
@@ -25,7 +23,7 @@
                     <h1 class="font-size-36">{$LANG.cartreviewcheckout}</h1>
                 </div>
 
-                {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+                {include file="orderforms/{$carttpl}/sidebar-categories-collapsed.tpl"}
 
                 <div class="row">
                     <div class="secondary-cart-body">
@@ -42,7 +40,7 @@
                                 </ul>
                             </div>
                         {elseif $promotioncode && $rawdiscount eq "0.00"}
-                            <div class="alert alert-info text-center" role="alert">
+                            <div class="alert alert-warning text-center" role="alert">
                                 {$LANG.promoappliedbutnodiscount}
                             </div>
                         {elseif $promoaddedsuccess}
@@ -87,13 +85,13 @@
                                             <div class="{if $showqtyoptions}col-sm-5{else}col-sm-7{/if}">
                                                 <span class="item-title">
                                                     {$product.productinfo.name}
-                                                    <a href="{$WEB_ROOT}/cart.php?a=confproduct&i={$num}" class="btn btn-link btn-xs">
-                                                        <i class="fas fa-pencil-alt"></i>
+                                                    <a href="{$WEB_ROOT}/cart.php?a=confproduct&i={$num}" style="font-size:14.333px;margin-left:15px;text-decoration:none !important;">
+                                                        <i class="fas fa-cog"></i>
                                                         {$LANG.orderForm.edit}
                                                     </a>
                                                     <span class="visible-xs-inline d-inline d-sm-none">
-                                                        <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
-                                                            <i class="fas fa-times"></i>
+                                                        <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('p','{$num}')">
+                                                            <i class="fas fa-times-circle"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
                                                     </span>
@@ -133,8 +131,8 @@
                                                 {if $product.proratadate}<br />({$LANG.orderprorata} {$product.proratadate}){/if}
                                             </div>
                                             <div class="col-sm-1 hidden-xs d-none d-sm-block">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('p','{$num}')">
-                                                    <i class="fas fa-times"></i>
+                                                <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('p','{$num}')">
+                                                    <i class="fas fa-times-circle"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -168,7 +166,14 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {if $addon.name|strstr:'SiteMigrator'}{assign var="siteMigratorAddon" value='true'}{/if}
+
                                     {/foreach}
+
+                                    {if $product.productinfo.name|strstr:'Titanium' && $product.billingcycle neq 'quarterly'}{assign var="siteMigratorTitanium" value='true'}{/if}
+                                    {if $product.productinfo.name|strstr:'Helium'}{assign var="heliumWithDomain" value=$product.domain}{/if}
+
                                 {/foreach}
 
                                 {foreach $addons as $num => $addon}
@@ -178,8 +183,8 @@
                                                 <span class="item-title">
                                                     {$addon.name}
                                                     <span class="visible-xs-inline d-inline d-sm-none">
-                                                        <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
-                                                            <i class="fas fa-times"></i>
+                                                        <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('a','{$num}')">
+                                                            <i class="fas fa-times-circle"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
                                                     </span>
@@ -210,8 +215,8 @@
                                                 {if $addon.isProrated}<br />({$LANG.orderprorata} {$addon.prorataDate}){/if}
                                             </div>
                                             <div class="col-sm-1 hidden-xs d-none d-sm-block">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
-                                                    <i class="fas fa-times"></i>
+                                                <button type="button" class="btn-link btn-xs btn-remove-from-cart" onclick="removeItem('a','{$num}')">
+                                                    <i class="fas fa-times-circle"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -224,15 +229,17 @@
                                             <div class="col-sm-7">
                                                 <span class="item-title">
                                                     {if $domain.type eq "register"}{$LANG.orderdomainregistration}{else}{$LANG.orderdomaintransfer}{/if}
-                                                    <a href="{$WEB_ROOT}/cart.php?a=confdomains" class="btn btn-link btn-xs">
-                                                        <i class="fas fa-pencil-alt"></i>
+                                                    <a href="{$WEB_ROOT}/cart.php?a=confdomains" style="font-size:14.333px;margin-left:15px;text-decoration:none !important;">
+                                                        <i class="fas fa-cog"></i>
                                                         {$LANG.orderForm.edit}
                                                     </a>
                                                     <span class="visible-xs-inline d-inline d-sm-none">
-                                                        <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
-                                                            <i class="fas fa-times"></i>
+                                                      {if array_search(141, $products) == false} {* Not Helium *}
+                                                        <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('d','{$num}')">
+                                                            <i class="fas fa-times-circle"></i>
                                                             {$LANG.orderForm.remove}
                                                         </button>
+                                                      {/if}
                                                     </span>
                                                 </span>
                                                 {if $domain.domain}
@@ -273,11 +280,13 @@
                                                     </span>
                                                 {/if}
                                             </div>
+                                            {if $heliumWithDomain != $domain.domain}
                                             <div class="col-sm-1 hidden-xs d-none d-sm-block">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('d','{$num}')">
-                                                    <i class="fas fa-times"></i>
+                                                <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('d','{$num}')">
+                                                    <i class="fas fa-times-circle"></i>
                                                 </button>
                                             </div>
+                                            {/if}
                                         </div>
                                     </div>
                                 {/foreach}
@@ -301,8 +310,8 @@
                                                 <span class="cycle">{$domain.regperiod} {$LANG.orderyears}</span>
                                             </div>
                                             <div class="col-sm-1">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('r','{$num}')">
-                                                    <i class="fas fa-times"></i>
+                                                <button type="button" class="btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('r','{$num}')">
+                                                    <i class="fas fa-times-circle"></i>
                                                     <span class="visible-xs d-block d-sm-none">{$LANG.orderForm.remove}</span>
                                                 </button>
                                             </div>
@@ -345,8 +354,8 @@
                                                 <span class="cycle">{$upgrade->localisedNewCycle}</span>
                                             </div>
                                             <div class="col-sm-1">
-                                                <button type="button" class="btn btn-link btn-xs btn-remove-from-cart" onclick="removeItem('u','{$num}')">
-                                                    <i class="fas fa-times"></i>
+                                                <button type="button" class="btn btn btn-xs btn-link btn-remove-from-cart" onclick="removeItem('u','{$num}')">
+                                                    <i class="fas fa-times-circle"></i>
                                                     <span class="visible-xs d-block d-sm-none">{$LANG.orderForm.remove}</span>
                                                 </button>
                                             </div>
@@ -379,6 +388,10 @@
 
                             {if $cartitems > 0}
                                 <div class="empty-cart">
+                                    <a href="https://clients.websavers.ca/whmcs/cart.php?a=add&domain=register" class="btn btn-link btn-xs" id="btnAddDomain">
+                                        <i class="fas fa-plus-circle"></i>
+                                        <span>Add a Domain</span>
+                                    </a>
                                     <button type="button" class="btn btn-link btn-xs" id="btnEmptyCart">
                                         <i class="fas fa-trash-alt"></i>
                                         <span>{$LANG.emptycart}</span>
@@ -427,6 +440,10 @@
                                             </a>
                                         </div>
                                     {else}
+
+                                    {if $siteMigratorAddon eq 'true' && $siteMigratorTitanium eq 'true' && $promotioncode neq 'FreeSiteMigrator'}
+<div id="promo-alert" style="text-align:center;color: black;font-size:0.9em;margin-bottom:5px;">Your order qualifies for a free website migration! Enter promotion code "FreeSiteMigrator" to save!</div>
+{/if}
                                         <form method="post" action="{$WEB_ROOT}/cart.php?a=view">
                                             <div class="form-group prepend-icon ">
                                                 <label for="cardno" class="field-icon">
@@ -577,7 +594,7 @@
                                 </button>
                             </div>
                             <h4 class="modal-title margin-bottom mb-3">
-                                <i class="fas fa-times fa-3x"></i>
+                                <i class="fas fa-times-circle fa-3x"></i>
                                 <span>{lang key='orderForm.removeItem'}</span>
                             </h4>
                             {lang key='cartremoveitemconfirm'}

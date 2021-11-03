@@ -1,19 +1,21 @@
-{include file="orderforms/standard_cart/common.tpl"}
+{include file="orderforms/{$carttpl}/common.tpl"}
 
 <div id="order-standard_cart">
 
-    <div class="row">
-        <div class="cart-sidebar">
-            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
-        </div>
+  <div class="row">
+      <div class="cart-sidebar">
+          {include file="orderforms/standard_cart/sidebar-categories.tpl"}
+      </div>
 
-        <div class="cart-body">
-            <div class="header-lined">
-                <h1 class="font-size-36">{$LANG.domaincheckerchoosedomain}</h1>
-            </div>
-            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+      <div class="cart-body">
+          <div class="header-lined">
+              <h1 class="font-size-36">{$LANG.domaincheckerchoosedomain}</h1>
+          </div>
+          {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+
             <form id="frmProductDomain">
                 <input type="hidden" id="frmProductDomainPid" value="{$pid}" />
+
                 <div class="domain-selection-options">
                     {if $incartdomains}
                         <div class="option">
@@ -40,6 +42,35 @@
                             </div>
                         </div>
                     {/if}
+                    
+                    {* Do not allow manual entry of own domain with Helium *}
+                    {if $productinfo.pid == 141}{assign 'owndomainenabled' 0}{/if}
+                    {if $domains_existing}
+                        <div class="option">
+                            <label>
+                                <input type="radio" name="domainoption" value="incart" id="selincart" />{$LANG.cartproductdomainuseincart}
+                            </label>
+                            <div class="domain-input-group clearfix" id="domainincart">
+                                <div class="row">
+                                    <div class="col-sm-8 col-sm-offset-1 col-md-6 col-md-offset-2 offset-sm-1 offset-md-2">
+                                        <div class="domains-row">
+                                            <select id="incartsld" name="incartdomain" class="form-control">
+                                                {foreach $domains_existing as $d}
+                                                    <option sld="{$d->sld}" tld="{$d->tld}" value="{$d->domain}">{$d->domain}</option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            {$LANG.orderForm.use}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
+                    
                     {if $registerdomainenabled}
                         <div class="option">
                             <label>
@@ -47,7 +78,7 @@
                             </label>
                             <div class="domain-input-group clearfix" id="domainregister">
                                 <div class="row">
-                                    <div class="col-sm-8 col-sm-offset-1 offset-sm-1">
+                                    <div class="col-md-8 col-md-offset-1 offset-md-1">
                                         <div class="row domains-row">
                                             <div class="col-xs-9 col-9">
                                                 <div class="input-group">
@@ -66,7 +97,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary btn-block">
                                             {$LANG.orderForm.check}
                                         </button>
@@ -82,7 +113,7 @@
                             </label>
                             <div class="domain-input-group clearfix" id="domaintransfer">
                                 <div class="row">
-                                    <div class="col-sm-8 col-sm-offset-1 offset-sm-1">
+                                    <div class="col-md-8 col-md-offset-1 offset-md-1">
                                         <div class="row domains-row">
                                             <div class="col-xs-9 col-9">
                                                 <div class="input-group">
@@ -101,7 +132,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary btn-block">
                                             {$LANG.orderForm.transfer}
                                         </button>
@@ -110,6 +141,7 @@
                             </div>
                         </div>
                     {/if}
+
                     {if $owndomainenabled}
                         <div class="option">
                             <label>
@@ -117,15 +149,15 @@
                             </label>
                             <div class="domain-input-group clearfix" id="domainowndomain">
                                 <div class="row">
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8 col-sm-offset-1 offset-sm-1">
                                         <div class="row domains-row">
-                                            <div class="col-xs-2 col-2 text-right">
-                                                <p class="form-control-static">
-                                                    {lang key='orderForm.www'}
-                                                </p>
-                                            </div>
-                                            <div class="col-xs-7 col-7">
-                                                <input type="text" id="owndomainsld" value="{$sld}" placeholder="{$LANG.yourdomainplaceholder}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
+                                            <div class="col-xs-9 col-9">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon input-group-prepend">
+                                                        <span class="input-group-text">{$LANG.orderForm.www}</span>
+                                                    </div>
+                                                    <input type="text" id="owndomainsld" value="{$sld}" placeholder="{$LANG.yourdomainplaceholder}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
+                                                </div>
                                             </div>
                                             <div class="col-xs-3 col-3">
                                                 <input type="text" id="owndomaintld" value="{$tld|substr:1}" placeholder="{$LANG.yourtldplaceholder}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.required'}" />
@@ -141,6 +173,7 @@
                             </div>
                         </div>
                     {/if}
+
                     {if $subdomains}
                         <div class="option">
                             <label>
@@ -148,15 +181,15 @@
                             </label>
                             <div class="domain-input-group clearfix" id="domainsubdomain">
                                 <div class="row">
-                                    <div class="col-sm-9">
+                                    <div class="col-md-8 col-md-offset-1 offset-md-1">
                                         <div class="row domains-row">
-                                            <div class="col-xs-2 col-2 text-right">
-                                                <p class="form-control-static">http://</p>
+                                            <div class="col-sm-7">
+                                              <div class="input-group">
+                                                <span class="input-group-addon input-group-prepend"><span class="input-group-text">https://</span></span>
+                                                <input type="text" id="subdomainsld" value="{$sld}" placeholder="yourname" class="form-control" autocomplete="none" autocorrect="none" autocapitalize="none" spellcheck="false" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
+                                              </div>
                                             </div>
-                                            <div class="col-xs-5 col-5">
-                                                <input type="text" id="subdomainsld" value="{$sld}" placeholder="yourname" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
-                                            </div>
-                                            <div class="col-xs-5 col-5">
+                                            <div class="col-sm-5">
                                                 <select id="subdomaintld" class="form-control">
                                                     {foreach $subdomains as $subid => $subdomain}
                                                         <option value="{$subid}">{$subdomain}</option>
@@ -165,7 +198,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary btn-block">
                                             {$LANG.orderForm.check}
                                         </button>
@@ -251,85 +284,86 @@
                         </div>
                     </div>
 
-                    {if $registerdomainenabled}
-                        {if $spotlightTlds}
-                            <div id="spotlightTlds" class="spotlight-tlds clearfix w-hidden">
-                                <div class="spotlight-tlds-container">
-                                    {foreach $spotlightTlds as $key => $data}
-                                        <div class="spotlight-tld-container spotlight-tld-container-{$spotlightTlds|count}">
-                                            <div id="spotlight{$data.tldNoDots}" class="spotlight-tld">
-                                                {if $data.group}
-                                                    <div class="spotlight-tld-{$data.group}">{$data.groupDisplayName}</div>
-                                                {/if}
-                                                {$data.tld}
-                                                <span class="domain-lookup-loader domain-lookup-spotlight-loader">
-                                                    <i class="fas fa-spinner fa-spin"></i>
-                                                </span>
-                                                <div class="domain-lookup-result">
-                                                    <button type="button" class="btn unavailable w-hidden" disabled="disabled">
-                                                        {lang key='domainunavailable'}
-                                                    </button>
-                                                    <button type="button" class="btn invalid w-hidden" disabled="disabled">
-                                                        {lang key='domainunavailable'}
-                                                    </button>
-                                                    <span class="available price w-hidden">{$data.register}</span>
-                                                    <button type="button" class="btn btn-add-to-cart product-domain w-hidden" data-whois="0" data-domain="">
-                                                        <span class="to-add">{lang key='orderForm.add'}</span>
-                                                        <span class="added">{lang key='domaincheckeradded'}</span>
-                                                        <span class="unavailable">{$LANG.domaincheckertaken}</span>
-                                                    </button>
-                                                    <button type="button" class="btn btn-primary domain-contact-support w-hidden">{lang key='domainChecker.contactSupport'}</button>
-                                                </div>
+                {if $registerdomainenabled}
+                    {if $spotlightTlds}
+                        <div id="spotlightTlds" class="spotlight-tlds clearfix w-hidden">
+                            <div class="spotlight-tlds-container">
+                                {foreach $spotlightTlds as $key => $data}
+                                    <div class="spotlight-tld-container spotlight-tld-container-{$spotlightTlds|count}">
+                                        <div id="spotlight{$data.tldNoDots}" class="spotlight-tld">
+                                            {if $data.group}
+                                                <div class="spotlight-tld-{$data.group}">{$data.groupDisplayName}</div>
+                                            {/if}
+                                            {$data.tld}
+                                            <span class="domain-lookup-loader domain-lookup-spotlight-loader">
+                                                <i class="fas fa-spinner fa-spin"></i>
+                                            </span>
+                                            <div class="domain-lookup-result">
+                                                <button type="button" class="btn unavailable w-hidden" disabled="disabled">
+                                                    {lang key='domainunavailable'}
+                                                </button>
+                                                <button type="button" class="btn invalid w-hidden" disabled="disabled">
+                                                    {lang key='domainunavailable'}
+                                                </button>
+                                                <span class="available price hidden">{$data.register}</span>
+                                                <button type="button" class="btn hidden btn-add-to-cart product-domain w-hidden" data-whois="0" data-domain="">
+                                                    <span class="to-add">{lang key='orderForm.add'}</span>
+                                                    <span class="added">{lang key='domaincheckeradded'}</span>
+                                                    <span class="unavailable">{$LANG.domaincheckertaken}</span>
+                                                </button>
+                                                <button type="button" class="btn btn-primary domain-contact-support w-hidden">{lang key='domainChecker.contactSupport'}</button>
                                             </div>
                                         </div>
-                                    {/foreach}
-                                </div>
-                            </div>
-                        {/if}
-
-                        <div class="suggested-domains w-hidden">
-                            <div class="panel-heading card-header">
-                                {lang key='orderForm.suggestedDomains'}
-                            </div>
-                            <div id="suggestionsLoader" class="card-body panel-body domain-lookup-loader domain-lookup-suggestions-loader">
-                                <i class="fas fa-spinner fa-spin"></i> {lang key='orderForm.generatingSuggestions'}
-                            </div>
-                            <div id="domainSuggestions" class="domain-lookup-result list-group w-hidden">
-                                <div class="domain-suggestion list-group-item w-hidden">
-                                    <span class="domain"></span><span class="extension"></span>
-                                    <div class="actions">
-                                        <button type="button" class="btn btn-add-to-cart product-domain" data-whois="1" data-domain="">
-                                            <span class="to-add">{$LANG.addtocart}</span>
-                                            <span class="loading">
-                                                <i class="fas fa-spinner fa-spin"></i> {lang key='loading'}
-                                            </span>
-                                            <span class="added">{lang key='domaincheckeradded'}</span>
-                                            <span class="unavailable">{$LANG.domaincheckertaken}</span>
-                                        </button>
-                                        <button type="button" class="btn btn-primary domain-contact-support w-hidden">{lang key='domainChecker.contactSupport'}</button>
-                                        <span class="price"></span>
-                                        <span class="promo w-hidden"></span>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer card-footer more-suggestions text-center w-hidden">
-                                <a id="moreSuggestions" href="#" onclick="loadMoreSuggestions();return false;">{lang key='domainsmoresuggestions'}</a>
-                                <span id="noMoreSuggestions" class="no-more small w-hidden">{lang key='domaincheckernomoresuggestions'}</span>
-                            </div>
-                            <div class="text-center text-muted domain-suggestions-warning">
-                                <p>{lang key='domainssuggestionswarnings'}</p>
+                                {/foreach}
                             </div>
                         </div>
                     {/if}
-                </div>
 
-                <div class="text-center">
-                    <button id="btnDomainContinue" type="submit" class="btn btn-primary btn-lg w-hidden" disabled="disabled">
-                        {$LANG.continue}
-                        &nbsp;<i class="fas fa-arrow-circle-right"></i>
-                    </button>
-                </div>
-            </form>
+                    <div class="suggested-domains w-hidden">
+                        <div class="panel-heading card-header">
+                            {lang key='orderForm.suggestedDomains'}
+                        </div>
+                        <div id="suggestionsLoader" class="card-body panel-body domain-lookup-loader domain-lookup-suggestions-loader">
+                            <i class="fas fa-spinner fa-spin"></i> {lang key='orderForm.generatingSuggestions'}
+                        </div>
+                        <div id="domainSuggestions" class="domain-lookup-result list-group w-hidden">
+                            <div class="domain-suggestion list-group-item w-hidden">
+                                <span class="domain"></span><span class="extension"></span>
+                                <div class="actions">
+                                    <button type="button" class="btn btn-add-to-cart product-domain" data-whois="1" data-domain="">
+                                        <span class="to-add">{$LANG.addtocart}</span>
+                                        <span class="loading">
+                                            <i class="fas fa-spinner fa-spin"></i> {lang key='loading'}
+                                        </span>
+                                        <span class="added">{lang key='domaincheckeradded'}</span>
+                                        <span class="unavailable">{$LANG.domaincheckertaken}</span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary domain-contact-support w-hidden">{lang key='domainChecker.contactSupport'}</button>
+                                    <span class="price"></span>
+                                    <span class="promo w-hidden"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer card-footer more-suggestions text-center w-hidden">
+                            <a id="moreSuggestions" href="#" onclick="loadMoreSuggestions();return false;">{lang key='domainsmoresuggestions'}</a>
+                            <span id="noMoreSuggestions" class="no-more small w-hidden">{lang key='domaincheckernomoresuggestions'}</span>
+                        </div>
+                        <div class="text-center text-muted domain-suggestions-warning">
+                            <p>{lang key='domainssuggestionswarnings'}</p>
+                        </div>
+                    </div>
+                {/if}
+              </div>
+                
+              <div class="text-center">
+                  <button id="btnDomainContinue" type="submit" class="btn btn-primary btn-lg hidden" disabled="disabled">
+                      {$LANG.continue}
+                      &nbsp;<i class="fas fa-arrow-circle-right"></i>
+                  </button>
+              </div>
+          </form>
+
         </div>
     </div>
 </div>

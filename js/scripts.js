@@ -1975,6 +1975,22 @@ jQuery(document).ready(function(){
         jQuery('#inputCardCVV').payment('formatCardCVC');
         jQuery('#inputCardStart').payment('formatCardExpiry');
         jQuery('#inputCardExpiry').payment('formatCardExpiry');
+        
+        /** Websavers Custom **/
+        jQuery('#inputCardNumber').keyup(function(){
+          
+          var cardType = jQuery.payment.cardType(jQuery(this).val());
+          
+          if (cardType != null){
+            var $cc_visual = card_type_get_visual(cardType);
+            
+            jQuery('#selectedCardType span.type').text( $cc_visual );
+            jQuery('input#cctype').val( $cc_visual );
+            jQuery('#selectedCardType').find('i.fa').attr( 'class', "fa " + card_type_get_fontawesome(cardType) );
+          }
+          
+        });
+        /** End Websavers Custom **/
     }
     if (existingCvv.length) {
         existingCvv.payment('formatCardCVC');
@@ -2020,6 +2036,44 @@ jQuery(document).ready(function(){
             });
         }
     }
+      
+    /** Websavers Custom Replacement Function **/
+    function repositionScrollingSidebar() {
+        if (jQuery('#scrollingPanelContainer').css('float') === 'none') {
+            $orderSummaryEl.stop().css('margin-top', '0');
+            return false;
+        }
+        var heightOfOrderSummary =  $orderSummaryEl.outerHeight();
+        var newTopOffset = jQuery(window).scrollTop() - offset.top;
+        if (newTopOffset > maxTopOffset - heightOfOrderSummary) {
+            newTopOffset = maxTopOffset - heightOfOrderSummary;
+        }
+        
+        var sidebarWidth = jQuery("#scrollingPanelContainer").width();
+        var sidebarTopMargin = 20;
+        
+        if (jQuery(window).scrollTop() > offset.top + sidebarTopMargin) {
+            $orderSummaryEl.css({
+                position: 'fixed',
+                top: sidebarTopMargin + 'px',
+                width: sidebarWidth,
+            });
+        } else {
+            $orderSummaryEl.css({
+                position: 'static',
+                top: 'auto',
+            });
+        }
+    }
+    jQuery( window ).resize(function() {
+      if (jQuery("#scrollingPanelContainer").css('float') != 'left') {
+          $orderSummaryEl.css('position', 'static');
+      }
+      $orderSummaryEl.css({
+          width:  jQuery("#scrollingPanelContainer").width(),
+      });
+    });
+    /** End Websavers Custom **/
 
     jQuery("#frmConfigureProduct").submit(function(e) {
         e.preventDefault();
@@ -2048,7 +2102,7 @@ jQuery(document).ready(function(){
     jQuery("#productConfigurableOptions").on('ifChecked', 'input', function() {
         recalctotals();
     });
-    jQuery("#productConfigurableOptions").on('ifUnchecked', 'input', function() {
+    jQuery("#productConfigurableOptions input[type=checkbox]").on('ifUnchecked', 'input', function() { /** Websavers Custom Fix **/
         recalctotals();
     });
     jQuery("#productConfigurableOptions").on('change', 'select', function() {
