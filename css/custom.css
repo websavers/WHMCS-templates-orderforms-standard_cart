@@ -466,3 +466,12 @@ body.cart section#main-body{ background-color: white; }
 	background-color: #CA1833;
 	color: white;
 }
+
+/* Order Summary Floater Tweaks */
+
+/* Avoid prices dropping to second line */
+.summary-container > .clearfix > .pull-left{
+	max-width: 240px;
+	text-indent: -11px;
+	margin-left: 12px;
+}
