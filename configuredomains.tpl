@@ -175,10 +175,10 @@
 
                           {if $domain.idprotection}
                               <div class="col-sm-{math equation="12 / numAddons" numAddons=$domain.addonsCount} mb-3">
-                                  <div class="panel panel-default panel-addon{if $domain.idprotectionselected} panel-addon-selected{/if}">
+                                  <div class="panel panel-default panel-addon panel-addon-selected">
                                       <div class="panel-body">
                                           <label>
-                                              <input type="checkbox" name="idprotection[{$num}]"{if $domain.idprotectionselected} checked{/if} />
+                                              <input type="checkbox" name="idprotection[{$num}]" checked />
                                               {$LANG.domainidprotection}
                                           </label><br />
                                           {$LANG.domainaddonsidprotectioninfo}
