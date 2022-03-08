@@ -557,6 +557,9 @@ jQuery(document).ready(function() {
                 .removeAttr('class')
                 .addClass('fas fa-spinner fa-spin');
         }
+    })
+    .on('click', '#openTicketSubmit.disabled', function () {
+        return false;
     });
 });
 
@@ -3258,7 +3261,7 @@ jQuery(document).ready(function(){
             (jQuery(this).parents('.suggested-domains').length > 0)) ? 1 : 0;
 
         var addToCart = WHMCS.http.jqClient.post(
-            window.location.pathname,
+            whmcsBaseUrl + '/cart.php',
             {
                 a: 'addToCart',
                 domain: domain,
@@ -3482,10 +3485,6 @@ jQuery(document).ready(function(){
             'json'
         );
         return false;
-    });
-
-    jQuery(document).on('click', '#btnAddUpSell', function(e) {
-        needRefresh = true;
     });
 
     var useCreditOnCheckout = jQuery('#iCheck-useCreditOnCheckout'),

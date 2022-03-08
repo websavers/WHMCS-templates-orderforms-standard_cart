@@ -154,9 +154,9 @@
                                             <div class="col-xs-9 col-9">
                                                 <div class="input-group">
                                                     <div class="input-group-addon input-group-prepend">
-                                                        <span class="input-group-text">{$LANG.orderForm.www}</span>
+                                                        <span class="input-group-text">{lang key='orderForm.www'}</span>
                                                     </div>
-                                                    <input type="text" id="owndomainsld" value="{$sld}" placeholder="{$LANG.yourdomainplaceholder}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
+                                                    <input type="text" id="owndomainsld" value="{$sld}" placeholder="{lang key='yourdomainplaceholder'}" class="form-control" autocapitalize="none" data-toggle="tooltip" data-placement="top" data-trigger="manual" title="{lang key='orderForm.enterDomain'}" />
                                                 </div>
                                             </div>
                                             <div class="col-xs-3 col-3">
@@ -284,34 +284,40 @@
                         </div>
                     </div>
 
-                {if $registerdomainenabled}
-                    {if $spotlightTlds}
-                        <div id="spotlightTlds" class="spotlight-tlds clearfix w-hidden">
-                            <div class="spotlight-tlds-container">
-                                {foreach $spotlightTlds as $key => $data}
-                                    <div class="spotlight-tld-container spotlight-tld-container-{$spotlightTlds|count}">
-                                        <div id="spotlight{$data.tldNoDots}" class="spotlight-tld">
-                                            {if $data.group}
-                                                <div class="spotlight-tld-{$data.group}">{$data.groupDisplayName}</div>
-                                            {/if}
-                                            {$data.tld}
-                                            <span class="domain-lookup-loader domain-lookup-spotlight-loader">
-                                                <i class="fas fa-spinner fa-spin"></i>
-                                            </span>
-                                            <div class="domain-lookup-result">
-                                                <button type="button" class="btn unavailable w-hidden" disabled="disabled">
-                                                    {lang key='domainunavailable'}
-                                                </button>
-                                                <button type="button" class="btn invalid w-hidden" disabled="disabled">
-                                                    {lang key='domainunavailable'}
-                                                </button>
-                                                <span class="available price hidden">{$data.register}</span>
-                                                <button type="button" class="btn hidden btn-add-to-cart product-domain w-hidden" data-whois="0" data-domain="">
-                                                    <span class="to-add">{lang key='orderForm.add'}</span>
-                                                    <span class="added">{lang key='domaincheckeradded'}</span>
-                                                    <span class="unavailable">{$LANG.domaincheckertaken}</span>
-                                                </button>
-                                                <button type="button" class="btn btn-primary domain-contact-support w-hidden">{lang key='domainChecker.contactSupport'}</button>
+                    {if $registerdomainenabled}
+                        {if $spotlightTlds}
+                            <div id="spotlightTlds" class="spotlight-tlds clearfix w-hidden">
+                                <div class="spotlight-tlds-container">
+                                    {foreach $spotlightTlds as $key => $data}
+                                        <div class="spotlight-tld-container spotlight-tld-container-{$spotlightTlds|count}">
+                                            <div id="spotlight{$data.tldNoDots}" class="spotlight-tld">
+                                                {if $data.group}
+                                                    <div class="spotlight-tld-{$data.group}">{$data.groupDisplayName}</div>
+                                                {/if}
+                                                {$data.tld}
+                                                <span class="domain-lookup-loader domain-lookup-spotlight-loader">
+                                                    <i class="fas fa-spinner fa-spin"></i>
+                                                </span>
+                                                <div class="domain-lookup-result">
+                                                    <button type="button" class="btn unavailable w-hidden" disabled="disabled">
+                                                        {lang key='domainunavailable'}
+                                                    </button>
+                                                    <button type="button" class="btn invalid w-hidden" disabled="disabled">
+                                                        {lang key='domainunavailable'}
+                                                    </button>
+                                                    <span class="available price w-hidden">{$data.register}</span>
+                                                    <button type="button" class="btn btn-add-to-cart product-domain w-hidden" data-whois="0" data-domain="">
+                                                        <span class="to-add">{lang key='orderForm.add'}</span>
+                                                        <span class="loading">
+                                                            <i class="fas fa-spinner fa-spin"></i> {lang key='loading'}
+                                                        </span>
+                                                        <span class="added"><i class="far fa-shopping-cart"></i> {lang key='domaincheckeradded'}</span>
+                                                        <span class="unavailable">{$LANG.domaincheckertaken}</span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary domain-contact-support w-hidden">
+                                                        {lang key='domainChecker.contactSupport'}
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
