@@ -1,6 +1,10 @@
 /**
  * Standard_Cart / Cart Overrides
  */
+
+ /* BUGFIX: there's a weird glitch where it's showing the spotlight TLD code outside of the #spotlightTlds container element, so this works around that by hiding them
+*/
+div:not(#spotlightTlds) > div:not(.spotlight-tlds-container) > .spotlight-tld-container{ display:none !important; }
  
  /** Change Blue Tone to Websavers Blue **/
  
