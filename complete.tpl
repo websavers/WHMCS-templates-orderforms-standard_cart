@@ -73,6 +73,10 @@
                 </div>
             </div>
             
+
+            {if $hasRecommendations}
+                {include file="orderforms/{$carttpl}/includes/product-recommendations.tpl"}
+            {/if}
         </div>
 
     </div>

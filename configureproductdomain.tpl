@@ -372,3 +372,5 @@
         </div>
     </div>
 </div>
+
+{include file="orderforms/standard_cart/recommendations-modal.tpl"}
