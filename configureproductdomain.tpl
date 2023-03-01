@@ -43,8 +43,8 @@
                         </div>
                     {/if}
                     
-                    {* Do not allow manual entry of own domain with Helium *}
-                    {if $productinfo.pid == 141}{assign 'owndomainenabled' 0}{/if}
+                    {* Do not allow manual entry of own domain with Helium. Do not allow transferring a domain with any other plan *}
+                    {if $productinfo.pid == 141}{assign 'owndomainenabled' 0}{else}{assign 'transferdomainenabled' 0}{/if}
                     {if $domains_existing}
                         <div class="option">
                             <label>
@@ -141,7 +141,6 @@
                             </div>
                         </div>
                     {/if}
-
                     {if $owndomainenabled}
                         <div class="option">
                             <label>
