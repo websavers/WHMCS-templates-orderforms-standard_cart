@@ -1569,6 +1569,20 @@ a.domain-tld-pricing-category {
     color: #555;
 }
 
+#order-standard_cart .mc-promo.nordvpn {
+    border-color: #4687FF;
+}
+#order-standard_cart .mc-promo.nordvpn .btn-add {
+    background-color: #4687FF;
+}
+#order-standard_cart .mc-promo.nordvpn .arrow {
+    background-color: #4687FF;
+}
+#order-standard_cart .mc-promo.nordvpn .expander,
+#order-standard_cart .mc-promo.nordvpn .price {
+    color: #4687FF;
+}
+
 #order-standard_cart .mc-promo.marketgoo {
     border-color: #3090e0;
 }
@@ -1581,6 +1595,32 @@ a.domain-tld-pricing-category {
 #order-standard_cart .mc-promo.marketgoo .expander,
 #order-standard_cart .mc-promo.marketgoo .price {
     color: #3090e0;
+}
+
+#order-standard_cart .mc-promo.threesixtymonitoring {
+    border-color: #ce3b56;
+}
+#order-standard_cart .mc-promo.threesixtymonitoring .btn-add,
+#order-standard_cart .mc-promo.threesixtymonitoring .arrow {
+    background-color: #ce3b56;
+}
+#order-standard_cart .mc-promo.threesixtymonitoring .expander,
+#order-standard_cart .mc-promo.threesixtymonitoring .price,
+#order-standard_cart .mc-promo.threesixtymonitoring .fa-check {
+    color: #ce3b56;
+}
+
+#order-standard_cart .mc-promo.xovinow {
+    border-color: #10069F;
+}
+#order-standard_cart .mc-promo.xovinow .btn-add,
+#order-standard_cart .mc-promo.xovinow .arrow {
+    background-color: #10069F;
+}
+#order-standard_cart .mc-promo.xovinow .expander,
+#order-standard_cart .mc-promo.xovinow .fa-check,
+#order-standard_cart .mc-promo.xovinow .price {
+    color: #10069F;
 }
 
 #order-standard_cart .mc-promo .rotate{

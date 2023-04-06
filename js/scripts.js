@@ -2144,21 +2144,43 @@ jQuery(document).ready(function(){
         }
         var heightOfOrderSummary =  $orderSummaryEl.outerHeight();
         var offsetTop = 0;
+        var productListing = jQuery("#scrollingPanelContainer").prev('div.secondary-cart-body');
         if (typeof offset !== "undefined") {
             offsetTop = offset.top;
         }
         var newTopOffset = jQuery(window).scrollTop() - offsetTop + topPadding;
-        if (newTopOffset > maxTopOffset - heightOfOrderSummary) {
-            newTopOffset = maxTopOffset - heightOfOrderSummary;
-        }
-        if (jQuery(window).scrollTop() > offsetTop) {
-            $orderSummaryEl.stop().animate({
-                marginTop: newTopOffset
+        if (heightOfOrderSummary < jQuery(window).height()) {
+            productListing.stop().animate({
+                marginTop: 0
             });
+            if (newTopOffset > maxTopOffset - heightOfOrderSummary) {
+                newTopOffset = maxTopOffset - heightOfOrderSummary;
+            }
+            if (jQuery(window).scrollTop() > offsetTop) {
+                $orderSummaryEl.stop().animate({
+                    marginTop: newTopOffset
+                });
+            } else {
+                $orderSummaryEl.stop().animate({
+                    marginTop: 0
+                });
+            }
         } else {
             $orderSummaryEl.stop().animate({
                 marginTop: 0
             });
+            if (newTopOffset + productListing.height() > $orderSummaryEl.height()) {
+                return false;
+            }
+            if (jQuery(window).scrollTop() > offsetTop) {
+                productListing.stop().animate({
+                    marginTop: newTopOffset
+                });
+            } else {
+                productListing.stop().animate({
+                    marginTop: 0
+                });
+            }
         }
     }
       
@@ -2443,7 +2465,7 @@ jQuery(document).ready(function(){
                                 idnLanguage.slideDown();
                             }
                             if (domain.preferredTLDNotAvailable) {
-                                unavailable.show().find('strong').html(domain.originalUnavailableDomain);
+                                unavailableTld.show().find('strong').html(domain.originalUnavailableTld);
                             }
                             contactSupport.hide();
                             available.show().find('strong').html(domain.domainName);
@@ -2454,7 +2476,10 @@ jQuery(document).ready(function(){
 
                             btnDomainContinue.removeAttr('disabled');
                         } else {
-                            unavailable.show().find('strong').html(domain.domainName);
+                            var displayDomain = domain.originalUnavailableDomain
+                                ? domain.originalUnavailableDomain
+                                : domain.domainName;
+                            unavailable.show().find('strong').html(displayDomain);
                             contactSupport.hide();
                             if (typeof pricing === 'string' && pricing == 'ContactUs') {
                                 contactSupport.show();
@@ -3197,6 +3222,7 @@ jQuery(document).ready(function(){
                     availablePrice = result.find('.domain-price'),
                     contactSupport = result.find('.domain-contact-support'),
                     unavailable = result.find('.domain-unavailable'),
+                    unavailableTld = result.find('.domain-tld-unavailable'),
                     invalid = result.find('.domain-invalid'),
                     error = result.find('.domain-error');
                 jQuery('.domain-lookup-primary-loader').hide();
@@ -3206,6 +3232,7 @@ jQuery(document).ready(function(){
                     pricing = domain.pricing;
                     unavailable.hide();
                     contactSupport.hide();
+                    unavailableTld.hide();
                     invalid.hide();
                     error.hide();
                     if (domain.isAvailable && typeof pricing !== 'string') {
@@ -3213,7 +3240,7 @@ jQuery(document).ready(function(){
                             idnLanguage.slideDown();
                         }
                         if (domain.preferredTLDNotAvailable) {
-                            unavailable.show().find('strong').html(domain.originalUnavailableDomain);
+                            unavailableTld.show().find('strong').html(domain.originalUnavailableTld);
                         }
                         available.show().find('strong').html(domain.domainName);
                         availablePrice.show().find('span.price').html(pricing[Object.keys(pricing)[0]].register).end()
@@ -3222,7 +3249,11 @@ jQuery(document).ready(function(){
                         available.hide();
                         availablePrice.hide();
                         contactSupport.hide();
-                        unavailable.show().find('strong').html(domain.domainName);
+                        if (domain.preferredTLDNotAvailable) {
+                            unavailableTld.show().find('strong').html(domain.originalUnavailableTld);
+                        } else {
+                            unavailable.show().find('strong').html(domain.domainName);
+                        }
                         if (typeof pricing === 'string' && pricing == 'ContactUs') {
                             contactSupport.show();
                         }
@@ -3231,6 +3262,7 @@ jQuery(document).ready(function(){
                     available.hide();
                     availablePrice.hide();
                     unavailable.hide();
+                    unavailableTld.hide();
                     contactSupport.hide();
                     invalid.hide();
                     error.hide();
