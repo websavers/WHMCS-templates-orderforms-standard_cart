@@ -475,3 +475,8 @@ body.cart section#main-body{ background-color: white; }
 	text-indent: -11px;
 	margin-left: 12px;
 }
+
+/* Ensure '-or-' has right spacing */
+#order-standard_cart .express-checkout-buttons .separator{
+	margin-left: 0;
+}
