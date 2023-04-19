@@ -534,9 +534,14 @@
                 {if !$inExpressCheckout}
                     <div id="paymentGatewaysContainer" class="form-group">
                         <p class="small text-muted">{$LANG.orderForm.preferredPaymentMethod}</p>
-
                         <div class="text-center">
                             {foreach $gateways as $gateway}
+                                {if $activeCurrency.code eq "CAD" && $gateway.name|strstr:'Stripe'}
+                                    {continue}
+                                {elseif $activeCurrency.code eq "USD" && $gateway.name eq 'Credit Card'}
+                                    {assign var="selectedgateway" value="stripe"}
+                                    {continue}
+                                {/if}
                                 <label class="radio-inline">
                                     <input type="radio"
                                            name="paymentmethod"
