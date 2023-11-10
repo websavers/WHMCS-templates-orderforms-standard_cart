@@ -30,32 +30,6 @@ jQuery(document).ready(function(){
 		jQuery( bc_selector ).addClass('active');
 		jQuery( 'body.cart ol.breadcrumb').scrollLeft( jQuery( bc_selector ).position().left );
 	}
-
-	/**
-	 * Dynamic Order Form login fields
-	 */
-	 
-	 /*
-	 if ( jQuery('#submitlogin').length > 0 ){
-	 
-		 jQuery( "#submitlogin" ).click(function() {
-		 
-		 	//visual
-		 	jQuery('input#inputLoginEmail').prop( "disabled", true );
-		 	jQuery('input#inputLoginPassword').prop( "disabled", true );
-		 	jQuery('button#submitlogin').prop( "disabled", true ).html('<i class="fa fa-circle-o-notch fa-spin"></i> Loading...');
-		 	
-		 	//functional
-		 	jQuery.post( "https://clients.websavers.ca/whmcs/dologin.php", { 
-		 		username: jQuery('input#inputLoginEmail').val(), 
-		 	  	password: jQuery('input#inputLoginPassword').val(),
-		 	}).done(function( data ) {
-		 		location.reload();
-		 	});
-		 });
-		 
-	 }
-	 */
 	 
 	 /** Hosting domain form **/
 	 if ( jQuery('#registersld').length > 0 ){
