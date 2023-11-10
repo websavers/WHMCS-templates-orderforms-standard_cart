@@ -480,3 +480,13 @@ body.cart section#main-body{ background-color: white; }
 #order-standard_cart .express-checkout-buttons .separator{
 	margin-left: 0;
 }
+
+#productConfigurableOptions .form-group > label:first-child{
+	font-size: 1.1em;
+}
+#productConfigurableOptions .form-group > label{
+	font-weight: bold;
+}
+#productConfigurableOptions .form-group > br{
+	margin-bottom: 10px;
+}
