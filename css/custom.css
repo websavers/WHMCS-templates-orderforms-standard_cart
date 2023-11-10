@@ -158,13 +158,13 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
   display:none; /* these line breaks are auto-inserted and unwanted */
 }
 
-.cart #order-standard_cart small.infotext{
+.cart #order-standard_cart .infotext{
 	display: block;
 	background-color: #ddd; /* match form border colour */
 	padding: 5px 8px 8px;
 	margin-top: -3px;
 }
-.cart #order-standard_cart small.errortext{
+.cart #order-standard_cart .errortext{
 	display: block;
 	background-color: #C44343; /* match error form border colour */
 	color:  white;

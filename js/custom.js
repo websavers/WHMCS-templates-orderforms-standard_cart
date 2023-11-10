@@ -98,35 +98,52 @@ jQuery(document).ready(function(){
 	 	
 	 }
 	 
-	 /** VPS Linux System Package / OS Template **/
-	 
-	 /** VPS Hostname **/
-	 if ( jQuery('select#inputConfigOption25').length > 0 ){
-	 
-	 	var $system_template_sel = jQuery('select#inputConfigOption25');
-	 
-	 	//On page load
-	 	show_cp_license_info($system_template_sel);
-	 
-	 	//When dropdown selection is changed.
-	 	$system_template_sel.change( function(){
-			show_cp_license_info($system_template_sel);
-	 	});
-	 	
-	 }
-	 
- 	function show_cp_license_info($system_template_sel){
- 	
- 		if ( $system_template_sel.find('option:selected').text().match("Plesk") ){
- 			if ( $system_template_sel.siblings('.cp-license-info').text() === "" ){
- 				$system_template_sel.after('<small class="infotext cp-license-info" style="display:block"><i class="fa fa-info-circle"></i> You will need a license to operate this control panel. Be sure to select one from the "Control Panel License" drop down, otherwise the panel will not be usable.</small>');
- 			}
- 		}
- 		else{
- 			$system_template_sel.siblings('.cp-license-info').remove();
- 		}
- 			
- 	}
+	/** Configurable Option Changes **/
+
+	const c_options = [
+		//"#inputConfigOption25", //VPS System Template / OS
+		"#inputConfigOption63", //Shared Hosting Support Level 
+	];
+
+	// Billing Cycle Change re-renders config options, so monitor for that and re-bind when config options change
+	jQuery("body").on('DOMSubtreeModified', "#productConfigurableOptions", function() {
+		if (jQuery('.option-info').length === 0){
+			bind_to_configurable_options();
+		}
+	});
+	//On Page load
+	bind_to_configurable_options();
+
+	function bind_to_configurable_options(){
+		jQuery.each(c_options, function(i, c_option) {
+			var $option = jQuery(c_option);
+			if ( $option.length > 0 ){
+	
+				//On page load
+				show_option_info($option);
+
+				//When dropdown selection is changed.
+				$option.change( function(){ show_option_info($option); });
+	
+			}
+		});
+	}
+	
+	function show_option_info($option){
+
+		$option.siblings('.option-info').remove();
+	
+		if ( $option.find('option:selected').text().match("DIY Troubleshooting") ){
+			$option.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> We’ve got guides, you’ve got Google! Pick this option if you really know what you’re doing or are happy to learn as you go. We’re hands-off with support on these accounts, and will direct you to guides and resources, but won’t be able to take an active role in troubleshooting.</div>');
+		}
+		if ( $option.find('option:selected').text().match("Managed Troubleshooting") ){
+			$option.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> At Websavers, we believe good hosting should come with more. That’s why our default selection is managed troubleshooting. Worried your site has been compromised? We’ve got your back. Receiving warnings about PHP, a plugin conflict, or something strange in the logs? Let us know and we’ll investigate. This means no additional charges for investigating / repairing conflicts, or many other frustrating and challenging tasks!</div>');
+		}
+		if ( $option.find('option:selected').text().match("Hands-On Support") ){
+			$option.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> A Hands-On Support subscription includes Managed Troubelshooting, site uptime monitoring and automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just simple site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
+		}
+			
+	}
 
 	/**
 	 * .ca domain registration CIRA field validation that eNom SHOULD BE DOING FOR US DAMN IT.
