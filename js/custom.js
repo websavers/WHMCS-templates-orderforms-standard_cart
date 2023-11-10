@@ -102,15 +102,18 @@ jQuery(document).ready(function(){
 
 	const c_options = [
 		//"#inputConfigOption25", //VPS System Template / OS
-		"#inputConfigOption63", //Shared Hosting Support Level 
+		"input[name='configoption[63]']", //Shared Hosting Support Level option
 	];
 
 	// Billing Cycle Change re-renders config options, so monitor for that and re-bind when config options change
+	/*
 	jQuery("body").on('DOMSubtreeModified', "#productConfigurableOptions", function() {
 		if (jQuery('.option-info').length === 0){
 			bind_to_configurable_options();
 		}
 	});
+	*/
+	
 	//On Page load
 	bind_to_configurable_options();
 
@@ -131,16 +134,33 @@ jQuery(document).ready(function(){
 	
 	function show_option_info($option){
 
-		$option.siblings('.option-info').remove();
-	
-		if ( $option.find('option:selected').text().match("DIY Troubleshooting") ){
-			$option.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> We’ve got guides, you’ve got Google! Pick this option if you really know what you’re doing or are happy to learn as you go. We’re hands-off with support on these accounts, and will direct you to guides and resources, but won’t be able to take an active role in troubleshooting.</div>');
+		var option_text = null;
+		var $attach_to = null;
+
+		if ($option.length === 1){ //Dropdown
+			$option.siblings('.option-info').remove();
+			option_text = $option.find('option:selected').text();
+			$attach_to = $option;
 		}
-		if ( $option.find('option:selected').text().match("Managed Troubleshooting") ){
-			$option.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> At Websavers, we believe good hosting should come with more. That’s why our default selection is managed troubleshooting. Worried your site has been compromised? We’ve got your back. Receiving warnings about PHP, a plugin conflict, or something strange in the logs? Let us know and we’ll investigate. This means no additional charges for investigating / repairing conflicts, or many other frustrating and challenging tasks!</div>');
+		else{ //Radio boxes will have more than 1: one per option
+			$option.each(function(index){
+				if ( $(this).prop("checked") ){
+					$(this).parents('.form-group').siblings('.option-info').remove();
+					optid = $(this).attr('id'); //ex: configoption-63-229
+					option_text = jQuery('label[for="' + optid + '"]').text();
+					$attach_to = $(this).parents('.form-group');
+				}
+			});
 		}
-		if ( $option.find('option:selected').text().match("Hands-On Support") ){
-			$option.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> A Hands-On Support subscription includes Managed Troubelshooting, site uptime monitoring and automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just simple site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
+
+		if ( option_text.match("DIY Troubleshooting") ){
+			$attach_to.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> We’ve got guides, you’ve got Google! Pick this option if you really know what you’re doing or are happy to learn as you go. We’re hands-off with support on these accounts, and will direct you to guides and resources, but won’t be able to take an active role in troubleshooting.</div>');
+		}
+		if ( option_text.match("Managed Troubleshooting") ){
+			$attach_to.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> At Websavers, we believe good hosting should come with more. That’s why our default selection is managed troubleshooting. Worried your site has been compromised? We’ve got your back. Receiving warnings about PHP, a plugin conflict, or something strange in the logs? Let us know and we’ll investigate. This means no additional charges for investigating / repairing conflicts, or many other frustrating and challenging tasks!</div>');
+		}
+		if ( option_text.match("Hands-On Support") ){
+			$attach_to.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> A Hands-On Support subscription includes Managed Troubelshooting, site uptime monitoring and automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just simple site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
 		}
 			
 	}
