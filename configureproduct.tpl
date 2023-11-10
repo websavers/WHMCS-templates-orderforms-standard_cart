@@ -224,19 +224,6 @@ var _localLang = {
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
-                                                    <select name="configoption[{$configoption.id}]" id="inputConfigOption{$configoption.id}" class="form-control">
-                                                    {foreach key=num2 item=options from=$configoption.options}
-                                                        <option value="{$options.id}"{if $configoption.selectedvalue eq $options.id} selected="selected"{/if}>
-                                                            {$options.name}
-                                                        </option>
-                                                    {/foreach}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        {elseif $configoption.optiontype eq 3}
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
                                                     {foreach key=num2 item=options from=$configoption.options}
                                                         <br />
                                                         <label>
@@ -248,6 +235,21 @@ var _localLang = {
                                                             {/if}
                                                         </label>
                                                     {/foreach}
+                                                </div>
+                                            </div>
+                                        {elseif $configoption.optiontype eq 3}
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
+                                                    <br />
+                                                    <label>
+                                                        <input type="checkbox" name="configoption[{$configoption.id}]" id="inputConfigOption{$configoption.id}" value="1"{if $configoption.selectedqty} checked{/if} />
+                                                        {if $configoption.options.0.name}
+                                                            {$configoption.options.0.name}
+                                                        {else}
+                                                            {$LANG.enable}
+                                                        {/if}
+                                                    </label>
                                                 </div>
                                             </div>
                                         {elseif $configoption.optiontype eq 4}
