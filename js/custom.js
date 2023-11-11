@@ -120,12 +120,6 @@ jQuery(document).ready(function(){
 		jQuery.each(c_options, function(i, c_option) {
 			var $option = jQuery(c_option);
 			if ( $option.length > 0 ){
-	
-				//On page load
-				show_option_info($option);
-
-				//When dropdown selection is changed.
-				$option.change( function(){ show_option_info($option); });
 
 				//Override default selection
 				curval = jQuery(c_option + ':checked').val();
@@ -134,6 +128,12 @@ jQuery(document).ready(function(){
 					jQuery("input[value='229']").prop('checked', true);
 					$option.iCheck('update');
 				}
+	
+				//On page load
+				show_option_info($option);
+
+				//When dropdown selection is changed.
+				$option.change( function(){ show_option_info($option); });
 	
 			}
 		});
