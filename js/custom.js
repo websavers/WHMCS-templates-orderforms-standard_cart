@@ -106,13 +106,12 @@ jQuery(document).ready(function(){
 	];
 
 	// Billing Cycle Change re-renders config options, so monitor for that and re-bind when config options change
-	/*
+
 	jQuery("body").on('DOMSubtreeModified', "#productConfigurableOptions", function() {
 		if (jQuery('.option-info').length === 0){
 			bind_to_configurable_options();
 		}
 	});
-	*/
 	
 	//On Page load
 	bind_to_configurable_options();
@@ -148,6 +147,7 @@ jQuery(document).ready(function(){
 					$(this).parents('.form-group').siblings('.option-info').remove();
 					optid = $(this).attr('id'); //ex: configoption-63-229
 					option_text = jQuery('label[for="' + optid + '"]').text();
+					if (option_text == '') option_text = $(this).parents('label').text();
 					$attach_to = $(this).parents('.form-group');
 				}
 			});
@@ -160,7 +160,7 @@ jQuery(document).ready(function(){
 			$attach_to.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> At Websavers, we believe good hosting should come with more. That’s why our default selection is managed troubleshooting. Worried your site has been compromised? We’ve got your back. Receiving warnings about PHP, a plugin conflict, or something strange in the logs? Let us know and we’ll investigate. This means no additional charges for investigating / repairing conflicts, or many other frustrating and challenging tasks!</div>');
 		}
 		if ( option_text.match("Hands-On Support") ){
-			$attach_to.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> A Hands-On Support subscription includes Managed Troubelshooting, site uptime monitoring and automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just simple site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
+			$attach_to.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> A Hands-On Support subscription includes Managed Troubleshooting, uptime monitoring and automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just simple site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
 		}
 			
 	}
