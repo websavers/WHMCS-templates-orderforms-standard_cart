@@ -1,6 +1,11 @@
 /**
  * Standard_Cart / Cart Overrides
  */
+ @media only screen and (min-width: 1200px){
+	#order-standard_cart .cart-body{
+		width: 90%; /* default = 75 */
+	}
+}
 
  /** Change Blue Tone to Websavers Blue **/
  
@@ -164,8 +169,7 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 	display: block;
 	background-color: #ddd; /* match form border colour */
 	padding: 5px 8px 8px;
-	margin-top: -3px;
-	margin-bottom: 5px;
+	margin: 5px 0;
 }
 .cart #order-standard_cart .errortext{
 	background-color: #C44343;
@@ -483,7 +487,10 @@ body.cart section#main-body{ background-color: white; }
 #order-standard_cart .express-checkout-buttons .separator{
 	margin-left: 0;
 }
-
+#productConfigurableOptions .form-group{
+	border: 1px solid #ccc;
+	padding: 7px 10px;
+}
 #productConfigurableOptions .form-group > label:first-child{
 	font-size: 1.1em;
 }

@@ -105,14 +105,14 @@ jQuery(document).ready(function(){
 		"input[name='configoption[63]']", //Shared Hosting Support Level option
 	];
 
-	// Billing Cycle Change re-renders config options, so monitor for that and re-bind when config options change
-
-	jQuery("body").on('DOMSubtreeModified', "#productConfigurableOptions", function() {
-		if (jQuery('.option-info').length === 0){
+	// Billing Cycle Change re-renders config options, so monitor for that and re-bind after config options change
+	jQuery("#inputBillingcycle").change(function(){
+		setTimeout(function(){
+			//console.log('rebind config option stuff');
 			bind_to_configurable_options();
-		}
+		}, 800); 
 	});
-	
+
 	//On Page load
 	bind_to_configurable_options();
 
@@ -147,12 +147,12 @@ jQuery(document).ready(function(){
 		if ($option.length === 1){ //Dropdown
 			$option.siblings('.option-info').remove();
 			option_text = get_opt_name($option);
-			$attach_to = $option;
+			$attach_to = $option.parents('.form-group');
 		}
 		else{ //Radio boxes will have more than 1: one per option
 			$option.each(function(index){
 				if ( $(this).prop("checked") ){
-					$(this).parents('.form-group').siblings('.option-info').remove();
+					$(this).parents('.col-sm-6').find('.option-info').remove();
 					option_text = get_opt_name($(this));
 					$attach_to = $(this).parents('.form-group');
 				}
@@ -160,13 +160,13 @@ jQuery(document).ready(function(){
 		}
 
 		if ( option_text.match("DIY Troubleshooting") ){
-			$attach_to.after('<div class="warntext option-info" style="display:block"><i class="fas fa-exclamation-triangle"></i> Warning: no support is included with this option. We’ve got guides, you’ve got Google! Pick this option if you really know what you’re doing or are happy to learn as you go. We’re hands-off with support on these accounts, and will direct you to guides and resources, but won’t be able to take an active role in troubleshooting.</div>');
+			$attach_to.append('<div class="warntext option-info" style="display:block"><i class="fas fa-exclamation-triangle"></i> Warning: no support is included with this option. We’ve got guides, you’ve got Google! Pick this option if you really know what you’re doing or are happy to learn as you go. We’re hands-off with support on these accounts, and will direct you to guides and resources, but won’t be able to take an active role in troubleshooting.</div>');
 		}
 		if ( option_text.match("Managed Troubleshooting") ){
-			$attach_to.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> At Websavers, we believe good hosting should come with more. That’s why our default selection is managed troubleshooting. Worried your site has been compromised? We’ve got your back. Receiving warnings about PHP, a plugin conflict, or something strange in the logs? Let us know and we’ll investigate. This means no additional charges for investigating / repairing conflicts, or many other frustrating and challenging tasks!</div>');
+			$attach_to.append('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> At Websavers, we believe good hosting should come with more. That’s why our default selection is managed troubleshooting. Worried your site has been compromised? We’ve got your back. Receiving warnings about PHP, a plugin conflict, or something strange in the logs? Let us know and we’ll investigate. This means no additional charges for investigating / repairing conflicts, or many other frustrating and challenging tasks!</div>');
 		}
 		if ( option_text.match("Hands-On Support") ){
-			$attach_to.after('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> A Hands-On Support subscription includes Managed Troubleshooting, uptime monitoring and automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just simple site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
+			$attach_to.append('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> A Hands-On Support subscription includes Managed Troubleshooting, uptime monitoring and automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just simple site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
 		}
 			
 	}
