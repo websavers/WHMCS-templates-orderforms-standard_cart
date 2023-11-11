@@ -487,6 +487,11 @@ body.cart section#main-body{ background-color: white; }
 #order-standard_cart .express-checkout-buttons .separator{
 	margin-left: 0;
 }
+
+#inputBillingcycle{
+	width: 100%;
+}
+
 #productConfigurableOptions .form-group{
 	border: 1px solid #ccc;
 	padding: 7px 10px;
@@ -504,4 +509,9 @@ body.cart section#main-body{ background-color: white; }
 #productAddonsContainer .col-sm-6{ /* Make all options/addons full 100% width */
 	flex: 0 0 100%;	
 	max-width: 100%;
+}
+
+/* Make left/right consistent with other fields */
+#order-standard_cart .row.field-container{
+	margin: 0 -15px 30px -15px;
 }
