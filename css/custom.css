@@ -163,6 +163,7 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 	background-color: #ddd; /* match form border colour */
 	padding: 5px 8px 8px;
 	margin-top: -3px;
+	margin-bottom: 5px;
 }
 .cart #order-standard_cart .errortext{
 	display: block;
