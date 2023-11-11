@@ -122,11 +122,11 @@ jQuery(document).ready(function(){
 			if ( $option.length > 0 ){
 
 				//Override default selection
-				curval = jQuery(c_option + ':checked').val();
-				if (curval == 228){ //DIY Troubleshooting
+				if ( jQuery(c_option + ':checked').val() == 228 ){ //DIY Troubleshooting
 					jQuery("input[value=228]").prop('checked', false);
-					jQuery("input[value='229']").prop('checked', true);
+					jQuery("input[value=229]").prop('checked', true);
 					$option.iCheck('update');
+					recalctotals(); //cart recalc
 				}
 	
 				//On page load
