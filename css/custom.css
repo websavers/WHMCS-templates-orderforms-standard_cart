@@ -158,7 +158,9 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
   display:none; /* these line breaks are auto-inserted and unwanted */
 }
 
-.cart #order-standard_cart .infotext{
+.cart #order-standard_cart .infotext,
+.cart #order-standard_cart .errortext,
+.cart #order-standard_cart .warntext{
 	display: block;
 	background-color: #ddd; /* match form border colour */
 	padding: 5px 8px 8px;
@@ -166,11 +168,11 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 	margin-bottom: 5px;
 }
 .cart #order-standard_cart .errortext{
-	display: block;
-	background-color: #C44343; /* match error form border colour */
+	background-color: #C44343;
 	color:  white;
-	padding: 5px 8px 8px;
-	margin-top: -3px;
+}
+.cart #order-standard_cart .warntext{
+	background-color: #ffdf7e; 
 }
 /*
 .cart #order-standard_cart .item-price button{
@@ -490,4 +492,9 @@ body.cart section#main-body{ background-color: white; }
 }
 #productConfigurableOptions .form-group > br{
 	margin-bottom: 10px;
+}
+#productConfigurableOptions .col-sm-6,
+#productAddonsContainer .col-sm-6{ /* Make all options/addons full 100% width */
+	flex: 0 0 100%;	
+	max-width: 100%;
 }
