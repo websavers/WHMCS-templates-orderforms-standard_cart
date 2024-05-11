@@ -159,8 +159,13 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 	text-align: center;
 }
 */
-.product-info br{
-  display:none; /* these line breaks are auto-inserted and unwanted */
+
+/* No line breaks in lists */
+.product-info ul>br,
+.product-info ol>br,
+.product-info ul+br,
+.product-info ol+br{
+  display:none;
 }
 
 .cart #order-standard_cart .infotext,
