@@ -49,7 +49,7 @@ jQuery(document).ready(function(){
 	 if ( jQuery('#owndomainsld').length > 0 ){
 	 	
 	 	jQuery('#owndomainsld').change( function(){
-	 	 	sanitize_domain( jQuery('#owndomainsld') );
+	 	 	sanitize_domain( jQuery('#owndomainsld'), true );
 	 	});
 	 	
 	 }
