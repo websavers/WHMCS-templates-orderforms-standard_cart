@@ -51,7 +51,7 @@
             {/if}
 
             <form method="post" action="{$smarty.server.PHP_SELF}?a=checkout" name="orderfrm" id="frmCheckout">
-                <input type="hidden" name="submit" value="true" />
+                <input type="hidden" name="checkout" value="true" />
                 <input type="hidden" name="custtype" id="inputCustType" value="{$custtype}" />
 
                 {if $custtype neq "new" && $loggedin}
