@@ -52,7 +52,7 @@ var _localLang = {
                         </div>
 
                         {if $pricing.type eq "recurring"}
-                            <div class="field-container row">
+                            <div class="field-container row" id="productBillingCycle>
                                 <div class="col-sm-12">
                                     <label for="inputBillingcycle">{$LANG.cartchoosecycle}</label>
                                     <br>

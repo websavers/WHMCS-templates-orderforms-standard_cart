@@ -501,10 +501,12 @@ body.cart section#main-body{ background-color: white; }
 	border: 1px solid #ccc;
 	padding: 7px 10px;
 }
-#productConfigurableOptions .form-group > label:first-child{
+#productConfigurableOptions .form-group > label:first-child,
+#productBillingCycle .form-group > label:first-child{
 	font-size: 1.1em;
 }
-#productConfigurableOptions .form-group > label{
+#productConfigurableOptions .form-group > label,
+#productBillingCycle .form-group > label{
 	font-weight: bold;
 }
 #productConfigurableOptions .form-group > br{
