@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){
+jQuery(document).ready(function($){
 
 	/**
 	 * Order form steps box 
@@ -86,17 +86,25 @@ jQuery(document).ready(function(){
 	 	
 	 }
 	 
-	 if ( jQuery('#inputNs1prefix').length > 0 ){ jQuery('#inputNs1prefix').val('none'); }
- 	 if ( jQuery('#inputNs2prefix').length > 0 ){ jQuery('#inputNs2prefix').val('none'); }
-	 
-	 /** VPS Root Password **/
-	 if ( jQuery('input[name=rootpw]').length > 0 ){
-	 
-	 	jQuery('input[name=rootpw]').val(randString(30))
-	 			.attr('readonly','true')
-	 			.after('<small class="infotext"><i class="fa fa-info-circle"></i> A secure password has been automatically generated for you. You will be able to view this password securely in the Client Centre after the server has been provisioned.</small>');
-	 	
-	 }
+	if ( jQuery('#inputNs1prefix').length > 0 ){ jQuery('#inputNs1prefix').val('none'); }
+	if ( jQuery('#inputNs2prefix').length > 0 ){ jQuery('#inputNs2prefix').val('none'); }
+	
+	/** VPS Root Password **/
+	if ( jQuery('input[name=rootpw]').length > 0 ){
+	
+	jQuery('input[name=rootpw]').val(randString(30))
+			.attr('readonly','true')
+			.after('<small class="infotext"><i class="fa fa-info-circle"></i> A secure password has been automatically generated for you. You will be able to view this password securely in the Client Centre after the server has been provisioned.</small>');
+	
+	}
+
+	/** Change help link to open live chat **/
+	// Any anchor with the 'tawk' class will open the chat window
+	$('a[href="contact.php"').text('Click here to chat!');
+    $('a.tawk,a[href="contact.php"').click(function(){
+        Tawk_API.toggle();
+        return false;
+    })
 	 
 	/** Configurable Option Changes **/
 
