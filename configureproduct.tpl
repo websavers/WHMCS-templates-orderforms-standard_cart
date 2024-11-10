@@ -56,6 +56,16 @@ var _localLang = {
                                 <div class="col-sm-12">
                                     <label for="inputBillingcycle">{$LANG.cartchoosecycle}</label>
                                     <br>
+                                    {foreach from=$pricing key=k item=v} {* k = monhtly, quarterly, etc. v = the actual pricing output text *}
+                                        {if $v && ($k eq 'monthly' || $k eq 'quarterly' || $k eq 'semiannually' || $k eq 'annually' || $k eq 'biennially' || $k eq 'triennially')}
+                                            <label for="billingcycle-{$k}">
+                                                <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="updateConfigurableOptions({$i}, '{$k}');"{if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD ":""}
+                                            </label>
+                                            <br>
+                                        {/if}
+                                    {/foreach}
+                                    
+                                    {*
                                     <select name="billingcycle" id="inputBillingcycle" class="form-control select-inline custom-select" onchange="updateConfigurableOptions({$i}, this.value); return false">
                                         {if $pricing.monthly}
                                             <option value="monthly"{if $billingcycle eq "monthly"} selected{/if}>
@@ -88,6 +98,8 @@ var _localLang = {
                                             </option>
                                         {/if}
                                     </select>
+                                    *}
+
                                 </div>
                             </div>
                         {/if}
@@ -226,8 +238,8 @@ var _localLang = {
                                                     <label for="inputConfigOption{$configoption.id}">{$configoption.optionname}</label>
                                                     {foreach key=num2 item=options from=$configoption.options}
                                                         <br />
-                                                        <label>
-                                                            <input type="radio" name="configoption[{$configoption.id}]" value="{$options.id}"{if $configoption.selectedvalue eq $options.id} checked="checked"{/if} />
+                                                        <label for="option-{$options.id}">
+                                                            <input type="radio" name="configoption[{$configoption.id}]" id="option-{$option.id}" value="{$options.id}"{if $configoption.selectedvalue eq $options.id} checked="checked"{/if} />
                                                             {if $options.name}
                                                                 {$options.name}
                                                             {else}
