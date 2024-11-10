@@ -522,3 +522,12 @@ body.cart section#main-body{ background-color: white; }
 #order-standard_cart .row.field-container{
 	margin: 0 -15px 30px -15px;
 }
+
+#order-standard_cart .panel-addon{
+	text-align: left;
+	font-size: 1em;
+}
+#order-standard_cart .panel-addon .panel-price,
+#order-standard_cart .panel-addon .panel-add{
+	padding: 10px 20px;
+}
