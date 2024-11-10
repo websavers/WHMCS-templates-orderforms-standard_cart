@@ -187,18 +187,19 @@ jQuery(document).ready(function(){
 	}
 
 	/**
-	 * .ca domain registration CIRA field validation that eNom SHOULD BE DOING FOR US DAMN IT.
+	 * .ca domain registration CIRA fields
 	 */
 	if ( jQuery('.domain-config .extra-domain-fields').length > 0 ){
 		
 		jQuery('.domain-config').each(function( index ){
-			//Set Canadian Citizen as default and make drop down not-selectable
+			//Set Canadian Citizen as default and make drop down not-selectable (Namesilo doesn't allow any other type via API)
 			if ( jQuery('select[name="domainfield[' + index + '][0]"] option[value="Corporation"]:selected') ){
 				jQuery('select[name="domainfield[' + index + '][0]"]')
 					.val("Canadian Citizen")
 					.css("pointer-events","none")
 					.after('<div><small><em>Legal type cannot be changed as we are only able to register .ca domains to Canadian Citizens.</em></small></div>');
 			}
+			//Check these by default
 			jQuery('input[type="checkbox"][name="domainfield[' + index + '][1]"]').parent().iCheck('check'); // CIRA Agreement Checkbox
 			jQuery('input[type="checkbox"][name="domainfield[' + index + '][2]"]').parent().iCheck('check'); // Hide WHOIS Checkbox
 			//jQuery('input[type="checkbox"][name="domainfield[' + index + '][1]"]').prop('checked', true); // CIRA Agreement Checkbox
