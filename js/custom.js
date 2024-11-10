@@ -106,7 +106,7 @@ jQuery(document).ready(function(){
 	];
 
 	// Billing Cycle Change re-renders config options, so monitor for that and re-bind after config options change
-	jQuery("#inputBillingcycle").change(function(){
+	jQuery("[name='billingcycle'").change(function(){
 		setTimeout(function(){
 			//console.log('rebind config option stuff');
 			bind_to_configurable_options();
@@ -161,14 +161,16 @@ jQuery(document).ready(function(){
 			});
 		}
 
-		if ( option_text.match("DIY Troubleshooting") ){
-			$attach_to.append('<div class="warntext option-info" style="display:block"><i class="fas fa-exclamation-triangle"></i> Warning: no support is included with this option. We’ve got guides, you’ve got Google! Pick this option if you really know what you’re doing or are happy to learn as you go. We’re hands-off with support on these accounts, and will direct you to guides and resources, but won’t be able to take an active role in troubleshooting.</div>');
-		}
-		if ( option_text.match("Managed Troubleshooting") ){
-			$attach_to.append('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> Seeing warnings about PHP, a plugin conflict, or something strange in the logs? Let us know and we’ll investigate. Managed Troubleshooting means no additional charges for investigating / repairing conflicts, or many other frustrating and challenging tasks!</div>');
-		}
-		if ( option_text.match("Hands-On Support") ){
-			$attach_to.append('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> Hands-On Support includes Managed Troubleshooting, uptime monitoring + automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
+		if ( option_text != null){
+			if ( option_text.match("DIY Troubleshooting") ){
+				$attach_to.append('<div class="warntext option-info" style="display:block"><i class="fas fa-exclamation-triangle"></i> Warning: no support is included with this option. We’ve got guides, you’ve got Google! Pick this option if you really know what you’re doing or are happy to learn as you go. We’re hands-off with support on these accounts, and will direct you to guides and resources, but won’t be able to take an active role in troubleshooting.</div>');
+			}
+			if ( option_text.match("Managed Troubleshooting") ){
+				$attach_to.append('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> Seeing warnings about PHP, a plugin conflict, or something strange in the logs? Let us know and we’ll investigate. Managed Troubleshooting means no additional charges for investigating / repairing conflicts, or many other frustrating and challenging tasks!</div>');
+			}
+			if ( option_text.match("Hands-On Support") ){
+				$attach_to.append('<div class="infotext option-info" style="display:block"><i class="fa fa-info-circle"></i> Hands-On Support includes Managed Troubleshooting, uptime monitoring + automatic response, security and performance optimizations, and 30 minutes of monthly FlexTime! Rather than just site troubleshooting, our team will be standing by to help with website changes, content updates, code alterations and more!</div>');
+			}
 		}
 			
 	}
