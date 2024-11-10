@@ -54,53 +54,54 @@ var _localLang = {
                         {if $pricing.type eq "recurring"}
                             <div class="field-container row" id="productBillingCycle">
                                 <div class="col-sm-12">
-                                    <label for="inputBillingcycle">{$LANG.cartchoosecycle}</label>
-                                    <br>
-                                    {foreach from=$pricing key=k item=v} {* k = monhtly, quarterly, etc. v = the actual pricing output text *}
-                                        {if $v && ($k eq 'monthly' || $k eq 'quarterly' || $k eq 'semiannually' || $k eq 'annually' || $k eq 'biennially' || $k eq 'triennially')}
-                                            <label for="billingcycle-{$k}">
-                                                <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="updateConfigurableOptions({$i}, '{$k}');"{if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD ":""}
-                                            </label>
-                                            <br>
-                                        {/if}
-                                    {/foreach}
-                                    <p><small>All prices shown during configuration represent the monthly breakdown of the billing cycle to make it easy to compare savings. The amount due today is shown in the Order Summary.</small></p>
-                                    
-                                    {*
-                                    <select name="billingcycle" id="inputBillingcycle" class="form-control select-inline custom-select" onchange="updateConfigurableOptions({$i}, this.value); return false">
-                                        {if $pricing.monthly}
-                                            <option value="monthly"{if $billingcycle eq "monthly"} selected{/if}>
-                                                {$pricing.monthly|replace:"$0.00CAD ":""}
-                                            </option>
-                                        {/if}
-                                        {if $pricing.quarterly}
-                                            <option value="quarterly"{if $billingcycle eq "quarterly"} selected{/if}>
-                                                {$pricing.quarterly|replace:"$0.00CAD ":""}
-                                            </option>
-                                        {/if}
-                                        {if $pricing.semiannually}
-                                            <option value="semiannually"{if $billingcycle eq "semiannually"} selected{/if}>
-                                                {$pricing.semiannually|replace:"$0.00CAD ":""}
-                                            </option>
-                                        {/if}
-                                        {if $pricing.annually}
-                                            <option value="annually"{if $billingcycle eq "annually"} selected{/if}>
-                                                {$pricing.annually|replace:"$0.00CAD ":""}
-                                            </option>
-                                        {/if}
-                                        {if $pricing.biennially}
-                                            <option value="biennially"{if $billingcycle eq "biennially"} selected{/if}>
-                                                {$pricing.biennially|replace:"$0.00CAD ":""}
-                                            </option>
-                                        {/if}
-                                        {if $pricing.triennially}
-                                            <option value="triennially"{if $billingcycle eq "triennially"} selected{/if}>
-                                                {$pricing.triennially|replace:"$0.00CAD ":""}
-                                            </option>
-                                        {/if}
-                                    </select>
-                                    *}
-
+                                    <div class="form-group">
+                                        <label for="inputBillingcycle">{$LANG.cartchoosecycle}</label>
+                                        <br>
+                                        {foreach from=$pricing key=k item=v} {* k = monhtly, quarterly, etc. v = the actual pricing output text *}
+                                            {if $v && ($k eq 'monthly' || $k eq 'quarterly' || $k eq 'semiannually' || $k eq 'annually' || $k eq 'biennially' || $k eq 'triennially')}
+                                                <label for="billingcycle-{$k}">
+                                                    <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="updateConfigurableOptions({$i}, '{$k}');"{if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD ":""}
+                                                </label>
+                                                <br>
+                                            {/if}
+                                        {/foreach}
+                                        <p><small>All prices shown during configuration represent the monthly breakdown of the billing cycle to make it easy to compare savings. The amount due today is shown in the Order Summary.</small></p>
+                                        
+                                        {*
+                                        <select name="billingcycle" id="inputBillingcycle" class="form-control select-inline custom-select" onchange="updateConfigurableOptions({$i}, this.value); return false">
+                                            {if $pricing.monthly}
+                                                <option value="monthly"{if $billingcycle eq "monthly"} selected{/if}>
+                                                    {$pricing.monthly|replace:"$0.00CAD ":""}
+                                                </option>
+                                            {/if}
+                                            {if $pricing.quarterly}
+                                                <option value="quarterly"{if $billingcycle eq "quarterly"} selected{/if}>
+                                                    {$pricing.quarterly|replace:"$0.00CAD ":""}
+                                                </option>
+                                            {/if}
+                                            {if $pricing.semiannually}
+                                                <option value="semiannually"{if $billingcycle eq "semiannually"} selected{/if}>
+                                                    {$pricing.semiannually|replace:"$0.00CAD ":""}
+                                                </option>
+                                            {/if}
+                                            {if $pricing.annually}
+                                                <option value="annually"{if $billingcycle eq "annually"} selected{/if}>
+                                                    {$pricing.annually|replace:"$0.00CAD ":""}
+                                                </option>
+                                            {/if}
+                                            {if $pricing.biennially}
+                                                <option value="biennially"{if $billingcycle eq "biennially"} selected{/if}>
+                                                    {$pricing.biennially|replace:"$0.00CAD ":""}
+                                                </option>
+                                            {/if}
+                                            {if $pricing.triennially}
+                                                <option value="triennially"{if $billingcycle eq "triennially"} selected{/if}>
+                                                    {$pricing.triennially|replace:"$0.00CAD ":""}
+                                                </option>
+                                            {/if}
+                                        </select>
+                                        *}
+                                    </div>
                                 </div>
                             </div>
                         {/if}
