@@ -64,6 +64,7 @@ var _localLang = {
                                             <br>
                                         {/if}
                                     {/foreach}
+                                    <p><small>All prices shown during configuration represent the monthly breakdown of the billing cycle to make it easy to compare savings. The amount due today is shown in the Order Summary.</small></p>
                                     
                                     {*
                                     <select name="billingcycle" id="inputBillingcycle" class="form-control select-inline custom-select" onchange="updateConfigurableOptions({$i}, this.value); return false">
