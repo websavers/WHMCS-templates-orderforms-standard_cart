@@ -236,6 +236,9 @@ jQuery(document).ready(function(){
 
 }); /* Document Ready */
 
+/**
+ * Helper functions used for VPS hostname validation
+ */
 function validation_fail(formElement, errorText){
 	formElement.addClass('error');
 	jQuery('#btnCompleteProductConfig').attr('disabled', 'disabled');
