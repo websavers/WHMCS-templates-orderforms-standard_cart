@@ -3,7 +3,7 @@
  */
  @media only screen and (min-width: 1200px){
 	#order-standard_cart .cart-body{
-		width: 90%; /* default = 75 */
+		width: 100%; /* default = 75 */
 	}
 }
 

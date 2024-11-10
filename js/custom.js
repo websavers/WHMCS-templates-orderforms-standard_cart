@@ -364,8 +364,8 @@ function card_type_get_fontawesome($cardtype){
       return "fa-credit-card"
   }
 }
-
-/** Addon Pricing Fixes **/
+/* Disabled due to reports of issues with adding plans at 1yr to cart
+// Addon Pricing Autoupdate
 function ws_update_addon_cycle_pricing(){
   
   var $billingcycle = jQuery('#inputBillingcycle').find(":selected").val();
@@ -405,12 +405,11 @@ function ws_update_addon_cycle_pricing(){
 
 jQuery(document).ready(function(){
 
-/* Disabled due to reports of issues with adding plans at 1yr to cart
   ws_update_addon_cycle_pricing();
   
   jQuery('#inputBillingcycle').change(function(){
     ws_update_addon_cycle_pricing();
   });
-*/
   
 });
+*/
