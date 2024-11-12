@@ -122,17 +122,12 @@ jQuery(document).ready(function($){
 	bind_to_configurable_options();
 
 	// Billing Cycle Change re-renders config options, so monitor for that and re-bind after config options change
-	/*
-	$("[id^=billingcycle]").change(function(){
+	$("[id^='billingcycle']").change(function(){
 		setTimeout(function(){
 			//console.log('rebind config option stuff'); ///DEBUG
-			bind_to_configurable_options();
+			//bind_to_configurable_options();
+			window.location.reload();
 		}, 1000); 
-	});
-	*/
-
-	$("body").on('DOMSubtreeModified', "productConfigurableOptions", function() {
-		bind_to_configurable_options();
 	});
 	
 	function bind_to_configurable_options(){
@@ -141,14 +136,13 @@ jQuery(document).ready(function($){
 			if ( $option.length > 0 ){
 
 				//Override default selection
-				/*
+
 				if ( jQuery(c_option + ':checked').val() == 228 ){ //DIY Troubleshooting
 					jQuery("input[value=228]").prop('checked', false);
 					jQuery("input[value=229]").prop('checked', true);
 					$option.iCheck('update');
 					recalctotals(); //cart recalc
 				}
-				*/
 	
 				// Trigger now
 				show_option_description($option);
@@ -166,16 +160,17 @@ jQuery(document).ready(function($){
 		var $attach_to = null;
 
 		if ($option.length === 1){ //Dropdown
-			$option.siblings('.option-info').remove();
-			option_text = get_opt_name($option);
 			$attach_to = $option.parents('.form-group');
+			$attach_to.find('.option-info').remove(); //remove existing description
+			option_text = get_opt_name($option);
+			
 		}
 		else{ //Radio boxes will have more than 1: one per option
 			$option.each(function(index){
 				if ( $(this).prop("checked") ){
-					$(this).parents('.col-sm-6').find('.option-info').remove();
-					option_text = get_opt_name($(this));
 					$attach_to = $(this).parents('.form-group');
+					$attach_to.find('.option-info').remove(); //remove existing description
+					option_text = get_opt_name($(this));
 				}
 			});
 		}
