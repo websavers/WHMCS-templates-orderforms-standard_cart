@@ -31,60 +31,63 @@ jQuery(document).ready(function($){
 		jQuery( 'body.cart ol.breadcrumb').scrollLeft( jQuery( bc_selector ).position().left );
 	}
 	 
-	 /** Hosting domain form **/
-	 if ( jQuery('#registersld').length > 0 ){
-	 	
-	 	jQuery('#registersld').change( function(){
-		 	sanitize_domain( jQuery('#registersld') );
+	/** Hosting domain form **/
+	if ( jQuery('#registersld').length > 0 ){
+	
+		jQuery('#registersld').change( function(){
+			sanitize_domain( jQuery('#registersld') );
 		});
 		
-	 }
-	 if ( jQuery('#transfersld').length > 0 ){
-	 	
-	 	jQuery('#transfersld').change( function(){
-	 	 	sanitize_domain( jQuery('#transfersld') );
-	 	});
-	 	
-	 }
-	 if ( jQuery('#owndomainsld').length > 0 ){
-	 	
-	 	jQuery('#owndomainsld').change( function(){
-	 	 	sanitize_domain( jQuery('#owndomainsld'), true );
-	 	});
-	 	
-	 }
-	 if ( jQuery('#owndomaintld').length > 0 ){
-	 	
-	 	jQuery('#owndomaintld').change( function(){
-	 	 	sanitize_domain( jQuery('#owndomaintld') );
-	 	});
-	 	
-	 }
-	 
-	 /** VPS Hostname **/
-	 if ( jQuery('#inputHostname').length > 0 ){
-	 	var $hostname_elem = jQuery('#inputHostname');
-	 
-	 	$hostname_elem.after('<small class="infotext"><i class="fa fa-info-circle"></i> This is the name for your server, often a subdomain of your website or organization. If you do not have a domain to use, you may use [a_name].myserver.ws and we will configure the DNS for you.</small>');
-	 	
-	 	$hostname_elem.keyup( function(){
-	 	ws_delay(function(){
-	 	
-	 	 	var $hostname = sanitize_hostname( $hostname_elem );
-      
-      $hostname_elem.val($hostname); //update on page
-	 	 	
-	 	 	if ( $hostname.indexOf('.') !== -1 ){ //need a dot character
-	 	 		validation_pass( $hostname_elem );
-	 	 	}
-	 	 	else{
-		 	 	validation_fail( $hostname_elem, '<i class="fa fa-warning"></i> A hostname must be a domain or subdomain like xyz.com or sub.xyz.com' );
-		 	}
-	 	
-	 	}, 1000 ); //1s delay
-	 	});
-	 	
-	 }
+	}
+	if ( jQuery('#transfersld').length > 0 ){
+	
+		jQuery('#transfersld').change( function(){
+			sanitize_domain( jQuery('#transfersld') );
+		});
+	
+	}
+	if ( jQuery('#owndomainsld').length > 0 ){
+		
+		jQuery('#owndomainsld').change( function(){
+			sanitize_domain( jQuery('#owndomainsld'), true );
+		});
+	
+	}
+	if ( jQuery('#owndomaintld').length > 0 ){
+	
+		jQuery('#owndomaintld').change( function(){
+			sanitize_domain( jQuery('#owndomaintld') );
+		});
+	
+	}
+	
+	/** VPS Hostname **/
+	if ( jQuery('#inputHostname').length > 0 ){
+
+		var $hostname_elem = jQuery('#inputHostname');
+		
+		$hostname_elem.after('<small class="infotext"><i class="fa fa-info-circle"></i> This is the name for your server, often a subdomain of your website or organization. If you do not have a domain to use, you may use [a_name].myserver.ws and we will configure the DNS for you.</small>');
+		
+		$hostname_elem.keyup( function(){
+			
+			ws_delay(function(){
+			
+				var $hostname = sanitize_hostname( $hostname_elem );
+
+				$hostname_elem.val($hostname); //update on page
+				
+				if ( $hostname.indexOf('.') !== -1 ){ //need a dot character
+					validation_pass( $hostname_elem );
+				}
+				else{
+					validation_fail( $hostname_elem, '<i class="fa fa-warning"></i> A hostname must be a domain or subdomain like xyz.com or sub.xyz.com' );
+				}
+			
+			}, 1000 ); //1s delay
+
+		});
+	
+	}
 	 
 	if ( jQuery('#inputNs1prefix').length > 0 ){ jQuery('#inputNs1prefix').val('none'); }
 	if ( jQuery('#inputNs2prefix').length > 0 ){ jQuery('#inputNs2prefix').val('none'); }
@@ -92,14 +95,14 @@ jQuery(document).ready(function($){
 	/** VPS Root Password **/
 	if ( jQuery('input[name=rootpw]').length > 0 ){
 	
-	jQuery('input[name=rootpw]').val(randString(30))
-			.attr('readonly','true')
-			.after('<small class="infotext"><i class="fa fa-info-circle"></i> A secure password has been automatically generated for you. You will be able to view this password securely in the Client Centre after the server has been provisioned.</small>');
-	
+		jQuery('input[name=rootpw]').val(randString(30))
+				.attr('readonly','true')
+				.after('<small class="infotext"><i class="fa fa-info-circle"></i> A secure password has been automatically generated for you. You will be able to view this password securely in the Client Centre after the server has been provisioned.</small>');
+		
 	}
 
 	/** Change help link to open live chat **/
-	// Any anchor with the 'tawk' class will open the chat window
+	// Any anchor with the 'tawk' class will also open the chat window
 	$('a[href="contact.php"').text('Click here to chat!');
     $('a.tawk,a[href="contact.php"').click(function(){
         Tawk_API.toggle();
@@ -113,12 +116,16 @@ jQuery(document).ready(function($){
 		"input[name='configoption[63]']", //Shared Hosting Support Level option
 	];
 
-	// Billing Cycle Change re-renders config options, so monitor for that and re-bind after config options change
-	jQuery("[name='billingcycle'").change(function(){
+	jQuery("[name='billingcycle']").change(function(){
+		// Billing Cycle Change re-renders config options, so monitor for that and re-bind after config options change
+		/*
 		setTimeout(function(){
 			//console.log('rebind config option stuff');
 			bind_to_configurable_options();
 		}, 800); 
+		*/
+		// WHMCS BUGFIX: Billing Cycle Changes break adding/removing addons to cart, so force reload of page to re-init addons JS
+		window.location.reload();
 	});
 
 	//On Page load
