@@ -119,6 +119,9 @@ jQuery(document).ready(function($){
 		$addon_panels.click(function(){ //onclick
 			ws_fix_addon_buttons_for_whmcs_devs($addon_panels);
 		});
+		$addon_panels.find('label,ins').click(function(){ //onclick of the label and iCheck cause it's stupidly separate (thanks WHMCS)
+			ws_fix_addon_buttons_for_whmcs_devs($addon_panels);
+		});
 	}
 	
 	function ws_fix_addon_buttons_for_whmcs_devs($addon_panels){
@@ -131,7 +134,7 @@ jQuery(document).ready(function($){
 					$(this).find('.panel-add').css('background-color', '#64c064'); //original green
 				}
 			});
-		}, 1000); 
+		}, 800); 
 	}
 	 
 	/***
