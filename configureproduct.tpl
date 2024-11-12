@@ -60,7 +60,7 @@ var _localLang = {
                                         {foreach from=$pricing key=k item=v} {* k = monhtly, quarterly, etc. v = the actual pricing output text *}
                                             {if $v && ($k eq 'monthly' || $k eq 'quarterly' || $k eq 'semiannually' || $k eq 'annually' || $k eq 'biennially' || $k eq 'triennially')}
                                                 <label for="billingcycle-{$k}">
-                                                    <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="updateConfigurableOptions({$i}, '{$k}');"{if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD ":""}
+                                                    <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="if (this.checked){ updateConfigurableOptions({$i}, this.value); }" {if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD ":""}
                                                 </label>
                                                 <br>
                                             {/if}
