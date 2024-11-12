@@ -108,6 +108,31 @@ jQuery(document).ready(function($){
         Tawk_API.toggle();
         return false;
     })
+
+	/** 
+	 * WHMCS BUG: the add to cart button doesn't refresh properly on page reload.
+	 * It also fails to turn red to represent removal from the cart. Let's fix this because WHMCS devs aren't worth what we pay for.
+	 **/
+	var $addon_panels = $('#order-standard_cart .panel-addon');
+	if ($addon_panels.length > 0){
+		ws_fix_addon_buttons_for_whmcs_devs($addon_panels); //onload
+		$addon_panels.click(function(){ //onclick
+			ws_fix_addon_buttons_for_whmcs_devs($addon_panels);
+		});
+	}
+	
+	function ws_fix_addon_buttons_for_whmcs_devs($addon_panels){
+		setTimeout(function(){ //give WHMCS time to do its thing first, then wreak havoc!!! (Fix bugs)
+			$addon_panels.each(function(){
+				if ($(this).hasClass('panel-addon-selected')){
+					$(this).find('.panel-add').html('<i class="fas fa-shopping-cart"></i> Remove from Cart').css('background-color', 'red');
+				}
+				else{
+					$(this).find('.panel-add').css('background-color', '#64c064'); //original green
+				}
+			});
+		}, 1000); 
+	}
 	 
 	/***
 	 * Configurable Option Changes 
