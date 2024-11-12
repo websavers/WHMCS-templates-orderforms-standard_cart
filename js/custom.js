@@ -109,28 +109,32 @@ jQuery(document).ready(function($){
         return false;
     })
 	 
-	/** Configurable Option Changes **/
+	/***
+	 * Configurable Option Changes 
+	 ***/
 
-	const c_options = [
+	const c_options = [ //options that we want to bind to
 		//"#inputConfigOption25", //VPS System Template / OS
 		"input[name='configoption[63]']", //Shared Hosting Support Level option
 	];
 
-	jQuery("[name='billingcycle']").change(function(){
-		// Billing Cycle Change re-renders config options, so monitor for that and re-bind after config options change
-		/*
-		setTimeout(function(){
-			//console.log('rebind config option stuff');
-			bind_to_configurable_options();
-		}, 800); 
-		*/
-		// WHMCS BUGFIX: Billing Cycle Changes break adding/removing addons to cart, so force reload of page to re-init addons JS
-		window.location.reload();
-	});
-
 	//On Page load
 	bind_to_configurable_options();
 
+	// Billing Cycle Change re-renders config options, so monitor for that and re-bind after config options change
+	/*
+	$("[id^=billingcycle]").change(function(){
+		setTimeout(function(){
+			//console.log('rebind config option stuff'); ///DEBUG
+			bind_to_configurable_options();
+		}, 1000); 
+	});
+	*/
+
+	$("body").on('DOMSubtreeModified', "productConfigurableOptions", function() {
+		bind_to_configurable_options();
+	});
+	
 	function bind_to_configurable_options(){
 		jQuery.each(c_options, function(i, c_option) {
 			var $option = jQuery(c_option);
@@ -146,17 +150,17 @@ jQuery(document).ready(function($){
 				}
 				*/
 	
-				//On page load
-				show_option_info($option);
+				// Trigger now
+				show_option_description($option);
 
-				//When dropdown selection is changed.
-				$option.change( function(){ show_option_info($option); });
+				// Trigger when option value is changed.
+				$option.change( function(){ show_option_description($option); });
 	
 			}
 		});
 	}
 	
-	function show_option_info($option){
+	function show_option_description($option){
 
 		var option_text = null;
 		var $attach_to = null;
