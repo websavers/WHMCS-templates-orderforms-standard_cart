@@ -57,15 +57,21 @@ var _localLang = {
                                     <div class="form-group">
                                         <label for="inputBillingcycle">{$LANG.cartchoosecycle}</label>
                                         <br>
-                                        {foreach from=$pricing key=k item=v} {* k = monhtly, quarterly, etc. v = the actual pricing output text *}
-                                            {if $v && ($k eq 'monthly' || $k eq 'quarterly' || $k eq 'semiannually' || $k eq 'annually' || $k eq 'biennially' || $k eq 'triennially')}
+                                        {foreach from=$pricing.cycles key=k item=v} {* k = monhtly, quarterly, etc. v = the actual pricing output text *}
+                                            {if $v}
+                                                {if $k eq 'quarterly'}{assign var="num_months" value=3}
+                                                {elseif $k eq 'semiannually'}{assign var="num_months" value=6}
+                                                {elseif $k eq 'annually'}{assign var="num_months" value=12}
+                                                {elseif $k eq 'biennially'}{assign var="num_months" value=24}
+                                                {elseif $k eq 'triennially'}{assign var="num_months" value=36}
+                                                {/if}
+                                                {math equation="price / months" price={$pricing.rawpricing.$k} months=$num_months format="%.2f" assign="monthly_breakdown"}
                                                 <label for="billingcycle-{$k}">
-                                                    <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="if (this.checked){ updateConfigurableOptions({$i}, this.value); }" {if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD ":""}
+                                                    <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="if (this.checked){ updateConfigurableOptions({$i}, this.value); }" {if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD ":""} <span class="monthly_breakdown">(${$monthly_breakdown} Monthly)</span>
                                                 </label>
                                                 <br>
                                             {/if}
                                         {/foreach}
-                                        <p><small>All prices shown during configuration represent the monthly breakdown of the billing cycle to make it easy to compare savings. The amount due today is shown in the Order Summary.</small></p>
                                         
                                         {*
                                         <select name="billingcycle" id="inputBillingcycle" class="form-control select-inline custom-select" onchange="updateConfigurableOptions({$i}, this.value); return false">

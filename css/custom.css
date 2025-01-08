@@ -531,3 +531,8 @@ body.cart section#main-body{ background-color: white; }
 #order-standard_cart .panel-addon .panel-add{
 	padding: 10px 20px;
 }
+
+.monthly_breakdown{
+	opacity: 0.8;
+	font-size: 0.9em;
+}
