@@ -508,6 +508,19 @@ body.cart section#main-body{ background-color: white; }
 #productConfigurableOptions .form-group > label,
 #productBillingCycle .form-group > label{
 	font-weight: bold;
+	font-size: 1.2em;
+}
+#productBillingCycle .form-group > label[for^="billingcycle-"]{
+	display: block;
+	padding: 10px;
+	margin-right: 0;
+	border: 1px solid #efefef;
+}
+#productBillingCycle .form-group > label[for^="billingcycle-"]:hover{
+	border-color: #ccc;
+}
+#productBillingCycle .form-group > br{
+	display: none;
 }
 #productConfigurableOptions .form-group > br{
 	margin-bottom: 10px;
