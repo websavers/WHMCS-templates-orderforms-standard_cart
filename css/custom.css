@@ -76,8 +76,6 @@ font-weight: 400;
 div.stepsbox:last-child::after{
 	display: none;
 }
-
-div.stepsboxinactive:hover{ }
  
 /****** Order Steps END ********/
 
@@ -91,7 +89,6 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
   font-weight: 400;
 }
 /*********************/
- 
  
 .cart .clientcentre .fl-page-header,
 .cart .clientcentre .fl-page-content{
@@ -113,6 +110,7 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
  
 .cart #order-standard_cart{
 	 padding-bottom: 0;
+	 min-height: 500px;
 }
 
 .cart #btnCompleteOrder{
@@ -153,12 +151,11 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
   padding-bottom: 6px;
   padding-top: 6px;
 }
-/*
-.cart #order-standard_cart p{
-	margin: 1em auto;
-	text-align: center;
+
+#order-standard_cart{
+	padding-bottom: 0;
+	min-height: 500px;
 }
-*/
 
 /* No line breaks in lists */
 .product-info ul>br,
@@ -172,7 +169,7 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 .cart #order-standard_cart .errortext,
 .cart #order-standard_cart .warntext{
 	display: block;
-	background-color: #ddd; /* match form border colour */
+	background-color: #ddd;
 	padding: 5px 8px 8px;
 	margin: 5px 0;
 }
@@ -183,12 +180,6 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 .cart #order-standard_cart .warntext{
 	background-color: #ffdf7e; 
 }
-/*
-.cart #order-standard_cart .item-price button{
-	pointer-events: none;
-	   cursor: default;
-}
-*/
 
 .cart #order-standard_cart .item-title .btn{
 	background-color: transparent;
@@ -208,16 +199,6 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 	 display: none;
 }
 
-.cart .extra-domain-fields blockquote{ /* CIRA text */
-	word-wrap: break-word;
-	font-size: 0.9em;
-	line-height: 1.2em;
-	width: 100%;
-	border: none;
-	margin: 10px 0;
-	padding: 15px;
-}
-
 .cart .already-registered{
 	text-align: center;
 }
@@ -231,6 +212,16 @@ body.cart .breadcrumb-item + .breadcrumb-item::before{
 
 .cart .already-registered .pull-right{
 	float: none !important;
+}
+
+.extra-domain-fields blockquote{ /* CIRA text */
+	word-wrap: break-word;
+	font-size: 0.9em;
+	line-height: 1.2em;
+	width: 100%;
+	border: none;
+	margin: 10px 0;
+	padding: 15px;
 }
 
 .domain-checker-container{
@@ -453,14 +444,6 @@ body.cart section#main-body{ background-color: white; }
 
 .icheckbox_square-blue{ margin-right: 5px; }
 
-/* Reduce left/right spacing on CC Expiry */
-@media screen and (min-width: 576px){
-  #newCardInfo .col-sm-3.new-card-container{
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
 /* Input field icons are just a little out of vertical alignment.
  * This is probably due to font size. This fixes that */
 #order-standard_cart .prepend-icon .field-icon{
@@ -552,4 +535,61 @@ body.cart section#main-body{ background-color: white; }
 
 #order-standard_cart .product-info{
 	font-size: 1em;
+}
+
+/* Hide Footer Links in Cart 
+ * Contact Us, Terms of Service and Social Icons
+ */
+footer#footer .nav,
+footer#footer .list-inline{ 
+	display: none;
+}
+
+#order-standard_cart .cc-input-container,
+#order-standard_cart .marketing-email-optin{
+	max-width: 600px;
+	margin: 15px auto;
+}
+
+/* Checkout Credit Card Inputs */
+#order-standard_cart .cc-input-container{
+	border-radius: 0;
+	padding: 30px;
+}
+#order-standard_cart .cc-input-container .new-card-container,
+#order-standard_cart .cc-input-container #cvv-field-container,
+#order-standard_cart .cc-input-container #inputDescriptionContainer,
+#order-standard_cart .cc-input-container #inputNoStoreContainer{
+	width: 100%;
+	flex: 0 0 100%;
+	max-width: 100%;
+}
+#order-standard_cart .cc-input-container .new-card-container{
+	margin: 0;
+}
+#order-standard_cart .cc-input-container #inputDescriptionContainer,
+#order-standard_cart .cc-input-container #inputNoStoreContainer{
+	margin-left: 0;
+	margin-right: 0;
+	padding: 0;
+}
+
+#order-standard_cart .cc-input-container #inputDescriptionContainer{
+	margin: 10px 0;
+}
+#order-standard_cart .cc-input-container #inputNoStoreContainer{
+	margin-top: 10px;
+}
+
+#order-standard_cart .cc-input-container .stripe-cards-inputs{
+	flex: 0 0 100%;
+	max-width: 100%;
+	margin-left: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+#order-standard_cart .cc-input-container .stripe-cards-inputs label{
+	margin-bottom: 0;
+	font-weight: bold;
 }
