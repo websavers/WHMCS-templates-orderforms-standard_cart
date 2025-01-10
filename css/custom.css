@@ -549,3 +549,7 @@ body.cart section#main-body{ background-color: white; }
 	opacity: 0.8;
 	font-size: 0.9em;
 }
+
+#order-standard_cart .product-info{
+	font-size: 1em;
+}
