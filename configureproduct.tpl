@@ -59,7 +59,8 @@ var _localLang = {
                                         <br>
                                         {foreach from=$pricing.cycles key=k item=v} {* k = monhtly, quarterly, etc. v = the actual pricing output text *}
                                             {if $v}
-                                                {if $k eq 'quarterly'}{assign var="num_months" value=3}
+                                                {if $k eq 'monthly'}{assign var="num_months" value=1}
+                                                {elseif $k eq 'quarterly'}{assign var="num_months" value=3}
                                                 {elseif $k eq 'semiannually'}{assign var="num_months" value=6}
                                                 {elseif $k eq 'annually'}{assign var="num_months" value=12}
                                                 {elseif $k eq 'biennially'}{assign var="num_months" value=24}
@@ -67,7 +68,7 @@ var _localLang = {
                                                 {/if}
                                                 {math equation="price / months" price={$pricing.rawpricing.$k} months=$num_months format="%.2f" assign="monthly_breakdown"}
                                                 <label for="billingcycle-{$k}">
-                                                    <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="if (this.checked){ updateConfigurableOptions({$i}, this.value); }" {if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD ":""} <span class="monthly_breakdown">(${$monthly_breakdown} Monthly)</span>
+                                                    <input type="radio" name="billingcycle" id="billingcycle-{$k}" value="{$k}" onchange="if (this.checked){ updateConfigurableOptions({$i}, this.value); }" {if $billingcycle eq "{$k}"} checked{/if}> {$v|replace:"$0.00CAD For":""|replace:"$0.00USD For":""} {if $monthly_breakdown != "0.00"}<span class="monthly_breakdown">(${$monthly_breakdown} Monthly)</span>{/if}
                                                 </label>
                                                 <br>
                                             {/if}
